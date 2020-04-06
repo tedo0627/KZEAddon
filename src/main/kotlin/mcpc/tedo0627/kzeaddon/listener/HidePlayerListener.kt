@@ -53,9 +53,9 @@ class HidePlayerListener(val addon: KZEAddon) : PlayerExtension {
         execute = key.isKeyDown
     }
 
-    enum class Type {
-        DISABLE, //無効
-        CLICK, //クリックしてon/off
-        PRESSING //押してる間
+    enum class Type(val message: String) {
+        DISABLE("無効"), //無効
+        CLICK("クリックで有効無効を切り替える"), //クリックしてon/off
+        PRESSING("押している間有効") //押してる間
     }
 }

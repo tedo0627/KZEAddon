@@ -9,7 +9,7 @@ import net.minecraft.util.text.StringTextComponent
 class SettingGui(val addon: KZEAddon) : Screen(StringTextComponent("setting gui")) {
 
     override fun init() {
-        addButton(Button(width / 5, height / 5, 200, 20, "プレイヤーの非表示${addon.hidePlayer}", fun(button: Button) {
+        addButton(Button(width / 5, height / 5, 200, 20, "プレイヤーの非表示 現在: ${addon.hidePlayer.message}", fun(button: Button) {
             when (addon.hidePlayer) {
                 HidePlayerListener.Type.DISABLE -> {
                     addon.hidePlayer = HidePlayerListener.Type.CLICK
@@ -21,9 +21,9 @@ class SettingGui(val addon: KZEAddon) : Screen(StringTextComponent("setting gui"
                     addon.hidePlayer = HidePlayerListener.Type.DISABLE
                 }
             }
-            button.message = "プレイヤーの非表示${addon.hidePlayer}"
+            button.message = "プレイヤーの非表示 現在: ${addon.hidePlayer.message}"
         }))
-        addButton(Button(width / 5, height / 5 + 20, 50, 20, "close", fun(button: Button) {
+        addButton(Button(width / 5, height / 5 + 20, 50, 20, "閉じる", fun(button: Button) {
             close()
         }))
     }

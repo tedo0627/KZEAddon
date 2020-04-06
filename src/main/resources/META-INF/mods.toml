@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+issueTrackerURL="http://my.issue.tracker/"
+[[mods]]
+modId="kzeaddon"
+version="1.0.0"
+displayName="KZEAddon"
+updateJSONURL="http://myurl.me/"
+displayURL="http://example.com/"
+authors="tedo0627"
+description="This mod helps you play with a KaedeZombieEscape server."
+# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+[[dependencies.kzeaddon]]
+    modId="forge"
+    mandatory=true
+    versionRange="[28,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.kzeaddon]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.14.4]"
+    ordering="NONE"
+    side="BOTH"

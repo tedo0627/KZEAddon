@@ -47,7 +47,7 @@ class HidePlayerListener(val addon: KZEAddon) : PlayerExtension {
     }
 
     @SubscribeEvent
-    fun onTick(event: TickEvent.ClientTickEvent) {
+    fun onClientTick(event: TickEvent.ClientTickEvent) {
         if (event.phase == TickEvent.Phase.END) return
         if (type != Type.PRESSING) return
         execute = key.isKeyDown

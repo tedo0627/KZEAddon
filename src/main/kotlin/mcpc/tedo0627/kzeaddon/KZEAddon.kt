@@ -55,5 +55,7 @@ class KZEAddon {
 
     private fun complete(event: FMLLoadCompleteEvent) {
         config = Config()
+        hidePlayer = config.hidePlayer
+        displayBullet = config.displayBullet
     }
 }

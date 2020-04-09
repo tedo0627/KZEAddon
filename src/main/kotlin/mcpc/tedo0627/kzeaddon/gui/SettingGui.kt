@@ -9,7 +9,7 @@ import net.minecraft.util.text.StringTextComponent
 class SettingGui(val addon: KZEAddon) : Screen(StringTextComponent("setting gui")) {
 
     override fun init() {
-        addButton(Button(width / 5, height / 5, 200, 20, "プレイヤーの非表示 現在: ${addon.hidePlayer.message}", fun(button: Button) {
+        addButton(Button(width / 5, height / 5, 250, 20, "プレイヤーの透明化 現在: ${addon.hidePlayer.message}", fun(button: Button) {
             when (addon.hidePlayer) {
                 HidePlayerListener.Type.DISABLE -> {
                     addon.hidePlayer = HidePlayerListener.Type.CLICK
@@ -21,11 +21,15 @@ class SettingGui(val addon: KZEAddon) : Screen(StringTextComponent("setting gui"
                     addon.hidePlayer = HidePlayerListener.Type.DISABLE
                 }
             }
-            button.message = "プレイヤーの非表示 現在: ${addon.hidePlayer.message}"
+            button.message = "プレイヤーの透明化 現在: ${addon.hidePlayer.message}"
+            addon.config.hidePlayer = addon.hidePlayer
+            addon.config.save()
         }))
-        addButton(Button(width / 5, height / 5 + 20, 50, 20, "弾の残りの数を表示する 現在: ${if (addon.displayBullet) "有効" else "無効"}", fun(button: Button) {
+        addButton(Button(width / 5, height / 5 + 20, 250, 20, "弾の残りの数を表示する 現在: ${if (addon.displayBullet) "有効" else "無効"}", fun(button: Button) {
             addon.displayBullet = !addon.displayBullet
             button.message = "弾の残りの数を表示する 現在: ${if (addon.displayBullet) "有効" else "無効"}"
+            addon.config.displayBullet = addon.displayBullet
+            addon.config.save()
         }))
         addButton(Button(width / 5, height / 5 + 40, 50, 20, "閉じる", fun(button: Button) {
             close()

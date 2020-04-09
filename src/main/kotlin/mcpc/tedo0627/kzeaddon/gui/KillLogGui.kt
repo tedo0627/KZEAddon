@@ -1,15 +1,18 @@
 package mcpc.tedo0627.kzeaddon.gui
 
 import mcpc.tedo0627.kzeaddon.KZEAddon
+import mcpc.tedo0627.kzeaddon.listener.KillLogListener
 import net.minecraft.client.gui.AbstractGui
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.util.text.StringTextComponent
 
-class KillLogGui(val addon: KZEAddon, val log: MutableList<String>) : Screen(StringTextComponent("kill log gui")) {
+class KillLogGui(val addon: KZEAddon, val listener: KillLogListener, val log: MutableList<String>) : Screen(StringTextComponent("kill log gui")) {
 
     private var scroll = 0
 
     override fun render(p_render_1_: Int, p_render_2_: Int, p_render_3_: Float) {
+        listener.deleteCache()
+
         var height = 2
         val start = if (log.size > 20) log.size - 20 - scroll else 0
         for (i in start until log.size - scroll) {

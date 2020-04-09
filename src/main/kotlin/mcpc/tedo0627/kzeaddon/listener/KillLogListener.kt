@@ -10,6 +10,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 
 class KillLogListener(val addon: KZEAddon) {
 
+    private val maxLogSize = 200
+
     val key: KeyBinding
         get() = addon.killLogKey
 
@@ -20,7 +22,7 @@ class KillLogListener(val addon: KZEAddon) {
     fun onKeyInput(event: InputEvent.KeyInputEvent) {
         if (event.action != 1) return
         if (!key.isPressed) return
-        Minecraft.getInstance().displayGuiScreen(KillLogGui(addon, log))
+        Minecraft.getInstance().displayGuiScreen(KillLogGui(addon, this, log))
     }
 
     @SubscribeEvent
@@ -31,5 +33,12 @@ class KillLogListener(val addon: KZEAddon) {
 
         uuidCache.add(uuid)
         log.add(bossInfo.name.formattedText.trim())
+    }
+
+    fun deleteCache() {
+        while (log.size > maxLogSize) {
+            log.removeAt(0)
+            uuidCache.removeAt(0)
+        }
     }
 }

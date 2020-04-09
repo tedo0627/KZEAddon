@@ -31,6 +31,7 @@ class KZEAddon {
 
     val settingOpenKey = KeyBinding("設定画面を開くキー", 79, "KZEAddon")
     val hidePlayerKey = KeyBinding("プレイヤーを透明にするキー", 78, "KZEAddon")
+    val killLogKey = KeyBinding("キルログを表示するキー", 75, "KZEAddon")
 
     init {
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent -> setup(event) }
@@ -45,9 +46,11 @@ class KZEAddon {
         MinecraftForge.EVENT_BUS.register(DisplayBulletListener(this))
         MinecraftForge.EVENT_BUS.register(OpenSettingGuiListener(this))
         MinecraftForge.EVENT_BUS.register(HidePlayerListener(this))
+        MinecraftForge.EVENT_BUS.register(KillLogListener(this))
 
         ClientRegistry.registerKeyBinding(settingOpenKey)
         ClientRegistry.registerKeyBinding(hidePlayerKey)
+        ClientRegistry.registerKeyBinding(killLogKey)
     }
 
     private fun complete(event: FMLLoadCompleteEvent) {

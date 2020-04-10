@@ -28,6 +28,12 @@ class Config {
             config.set<Boolean>("displayBullet", value)
         }
 
+    var displayReloadDuration: Boolean
+        get() = config.get<Boolean>("displayReloadDuration") ?: false
+        set(value) {
+            config.set<Boolean>("displayReloadDuration", value)
+        }
+
     fun save() {
         config.save()
     }

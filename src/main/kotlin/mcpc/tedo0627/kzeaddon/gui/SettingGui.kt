@@ -31,7 +31,13 @@ class SettingGui(val addon: KZEAddon) : Screen(StringTextComponent("setting gui"
             addon.config.displayBullet = addon.displayBullet
             addon.config.save()
         }))
-        addButton(Button(width / 5, height / 5 + 40, 50, 20, "閉じる", fun(button: Button) {
+        addButton(Button(width / 5, height / 5 + 40, 250, 20, "リロードの時間を表示する 現在: ${if (addon.displayReloadDuration) "有効" else "無効"}", fun(button: Button) {
+            addon.displayReloadDuration = !addon.displayReloadDuration
+            button.message = "リロードの時間を表示する 現在: ${if (addon.displayReloadDuration) "有効" else "無効"}"
+            addon.config.displayReloadDuration = addon.displayReloadDuration
+            addon.config.save()
+        }))
+        addButton(Button(width / 5, height / 5 + 60, 50, 20, "閉じる", fun(button: Button) {
             close()
         }))
     }

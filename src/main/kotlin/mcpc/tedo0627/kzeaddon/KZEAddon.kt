@@ -26,8 +26,9 @@ class KZEAddon {
     lateinit var config: Config
         private set
 
-    var hidePlayer = HidePlayerListener.Type.DISABLE
-    var displayBullet = false
+    var hidePlayer = HidePlayerListener.Type.CLICK
+    var displayBullet = true
+    var displayReloadDuration = true
 
     val settingOpenKey = KeyBinding("設定画面を開くキー", 79, "KZEAddon")
     val hidePlayerKey = KeyBinding("プレイヤーを透明にするキー", 78, "KZEAddon")
@@ -47,6 +48,7 @@ class KZEAddon {
         MinecraftForge.EVENT_BUS.register(OpenSettingGuiListener(this))
         MinecraftForge.EVENT_BUS.register(HidePlayerListener(this))
         MinecraftForge.EVENT_BUS.register(KillLogListener(this))
+        MinecraftForge.EVENT_BUS.register(ReloadDurationListener(this))
 
         ClientRegistry.registerKeyBinding(settingOpenKey)
         ClientRegistry.registerKeyBinding(hidePlayerKey)

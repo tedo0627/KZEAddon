@@ -26,7 +26,7 @@ class ReloadDurationListener(val addon: KZEAddon) {
         if (item.item != Items.DIAMOND_HOE) return
 
         if (reloading) {
-            if (slot != inventory.currentItem) {
+            if (slot != inventory.currentItem || !item.displayName.formattedText.startsWith("§c")) {
                 reloading = false
                 slot = -1
                 time = 0

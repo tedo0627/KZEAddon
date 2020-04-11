@@ -43,7 +43,6 @@ class KZEAddon {
     private fun setup(event: FMLCommonSetupEvent) {
         scheduler = Scheduler()
 
-        MinecraftForge.EVENT_BUS.register(EventListener(this))
         MinecraftForge.EVENT_BUS.register(scheduler)
         MinecraftForge.EVENT_BUS.register(DisplayBulletListener(this))
         MinecraftForge.EVENT_BUS.register(OpenSettingGuiListener(this))

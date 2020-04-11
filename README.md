@@ -1,5 +1,5 @@
 # KZEAddon
-kzeをプレイすることをサポートするmodです  
+kzeのプレイをサポートするmodです  
 version 1.14.4
 
 ## 機能
@@ -15,4 +15,4 @@ kキーを押すとキルログを表示します
 キーを変えたい場合はマイクラのキー設定から変更してください
 
 ## ダウンロード
-[Download](https://github.com/tedo0627/KZEAddon/releases/download/1.0.0/kzeaddon-1.0.0.jar)
+[Download](https://github.com/tedo0627/KZEAddon/releases/download/1.0.1/kzeaddon-1.0.1.jar)

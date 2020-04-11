@@ -29,6 +29,7 @@ class KZEAddon {
     var hidePlayer = HidePlayerListener.Type.CLICK
     var displayBullet = true
     var displayReloadDuration = true
+    var fillKillLogName = false
 
     val settingOpenKey = KeyBinding("設定画面を開くキー", 79, "KZEAddon")
     val hidePlayerKey = KeyBinding("プレイヤーを透明にするキー", 78, "KZEAddon")

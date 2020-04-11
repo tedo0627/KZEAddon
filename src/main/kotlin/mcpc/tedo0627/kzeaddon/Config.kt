@@ -34,6 +34,12 @@ class Config {
             config.set<Boolean>("displayReloadDuration", value)
         }
 
+    var fillKillLogName: Boolean
+        get() = config.get<Boolean>("fillKillLogName") ?: false
+        set(value) {
+            config.set<Boolean>("fillKillLogName", value)
+        }
+
     fun save() {
         config.save()
     }

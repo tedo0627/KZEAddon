@@ -37,7 +37,13 @@ class SettingGui(val addon: KZEAddon) : Screen(StringTextComponent("setting gui"
             addon.config.displayReloadDuration = addon.displayReloadDuration
             addon.config.save()
         }))
-        addButton(Button(width / 5, height / 5 + 60, 50, 20, "閉じる", fun(button: Button) {
+        addButton(Button(width / 5, height / 5 + 60, 250, 20, "キルログの自分の名前のところの背景を赤くする 現在: ${if (addon.fillKillLogName) "有効" else "無効"}", fun(button: Button) {
+            addon.fillKillLogName = !addon.fillKillLogName
+            button.message = "キルログの自分の名前のところの背景を赤くする 現在: ${if (addon.fillKillLogName) "有効" else "無効"}"
+            addon.config.fillKillLogName = addon.fillKillLogName
+            addon.config.save()
+        }))
+        addButton(Button(width / 5, height / 5 + 80, 50, 20, "閉じる", fun(button: Button) {
             close()
         }))
     }

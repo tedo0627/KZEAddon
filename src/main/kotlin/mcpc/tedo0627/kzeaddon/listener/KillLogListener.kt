@@ -32,12 +32,7 @@ class KillLogListener(val addon: KZEAddon) {
         if (uuidCache.contains(uuid)) return
 
         uuidCache.add(uuid)
-
-        val name = Minecraft.getInstance().player.name.formattedText
-        var text = bossInfo.name.formattedText.trim()
-        val index = text.indexOf(name)
-        if (index != -1) text = "${text.substring(0, index)}§c${name}§f${text.substring(index + name.length, text.length)}"
-        log.add(text)
+        log.add(bossInfo.name.formattedText.trim())
     }
 
     fun deleteCache() {

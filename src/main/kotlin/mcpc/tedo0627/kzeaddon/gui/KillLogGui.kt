@@ -2,6 +2,7 @@ package mcpc.tedo0627.kzeaddon.gui
 
 import mcpc.tedo0627.kzeaddon.KZEAddon
 import mcpc.tedo0627.kzeaddon.listener.KillLogListener
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.AbstractGui
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.util.text.StringTextComponent
@@ -13,11 +14,20 @@ class KillLogGui(val addon: KZEAddon, val listener: KillLogListener, val log: Mu
     override fun render(p_render_1_: Int, p_render_2_: Int, p_render_3_: Float) {
         listener.deleteCache()
 
+        val name = Minecraft.getInstance().player.name.formattedText
         var height = 2
         val start = if (log.size > 20) log.size - 20 - scroll else 0
         for (i in start until log.size - scroll) {
             val text = log[i]
             AbstractGui.fill(width / 3 * 2, height, width - 2, height + 12, minecraft!!.gameSettings.func_216839_a(Int.MIN_VALUE))
+
+            if (text.indexOf(name) != -1) {
+                AbstractGui.fill(width / 3 * 2, height, width - 2, height + 1, 1688862720)
+                AbstractGui.fill(width / 3 * 2, height + 11, width - 2, height + 12, 1688862720)
+                AbstractGui.fill(width / 3 * 2, height, width / 3 * 2 + 1, height + 12, 1688862720)
+                AbstractGui.fill(width - 3, height, width - 2, height + 12, 1688862720)
+            }
+
             font.drawString(text, (width / 3 * 2).toFloat() + 2, height.toFloat() + 2, 16777215)
             height += 12
         }

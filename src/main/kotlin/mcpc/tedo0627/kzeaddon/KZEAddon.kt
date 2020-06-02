@@ -59,5 +59,6 @@ class KZEAddon {
         config = Config()
         hidePlayer = config.hidePlayer
         displayBullet = config.displayBullet
+        fillKillLogName = config.fillKillLogName
     }
 }

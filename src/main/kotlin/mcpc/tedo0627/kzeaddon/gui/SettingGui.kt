@@ -51,6 +51,18 @@ class SettingGui(val addon: KZEAddon) : Screen(StringTextComponent("setting gui"
         super.render(p_render_1_, p_render_2_, p_render_3_)
     }
 
+    override fun keyPressed(p_keyPressed_1_: Int, p_keyPressed_2_: Int, p_keyPressed_3_: Int): Boolean {
+        if (addon.settingOpenKey.key.keyCode == p_keyPressed_1_) {
+            close()
+            return true
+        }
+        if (p_keyPressed_1_ == 256) {
+            close()
+            return true
+        }
+        return false
+    }
+
     private fun close() {
         minecraft?.displayGuiScreen(null)
     }

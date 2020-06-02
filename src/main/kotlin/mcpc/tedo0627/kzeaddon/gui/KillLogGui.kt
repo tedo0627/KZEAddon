@@ -19,20 +19,29 @@ class KillLogGui(val addon: KZEAddon, val listener: KillLogListener, val log: Mu
         val start = if (log.size > 20) log.size - 20 - scroll else 0
         for (i in start until log.size - scroll) {
             val text = log[i]
-            if (addon.fillKillLogName) {
-                if (text.indexOf(name) != -1) {
-                    AbstractGui.fill(width / 3 * 2, height, width - 2, height + 12, 1688862720)
-                } else {
+            when (addon.fillKillLogName) {
+                Type.DISABLE -> {
                     AbstractGui.fill(width / 3 * 2, height, width - 2, height + 12, minecraft!!.gameSettings.func_216839_a(Int.MIN_VALUE))
                 }
-            } else {
-                if (text.indexOf(name) != -1) {
-                    AbstractGui.fill(width / 3 * 2, height, width - 2, height + 1, 1688862720)
-                    AbstractGui.fill(width / 3 * 2, height + 11, width - 2, height + 12, 1688862720)
-                    AbstractGui.fill(width / 3 * 2, height, width / 3 * 2 + 1, height + 12, 1688862720)
-                    AbstractGui.fill(width - 3, height, width - 2, height + 12, 1688862720)
+                Type.SURROUND -> {
+                    if (text.indexOf(name) != -1) {
+                        AbstractGui.fill(width / 3 * 2, height, width - 2, height + 1, 1688862720)
+                        AbstractGui.fill(width / 3 * 2, height + 11, width - 2, height + 12, 1688862720)
+                        AbstractGui.fill(width / 3 * 2, height, width / 3 * 2 + 1, height + 12, 1688862720)
+                        AbstractGui.fill(width - 3, height, width - 2, height + 12, 1688862720)
+
+                        AbstractGui.fill(width / 3 * 2 + 1, height + 1, width - 3, height + 11, minecraft!!.gameSettings.func_216839_a(Int.MIN_VALUE))
+                    } else {
+                        AbstractGui.fill(width / 3 * 2, height, width - 2, height + 12, minecraft!!.gameSettings.func_216839_a(Int.MIN_VALUE))
+                    }
                 }
-                AbstractGui.fill(width / 3 * 2, height, width - 2, height + 12, minecraft!!.gameSettings.func_216839_a(Int.MIN_VALUE))
+                Type.FILL -> {
+                    if (text.indexOf(name) != -1) {
+                        AbstractGui.fill(width / 3 * 2, height, width - 2, height + 12, 1688862720)
+                    } else {
+                        AbstractGui.fill(width / 3 * 2, height, width - 2, height + 12, minecraft!!.gameSettings.func_216839_a(Int.MIN_VALUE))
+                    }
+                }
             }
 
             font.drawString(text, (width / 3 * 2).toFloat() + 2, height.toFloat() + 2, 16777215)
@@ -72,5 +81,11 @@ class KillLogGui(val addon: KZEAddon, val listener: KillLogListener, val log: Mu
 
     private fun close() {
         minecraft?.displayGuiScreen(null)
+    }
+
+    enum class Type(val message: String) {
+        DISABLE("無効"),
+        SURROUND("囲む"),
+        FILL("埋める")
     }
 }

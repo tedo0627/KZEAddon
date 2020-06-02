@@ -1,12 +1,11 @@
 package mcpc.tedo0627.kzeaddon
 
+import mcpc.tedo0627.kzeaddon.gui.KillLogGui
 import mcpc.tedo0627.kzeaddon.listener.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
@@ -29,7 +28,7 @@ class KZEAddon {
     var hidePlayer = HidePlayerListener.Type.CLICK
     var displayBullet = true
     var displayReloadDuration = true
-    var fillKillLogName = false
+    var fillKillLogName = KillLogGui.Type.DISABLE
 
     val settingOpenKey = KeyBinding("設定画面を開くキー", 79, "KZEAddon")
     val hidePlayerKey = KeyBinding("プレイヤーを透明にするキー", 78, "KZEAddon")
@@ -59,6 +58,7 @@ class KZEAddon {
         config = Config()
         hidePlayer = config.hidePlayer
         displayBullet = config.displayBullet
+        displayReloadDuration = config.displayReloadDuration
         fillKillLogName = config.fillKillLogName
     }
 }

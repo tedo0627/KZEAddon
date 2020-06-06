@@ -16,6 +16,6 @@ description="This mod helps you play with a KaedeZombieEscape server."
 [[dependencies.kzeaddon]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.14.4,1.15.2]"
     ordering="NONE"
     side="BOTH"

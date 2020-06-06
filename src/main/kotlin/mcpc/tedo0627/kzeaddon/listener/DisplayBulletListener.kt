@@ -27,6 +27,8 @@ class DisplayBulletListener(val addon: KZEAddon) : PlayerExtension {
 
     @SubscribeEvent
     fun onClientTick(event: TickEvent.ClientTickEvent) {
+        if (event.phase == TickEvent.Phase.START) return
+
         val mc = Minecraft.getInstance()
         val player = mc.player ?: return
         val inventory = player.inventory ?: return

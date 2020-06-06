@@ -3,12 +3,7 @@ package mcpc.tedo0627.kzeaddon.listener
 import mcpc.tedo0627.kzeaddon.KZEAddon
 import mcpc.tedo0627.kzeaddon.extension.PlayerExtension
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.entity.model.PlayerModel
-import net.minecraft.entity.monster.CreeperEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.potion.*
 import net.minecraftforge.client.event.InputEvent
-import net.minecraftforge.client.event.RenderLivingEvent
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.event.TickEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent

@@ -1,11 +1,11 @@
 package mcpc.tedo0627.kzeaddon.listener
 
 import mcpc.tedo0627.kzeaddon.KZEAddon
+import mcpc.tedo0627.kzeaddon.event.CreateBossBarEvent
 import mcpc.tedo0627.kzeaddon.gui.KillLogGui
 import net.minecraft.client.Minecraft
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.client.event.InputEvent
-import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 
 class KillLogListener(val addon: KZEAddon) {
@@ -16,7 +16,6 @@ class KillLogListener(val addon: KZEAddon) {
         get() = addon.killLogKey
 
     private val log = mutableListOf<String>()
-    private val uuidCache = mutableListOf<String>()
 
     @SubscribeEvent
     fun onKeyInput(event: InputEvent.KeyInputEvent) {
@@ -26,19 +25,14 @@ class KillLogListener(val addon: KZEAddon) {
     }
 
     @SubscribeEvent
-    fun onRenderGameOverlay(event: RenderGameOverlayEvent.BossInfo) {
+    fun onCreateBossBar(event: CreateBossBarEvent) {
         val bossInfo = event.bossInfo
-        val uuid = bossInfo.uniqueId.toString()
-        if (uuidCache.contains(uuid)) return
-
-        uuidCache.add(uuid)
         log.add(bossInfo.name.formattedText.trim())
     }
 
     fun deleteCache() {
         while (log.size > maxLogSize) {
             log.removeAt(0)
-            uuidCache.removeAt(0)
         }
     }
 }

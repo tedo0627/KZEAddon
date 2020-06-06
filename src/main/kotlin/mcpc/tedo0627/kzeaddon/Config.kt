@@ -46,6 +46,22 @@ class Config {
             config.set<Boolean>("fillKillLogName", value)
         }
 
+    fun getWeaponKillCount(weapon: String): Int {
+        return config.getIntOrElse("weaponStats.${weapon}.killCount", 0)
+    }
+
+    fun setWeaponKillCount(weapon: String, count: Int) {
+        config.set<Int>("weaponStats.${weapon}.killCount", count)
+    }
+
+    fun exist(name: String): Boolean {
+        return config.contains(name)
+    }
+
+    fun <T> get(name: String): T {
+        return config.get(name)
+    }
+
     fun save() {
         config.set<String>("configVersion", version)
         config.save()

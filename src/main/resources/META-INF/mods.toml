@@ -2,7 +2,7 @@ modLoader="javafml"
 loaderVersion="[28,)"
 [[mods]]
 modId="kzeaddon"
-version="1.0.1"
+version="1.0.2"
 displayName="KZEAddon"
 displayURL="https://github.com/tedo0627/KZEAddon"
 authors="tedo0627"

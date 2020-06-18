@@ -35,11 +35,15 @@ class KillCountListener(val addon: KZEAddon) : PlayerExtension {
         if (component.unformattedComponentText != "${player.name.unformattedComponentText} " || component.style.color != TextFormatting.DARK_AQUA) return
 
         val item = player.inventory.getCurrentItem()
+        if (item.item != Items.DIAMOND_HOE) return
+
         val split = item.displayName.unformattedComponentText.split(" ")
         if (split.isEmpty()) return
 
         val str = split[0]
         val weapon = str.substring(2, str.length)
+        if (weapon.isEmpty()) return
+
         if (!killCount.containsKey(weapon)) killCount[weapon] = addon.config.getWeaponKillCount(weapon)
 
         val count = (killCount[weapon] ?: 0) + 1

@@ -1,21 +1,26 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[37,)"
+license="MIT License"
+
 [[mods]]
 modId="kzeaddon"
-version="1.0.2"
+version="2.0.0"
 displayName="KZEAddon"
-displayURL="https://github.com/tedo0627/KZEAddon"
 authors="tedo0627"
-description="This mod helps you play with a KaedeZombieEscape server."
+description='''
+This mod helps you play with a KaedeZombieEscape server.
+'''
+
 [[dependencies.kzeaddon]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"
+
 [[dependencies.kzeaddon]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4,1.15.2]"
+    versionRange="[1.17.1,1.18)"
     ordering="NONE"
     side="BOTH"

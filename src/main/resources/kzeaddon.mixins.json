@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "mcpc.tedo0627.kzeaddon.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "refmap": "kzeaddon.refmap.json",
+  "mixins": [
+    "MixinEntity"
+  ],
+  "client": [
+  ]
+}

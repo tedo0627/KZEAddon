@@ -1,36 +1,32 @@
 buildscript {
-    ext.kotlin_version = '1.3.70'
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'kotlin'
+apply plugin: 'org.spongepowered.mixin'
 
-version = '1.0.2'
-group = 'mcpc.tedo0627.kzeaddon'
-archivesBaseName = 'kzeaddon'
+version = "2.0.0"
+group = "mcpc.tedo0627.kzeaddon"
+archivesBaseName = "kzeaddon"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    mappings channel: 'official', version: '1.17.1'
 
     runs {
         client {
             workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -43,10 +39,7 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -59,13 +52,10 @@ minecraft {
         data {
             workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
                 examplemod {
@@ -76,27 +66,18 @@ minecraft {
     }
 }
 
-configurations {
-    embed
-    compile.extendsFrom(embed)
+mixin {
+    add sourceSets.main, "kzeaddon.refmap.json"
+
+    config "kzeaddon.mixins.json"
 }
 
 repositories {
-    mavenCentral()
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.2.3'
-    embed 'org.jetbrains.kotlin:kotlin-stdlib:1.3.70'
+    minecraft 'net.minecraftforge:forge:1.17.1-37.1.1'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
-jar {
-    from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
-}
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = '1.8'
-        includeRuntime = true
-    }
-}
+jar.finalizedBy('reobfJar')

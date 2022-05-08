@@ -7,5 +7,6 @@
     "MixinEntity"
   ],
   "client": [
+    "MixinClientLevel"
   ]
 }

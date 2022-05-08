@@ -13,9 +13,8 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
-version = "2.0.0"
 group = "mcpc.tedo0627.kzeaddon"
-archivesBaseName = "kzeaddon"
+archivesBaseName = "KZEAddon"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 

@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 @Mixin(Entity.class)
 public class MixinEntity {
@@ -17,7 +18,7 @@ public class MixinEntity {
     @Inject(at = @At("HEAD"), method = "isInvisible", cancellable = true)
     private void isInvisible(CallbackInfoReturnable<Boolean> cir) {
         boolean bool = this.getSharedFlag(5);
-        cir.setReturnValue(HidePlayerService.isInvisible(getTeam(), bool));
+        cir.setReturnValue(HidePlayerService.isInvisible(getUUID(), getTeam(), bool));
     }
 
     @Shadow
@@ -29,5 +30,10 @@ public class MixinEntity {
     @Nullable
     public Team getTeam() {
         throw new IllegalStateException("Mixin failed to shadow getTeam()");
+    }
+
+    @Shadow
+    public UUID getUUID() {
+        throw new IllegalStateException("Mixin failed to shadow getUUID()");
     }
 }

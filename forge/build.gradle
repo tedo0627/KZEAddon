@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = "mcpc.tedo0627.kzeaddon"
-archivesBaseName = "KZEAddon"
+archivesBaseName = "kzeaddon-forge"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
@@ -53,8 +53,6 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
                 examplemod {

@@ -1,6 +1,9 @@
-name: Java CI with Gradle
+name: Upload jar files
 
-on: push
+on:
+  release:
+    types:
+      - created
 
 jobs:
   build:
@@ -33,10 +36,14 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+      - name: Upload a Release Asset
+        uses: shogo82148/actions-upload-release-asset@v1
         with:
-          name: kzeaddon
-          path: |
-            fabric/build/libs/kzeaddon-fabric.jar
-            forge/build/libs/kzeaddon-forge.jar
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: fabric/build/libs/kzeaddon-fabric.jar
+
+      - name: Upload a Release Asset
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: forge/build/libs/kzeaddon-forge.jar

@@ -3,6 +3,7 @@ package mcpc.tedo0627.kzeaddon.fabric.mixin;
 import mcpc.tedo0627.kzeaddon.fabric.HidePlayerService;
 import net.minecraft.entity.Entity;
 import net.minecraft.scoreboard.AbstractTeam;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,8 +16,8 @@ import java.util.UUID;
 @Mixin(Entity.class)
 public class MixinEntity {
 
-    @Inject(at = @At("HEAD"), method = "isInvisible", cancellable = true)
-    private void isInvisible(CallbackInfoReturnable<Boolean> cir) {
+    @Inject(at = @At("HEAD"), method = "isInvisible()Z", cancellable = true)
+    private void isInvisible(@NotNull CallbackInfoReturnable<Boolean> cir) {
         boolean bool = this.getFlag(5);
         cir.setReturnValue(HidePlayerService.isInvisible(getUuid(), getScoreboardTeam(), bool));
     }

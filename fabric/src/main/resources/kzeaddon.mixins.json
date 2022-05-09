@@ -1,12 +1,15 @@
 {
   "required": true,
+  "minVersion": "0.8",
   "package": "mcpc.tedo0627.kzeaddon.fabric.mixin",
   "compatibilityLevel": "JAVA_16",
-  "refmap": "kzeaddon.refmap.json",
   "mixins": [
-    "MixinEntity"
+    "MixinEntity",
+    "MixinClientWorld"
   ],
   "client": [
-    "MixinClientWorld"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

@@ -1,4 +1,4 @@
-package mcpc.tedo0627.kzeaddon.mixin;
+package mcpc.tedo0627.kzeaddon.forge.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

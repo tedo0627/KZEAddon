@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "mcpc.tedo0627.kzeaddon.mixin",
+  "package": "mcpc.tedo0627.kzeaddon.forge.mixin",
   "compatibilityLevel": "JAVA_16",
   "refmap": "kzeaddon.refmap.json",
   "mixins": [

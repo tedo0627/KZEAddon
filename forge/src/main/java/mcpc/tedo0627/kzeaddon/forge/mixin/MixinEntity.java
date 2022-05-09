@@ -1,6 +1,6 @@
-package mcpc.tedo0627.kzeaddon.mixin;
+package mcpc.tedo0627.kzeaddon.forge.mixin;
 
-import mcpc.tedo0627.kzeaddon.service.HidePlayerService;
+import mcpc.tedo0627.kzeaddon.forge.service.HidePlayerService;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.scores.Team;
 import org.spongepowered.asm.mixin.Mixin;

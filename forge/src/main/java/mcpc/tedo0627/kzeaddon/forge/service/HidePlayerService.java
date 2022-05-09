@@ -1,4 +1,4 @@
-package mcpc.tedo0627.kzeaddon.service;
+package mcpc.tedo0627.kzeaddon.forge.service;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;

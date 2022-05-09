@@ -1,4 +1,4 @@
-package mcpc.tedo0627.kzeaddon;
+package mcpc.tedo0627.kzeaddon.forge;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;

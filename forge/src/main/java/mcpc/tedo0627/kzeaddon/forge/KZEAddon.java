@@ -1,7 +1,7 @@
-package mcpc.tedo0627.kzeaddon;
+package mcpc.tedo0627.kzeaddon.forge;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import mcpc.tedo0627.kzeaddon.service.HidePlayerService;
+import mcpc.tedo0627.kzeaddon.forge.service.HidePlayerService;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;

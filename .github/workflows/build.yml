@@ -37,4 +37,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: kzeaddon
-          path: build/libs/KZEAddon.jar
+          path: |
+            fabric/build/libs/kzeaddon-fabric.jar
+            forge/build/libs/kzeaddon-forge.jar

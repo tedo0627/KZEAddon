@@ -4,6 +4,11 @@ plugins {
     id("fabric-loom") version "0.10-SNAPSHOT"
 }
 
+group = "mcpc.tedo0627.kzeaddon"
+tasks.jar {
+    archiveBaseName.set("kzeaddon-fabric")
+}
+
 repositories {
     mavenCentral()
 }

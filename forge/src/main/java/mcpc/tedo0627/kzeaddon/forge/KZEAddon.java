@@ -17,21 +17,17 @@ public class KZEAddon {
 
     private CustomConfig config;
 
-    private KeyMapping settingKey = new KeyMapping("Open KZEAddon settings key", InputConstants.Type.KEYSYM, -1, "KZEAddon");
-    private KeyMapping hidePlayerKey = new KeyMapping("Hide player toggle key", InputConstants.Type.KEYSYM, -1, "KZEAddon");
+    private final KeyMapping settingKey = new KeyMapping("Open KZEAddon settings key", InputConstants.Type.KEYSYM, -1, "KZEAddon");
+    private final KeyMapping hidePlayerKey = new KeyMapping("Hide player toggle key", InputConstants.Type.KEYSYM, -1, "KZEAddon");
 
     public KZEAddon() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::complete);
-    }
-
-    private void setup(FMLCommonSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new HidePlayerService(hidePlayerKey));
-        //ClientRegistry.registerKeyBinding(settingKey);
-        ClientRegistry.registerKeyBinding(hidePlayerKey);
     }
 
     private void complete(FMLLoadCompleteEvent event) {
         //config = new CustomConfig();
+        MinecraftForge.EVENT_BUS.register(new HidePlayerService(hidePlayerKey));
+        //ClientRegistry.registerKeyBinding(settingKey);
+        ClientRegistry.registerKeyBinding(hidePlayerKey);
     }
 }

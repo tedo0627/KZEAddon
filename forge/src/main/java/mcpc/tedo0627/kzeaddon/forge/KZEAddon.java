@@ -5,10 +5,8 @@ import mcpc.tedo0627.kzeaddon.forge.service.HidePlayerService;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 @Mod(KZEAddon.MOD_ID)
 public class KZEAddon {
@@ -18,7 +16,6 @@ public class KZEAddon {
     private CustomConfig config;
 
     private final KeyMapping settingKey = new KeyMapping("Open KZEAddon settings key", InputConstants.Type.KEYSYM, -1, "KZEAddon");
-    private final KeyMapping hidePlayerKey = new KeyMapping("Hide player toggle key", InputConstants.Type.KEYSYM, -1, "KZEAddon");
 
     public KZEAddon() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::complete);
@@ -26,8 +23,7 @@ public class KZEAddon {
 
     private void complete(FMLLoadCompleteEvent event) {
         //config = new CustomConfig();
-        MinecraftForge.EVENT_BUS.register(new HidePlayerService(hidePlayerKey));
+        MinecraftForge.EVENT_BUS.register(new HidePlayerService());
         //ClientRegistry.registerKeyBinding(settingKey);
-        ClientRegistry.registerKeyBinding(hidePlayerKey);
     }
 }

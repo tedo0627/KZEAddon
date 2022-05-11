@@ -1,8 +1,8 @@
 package mcpc.tedo0627.kzeaddon.forge;
 
-import com.mojang.blaze3d.platform.InputConstants;
+import mcpc.tedo0627.kzeaddon.forge.service.DeleteMessageService;
 import mcpc.tedo0627.kzeaddon.forge.service.HidePlayerService;
-import net.minecraft.client.KeyMapping;
+import mcpc.tedo0627.kzeaddon.forge.service.OpenScreenService;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -13,17 +13,14 @@ public class KZEAddon {
 
     public static final String MOD_ID = "kzeaddon";
 
-    private CustomConfig config;
-
-    private final KeyMapping settingKey = new KeyMapping("Open KZEAddon settings key", InputConstants.Type.KEYSYM, -1, "KZEAddon");
-
     public KZEAddon() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::complete);
     }
 
     private void complete(FMLLoadCompleteEvent event) {
-        //config = new CustomConfig();
+        CustomConfig config = new CustomConfig();
+        MinecraftForge.EVENT_BUS.register(new DeleteMessageService(config));
         MinecraftForge.EVENT_BUS.register(new HidePlayerService());
-        //ClientRegistry.registerKeyBinding(settingKey);
+        MinecraftForge.EVENT_BUS.register(new OpenScreenService(config));
     }
 }

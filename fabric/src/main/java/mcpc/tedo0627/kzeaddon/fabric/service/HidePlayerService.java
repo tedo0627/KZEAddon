@@ -1,4 +1,4 @@
-package mcpc.tedo0627.kzeaddon.fabric;
+package mcpc.tedo0627.kzeaddon.fabric.service;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.impl.client.keybinding.KeyBindingRegistryImpl;

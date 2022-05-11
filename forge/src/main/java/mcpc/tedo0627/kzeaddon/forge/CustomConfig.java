@@ -7,7 +7,7 @@ import java.io.File;
 
 public class CustomConfig {
 
-    private CommentedFileConfig config;
+    private final CommentedFileConfig config;
 
     public CustomConfig() {
         config = CommentedFileConfig.builder(new File("config/KZEAddon.toml"))
@@ -19,12 +19,20 @@ public class CustomConfig {
         config.load();
     }
 
-    public boolean isHideJoinMessage() {
-        return config.getOrElse("hideJoinMessage", false);
+    public boolean isDeleteJoinMessage() {
+        return config.getOrElse("message.deleteJoin", false);
     }
 
-    public void setHideJoinMessage(boolean bool) {
-        config.set("hideJoinMessage", bool);
+    public void setDeleteJoinMessage(boolean bool) {
+        config.set("message.deleteJoin", bool);
+    }
+
+    public boolean isDeleteQuitMessage() {
+        return config.getOrElse("message.deleteQuit", false);
+    }
+
+    public void setDeleteQuitMessage(boolean bool) {
+        config.set("message.deleteQuit", bool);
     }
 
     public boolean isHidePlayer() {
@@ -33,5 +41,9 @@ public class CustomConfig {
 
     public void setHidePlayer(boolean bool) {
         config.set("hidePlayer", bool);
+    }
+
+    public void save() {
+        config.save();
     }
 }

@@ -1,6 +1,6 @@
 package mcpc.tedo0627.kzeaddon.fabric.mixin;
 
-import mcpc.tedo0627.kzeaddon.fabric.HidePlayerService;
+import mcpc.tedo0627.kzeaddon.fabric.service.HidePlayerService;
 import net.minecraft.entity.Entity;
 import net.minecraft.scoreboard.AbstractTeam;
 import org.jetbrains.annotations.NotNull;

@@ -4,8 +4,9 @@
   "package": "mcpc.tedo0627.kzeaddon.fabric.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "MixinEntity",
-    "MixinClientWorld"
+    "MixinClientPlayNetworkHandler",
+    "MixinClientWorld",
+    "MixinEntity"
   ],
   "client": [
   ],

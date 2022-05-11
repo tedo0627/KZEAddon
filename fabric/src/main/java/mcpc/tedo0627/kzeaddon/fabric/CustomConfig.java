@@ -12,12 +12,14 @@ public class CustomConfig {
 
     public boolean deleteJoinMessage = false;
     public boolean deleteQuitMessage = false;
+    public boolean disableResourcePackReload = false;
 
     public CustomConfig() {}
 
-    public CustomConfig(boolean deleteJoinMessage, boolean deleteQuitMessage) {
+    public CustomConfig(boolean deleteJoinMessage, boolean deleteQuitMessage, boolean disableResourcePackReload) {
         this.deleteJoinMessage = deleteJoinMessage;
         this.deleteQuitMessage = deleteQuitMessage;
+        this.disableResourcePackReload = disableResourcePackReload;
     }
 
     public static CustomConfig load() {
@@ -51,6 +53,14 @@ public class CustomConfig {
 
     public void setDeleteQuitMessage(boolean bool) {
         deleteQuitMessage = bool;
+    }
+
+    public boolean isDisableResourcePackReload() {
+        return disableResourcePackReload;
+    }
+
+    public void setDisableResourcePackReload(boolean bool) {
+        disableResourcePackReload = bool;
     }
 
     public void save() {

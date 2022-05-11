@@ -35,6 +35,14 @@ public class CustomConfig {
         config.set("message.deleteQuit", bool);
     }
 
+    public boolean isDisableResourcePackReload() {
+        return config.getOrElse("disableResourcePackReload", false);
+    }
+
+    public void setDisableResourcePackReload(boolean bool) {
+        config.set("disableResourcePackReload", bool);
+    }
+
     public boolean isHidePlayer() {
         return config.getOrElse("hidePlayer", false);
     }

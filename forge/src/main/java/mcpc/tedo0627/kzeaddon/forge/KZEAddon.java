@@ -13,12 +13,14 @@ public class KZEAddon {
 
     public static final String MOD_ID = "kzeaddon";
 
+    public static CustomConfig config;
+
     public KZEAddon() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::complete);
     }
 
     private void complete(FMLLoadCompleteEvent event) {
-        CustomConfig config = new CustomConfig();
+        config = new CustomConfig();
         MinecraftForge.EVENT_BUS.register(new DeleteMessageService(config));
         MinecraftForge.EVENT_BUS.register(new HidePlayerService());
         MinecraftForge.EVENT_BUS.register(new OpenScreenService(config));

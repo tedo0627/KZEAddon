@@ -22,14 +22,28 @@ public class SettingScreen extends Screen {
             Minecraft mc = minecraft;
             if (mc != null) mc.setScreen(new MessageSettingScreen(config, this));
         }));
+        addRenderableWidget(new Button(width / 10 + 120, height / 5 + 30, 150, 20, getButtonText("リソパの再読み込みの無効化", config.isDisableResourcePackReload()), (button) -> {
+            config.setDisableResourcePackReload(!config.isDisableResourcePackReload());
+            button.setMessage(getButtonText("リソパの再読み込みの無効化", config.isDisableResourcePackReload()));
+        }));
         addRenderableWidget(new Button(width / 2 - 20, height / 5 + 200, 40, 20, Component.nullToEmpty("閉じる"), (button) -> {
             onClose();
         }));
+    }
+
+    private Component getButtonText(String text, boolean bool) {
+        return Component.nullToEmpty(text + ": " + (bool ? "オン" : "オフ"));
     }
 
     @Override
     public void render(PoseStack poseStack, int int1, int int2, float int3) {
         renderBackground(poseStack);
         super.render(poseStack, int1, int2, int3);
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        config.save();
     }
 }

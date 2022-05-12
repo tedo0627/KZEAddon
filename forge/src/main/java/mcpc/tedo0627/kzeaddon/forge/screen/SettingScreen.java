@@ -18,13 +18,20 @@ public class SettingScreen extends Screen {
 
     @Override
     public void init() {
+        Minecraft mc = minecraft;
+        if (mc == null) return;
+
         addRenderableWidget(new Button(width / 10 + 120, height / 5, 150, 20, Component.nullToEmpty("メッセージの設定"), (button) -> {
-            Minecraft mc = minecraft;
-            if (mc != null) mc.setScreen(new MessageSettingScreen(config, this));
+            mc.setScreen(new MessageSettingScreen(config, this));
         }));
         addRenderableWidget(new Button(width / 10 + 120, height / 5 + 30, 150, 20, getButtonText("リソパの再読み込みの無効化", config.isDisableResourcePackReload()), (button) -> {
             config.setDisableResourcePackReload(!config.isDisableResourcePackReload());
             button.setMessage(getButtonText("リソパの再読み込みの無効化", config.isDisableResourcePackReload()));
+        }));
+        addRenderableWidget(new Button(width / 10 + 120, height / 5 + 60, 150, 20, getButtonText("明るさを最大にする", mc.options.gamma >= 10000), (button) -> {
+            mc.options.gamma = mc.options.gamma >= 10000 ? 1.0 : 10000;
+            mc.options.save();
+            button.setMessage(getButtonText("明るさを最大にする", mc.options.gamma >= 10000));
         }));
         addRenderableWidget(new Button(width / 2 - 20, height / 5 + 200, 40, 20, Component.nullToEmpty("閉じる"), (button) -> {
             onClose();

@@ -1,11 +1,13 @@
 {
   "schemaVersion": 1,
   "id": "kzeaddon-fabric",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "name": "KZEAddon",
   "description": "This mod helps you play with a KaedeZombieEscape server.",
   "authors": [ "tedo0627" ],
   "contact": {
+    "homepage": "https://github.com/tedo0627/KZEAddon",
+    "issues": "https://github.com/tedo0627/KZEAddon/issues",
     "sources": "https://github.com/tedo0627/KZEAddon"
   },
   "license": "MIT License",
@@ -19,9 +21,9 @@
     "kzeaddon.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11.3",
-    "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
+    "fabricloader": ">=0.14",
+    "fabric-api": "*",
+    "minecraft": ">=1.19.4",
+    "java": ">=17"
   }
 }

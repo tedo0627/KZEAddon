@@ -24,6 +24,7 @@ object CustomConfig {
 
             val reader = FileReader(file)
             json = Gson().fromJson(reader, JsonObject::class.java)
+            reader.close()
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
@@ -36,7 +37,12 @@ object CustomConfig {
 
     fun <T : Enum<T>> getEnum(key: String, default: Enum<T>): Enum<T> {
         val obj = json.getAsJsonPrimitive(key) ?: return default
-        return default::class.java.enumConstants[obj.asInt]
+        val ordinal = obj.asInt
+
+        val enums = default::class.java.enumConstants
+        if (enums.size <= ordinal) return default
+
+        return enums[ordinal]
     }
 
     fun setEnum(key: String, value: Enum<*>) {

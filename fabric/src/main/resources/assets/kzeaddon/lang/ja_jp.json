@@ -1,5 +1,9 @@
 {
   "option.modmenu.hidePlayerToggle": "透明にするキー",
   "option.modmenu.hidePlayerToggle.click": "切り替え",
-  "option.modmenu.hidePlayerToggle.pressing": "長押し"
+  "option.modmenu.hidePlayerToggle.pressing": "長押し",
+
+  "option.modmenu.gammaMax": "明るさを最大にする",
+  "option.modmenu.gammaMax.true": "有効",
+  "option.modmenu.gammaMax.false": "無効"
 }

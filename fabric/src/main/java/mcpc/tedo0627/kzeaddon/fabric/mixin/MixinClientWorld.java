@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ClientWorld.class)
-public abstract class MixinClientWorld {
+public class MixinClientWorld {
 
-    @Inject(at = @At("HEAD"), method = "getEntities()Ljava/lang/Iterable;", cancellable = true)
+    @Inject(method = "getEntities()Ljava/lang/Iterable;", at = @At("HEAD"), cancellable = true)
     private void getEntities(CallbackInfoReturnable<Iterable<Entity>> cir) {
         List<Entity> list = new ArrayList<>();
         for (Entity entity : getEntityLookup().iterate()) list.add(entity);

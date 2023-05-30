@@ -16,7 +16,7 @@ import java.util.UUID;
 @Mixin(Entity.class)
 public class MixinEntity {
 
-    @Inject(at = @At("HEAD"), method = "isInvisible()Z", cancellable = true)
+    @Inject(method = "isInvisible()Z", at = @At("HEAD"), cancellable = true)
     private void isInvisible(@NotNull CallbackInfoReturnable<Boolean> cir) {
         boolean invisibleFlag = this.getFlag(5);
         cir.setReturnValue(HidePlayerService.isInvisible(getUuid(), getScoreboardTeam(), invisibleFlag));

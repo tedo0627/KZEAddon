@@ -6,7 +6,8 @@
     "MixinEntity"
   ],
   "client": [
-    "MixinClientWorld"
+    "MixinClientWorld",
+    "MixinLightmapTextureManager"
   ],
   "injectors": {
     "defaultRequire": 1

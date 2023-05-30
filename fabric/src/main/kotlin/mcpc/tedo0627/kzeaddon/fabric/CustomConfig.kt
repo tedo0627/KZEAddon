@@ -35,6 +35,10 @@ object CustomConfig {
         return json.getAsJsonPrimitive(key)?.asString ?: default
     }
 
+    fun getBoolean(key: String, default: Boolean): Boolean {
+        return json.getAsJsonPrimitive(key)?.asBoolean ?: default
+    }
+
     fun <T : Enum<T>> getEnum(key: String, default: Enum<T>): Enum<T> {
         val obj = json.getAsJsonPrimitive(key) ?: return default
         val ordinal = obj.asInt
@@ -45,7 +49,19 @@ object CustomConfig {
         return enums[ordinal]
     }
 
-    fun setEnum(key: String, value: Enum<*>) {
+    fun set(key: String, value: Boolean) {
+        json.add(key, JsonPrimitive(value))
+    }
+
+    fun set(key: String, value: Number) {
+        json.add(key, JsonPrimitive(value))
+    }
+
+    fun set(key: String, value: String) {
+        json.add(key, JsonPrimitive(value))
+    }
+
+    fun set(key: String, value: Enum<*>) {
         json.add(key, JsonPrimitive(value.ordinal))
     }
 

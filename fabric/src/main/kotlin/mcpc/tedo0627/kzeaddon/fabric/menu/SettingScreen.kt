@@ -1,7 +1,5 @@
 package mcpc.tedo0627.kzeaddon.fabric.menu
 
-import com.terraformersmc.modmenu.config.option.EnumConfigOption
-import mcpc.tedo0627.kzeaddon.fabric.CustomConfig
 import mcpc.tedo0627.kzeaddon.fabric.Options
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawableHelper
@@ -21,22 +19,9 @@ class SettingScreen(private val previous: Screen) : GameOptionsScreen(
 
     private lateinit var widget: OptionListWidget
 
-    private val options = Options.values
-
     override fun init() {
-        val simpleOptionList = options.map {
-            when (it) {
-                is EnumConfigOption<*> -> {
-                    val option = it.asOption()
-                    option.value = CustomConfig.getEnum(it.key, it.defaultValue)
-                    option
-                }
-                else -> throw IllegalStateException()
-            }
-        }
-
         widget = OptionListWidget(client, width, height, 32, height - 32, 25)
-        widget.addAll(simpleOptionList.toTypedArray())
+        widget.addAll(Options.toSimpleOptions())
         addSelectableChild(widget)
 
         addDrawableChild(ButtonWidget.Builder(ScreenTexts.DONE) {
@@ -56,13 +41,6 @@ class SettingScreen(private val previous: Screen) : GameOptionsScreen(
     }
 
     override fun removed() {
-        options.forEach {
-            when (it) {
-                is EnumConfigOption<*> -> CustomConfig.setEnum(it.key, it.value)
-                else -> throw IllegalStateException()
-            }
-        }
-
-        CustomConfig.save()
+        Options.save()
     }
 }

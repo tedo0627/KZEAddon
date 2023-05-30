@@ -6,7 +6,6 @@ plugins {
 }
 
 base { archivesName.set("kzeaddon-fabric") }
-version = "3.0.0"
 group = "mcpc.tedo0627.kzeaddon"
 
 repositories {

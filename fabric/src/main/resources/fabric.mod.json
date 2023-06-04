@@ -17,7 +17,7 @@
       "mcpc.tedo0627.kzeaddon.fabric.KZEAddon"
     ],
     "modmenu": [
-      "mcpc.tedo0627.kzeaddon.fabric.menu.KZEAddonModMenuIntegration"
+      "mcpc.tedo0627.kzeaddon.fabric.KZEAddonModMenuIntegration"
     ]
   },
   "mixins": [

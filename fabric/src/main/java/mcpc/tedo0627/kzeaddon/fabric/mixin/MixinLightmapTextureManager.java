@@ -1,6 +1,6 @@
 package mcpc.tedo0627.kzeaddon.fabric.mixin;
 
-import mcpc.tedo0627.kzeaddon.fabric.Options;
+import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions;
 import net.minecraft.client.render.LightmapTextureManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +11,7 @@ public class MixinLightmapTextureManager {
 
     @ModifyArg(method = "update", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", ordinal = 2), index = 1)
     private float update(float f) {
-        if (Options.INSTANCE.getGamma().getValue()) {
+        if (AddonOptions.INSTANCE.getGamma().getValue()) {
             return 10000f;
         }
         return f;

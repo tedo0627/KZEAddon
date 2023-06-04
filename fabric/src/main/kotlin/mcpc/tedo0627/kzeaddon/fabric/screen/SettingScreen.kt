@@ -15,7 +15,7 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Text.literal(
 
     override fun init() {
         widget = OptionListWidget(client ?: return, width, height, 32, height - 32, 25)
-        widget.addAll(AddonOptions.options)
+        widget.addAll(AddonOptions.getOptions())
         addSelectableChild(widget)
 
         addDrawableChild(ButtonWidget.Builder(ScreenTexts.DONE) {

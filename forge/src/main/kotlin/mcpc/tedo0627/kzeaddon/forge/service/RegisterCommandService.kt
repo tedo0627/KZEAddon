@@ -13,13 +13,11 @@ class RegisterCommandService {
 
     @SubscribeEvent
     fun onRegisterClientCommands(event: RegisterClientCommandsEvent) {
-        val builder = Commands.literal("kzeaddon")
+        event.dispatcher.register(Commands.literal("kzeaddon")
             .executes { _: CommandContext<CommandSourceStack> ->
                 Minecraft.getInstance().setScreen(SettingScreen())
                 Command.SINGLE_SUCCESS
             }
-        event.dispatcher.register(builder)
-
-        Minecraft.getInstance().level
+        )
     }
 }

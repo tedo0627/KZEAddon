@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.UUID;
 
 @Mixin(Entity.class)
-public class MixinEntity {
+public abstract class MixinEntity {
 
     @Inject(method = "isInvisible()Z", at = @At("HEAD"), cancellable = true)
     private void isInvisible(@NotNull CallbackInfoReturnable<Boolean> cir) {
@@ -23,18 +23,12 @@ public class MixinEntity {
     }
 
     @Shadow
-    protected boolean getFlag(int index) {
-        throw new IllegalStateException("Mixin failed to shadow getFlag()");
-    }
+    protected abstract boolean getFlag(int index);
 
     @Shadow
     @Nullable
-    public AbstractTeam getScoreboardTeam() {
-        throw new IllegalStateException("Mixin failed to shadow getScoreboardTeam()");
-    }
+    public abstract AbstractTeam getScoreboardTeam();
 
     @Shadow
-    public UUID getUuid() {
-        throw new IllegalStateException("Mixin failed to shadow getUuid()");
-    }
+    public abstract UUID getUuid();
 }

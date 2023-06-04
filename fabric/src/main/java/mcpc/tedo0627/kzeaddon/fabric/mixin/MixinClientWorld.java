@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ClientWorld.class)
-public class MixinClientWorld {
+public abstract class MixinClientWorld {
 
     @Inject(method = "getEntities()Ljava/lang/Iterable;", at = @At("HEAD"), cancellable = true)
     private void getEntities(CallbackInfoReturnable<Iterable<Entity>> cir) {
@@ -34,7 +34,5 @@ public class MixinClientWorld {
     }
 
     @Shadow
-    protected EntityLookup<Entity> getEntityLookup() {
-        throw new IllegalStateException("Mixin failed to shadow getEntityLookup()");
-    }
+    protected abstract EntityLookup<Entity> getEntityLookup();
 }

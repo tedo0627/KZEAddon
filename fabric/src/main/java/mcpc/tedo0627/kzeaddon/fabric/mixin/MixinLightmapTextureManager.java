@@ -7,11 +7,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(LightmapTextureManager.class)
-public class MixinLightmapTextureManager {
+public abstract class MixinLightmapTextureManager {
 
     @ModifyArg(method = "update", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", ordinal = 2), index = 1)
     private float update(float f) {
-        if (AddonOptions.INSTANCE.getGamma().getValue()) {
+        if (AddonOptions.gamma.getValue()) {
             return 10000f;
         }
         return f;

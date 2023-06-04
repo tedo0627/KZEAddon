@@ -6,7 +6,7 @@ plugins {
 }
 
 base { archivesName.set("kzeaddon-fabric") }
-group = "mcpc.tedo0627.kzeaddon"
+group = "mcpc.tedo0627.kzeaddon.fabric"
 
 repositories {
     maven { url = uri("https://maven.terraformersmc.com/releases/") }
@@ -30,9 +30,9 @@ tasks {
         targetCompatibility = javaVersion.toString()
         options.release.set(javaVersion.toString().toInt())
     }
-    withType<KotlinCompile> { kotlinOptions { jvmTarget = javaVersion.toString() } }
+    withType<KotlinCompile> { kotlinOptions.jvmTarget = javaVersion.toString() }
     java {
-        toolchain { languageVersion.set(JavaLanguageVersion.of(javaVersion.toString())) }
+        toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion.toString()))
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
         withSourcesJar()

@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ClientLevel.class)
-public class MixinClientLevel {
+public abstract class MixinClientLevel {
 
-    @Inject(at = @At("HEAD"), method = "entitiesForRendering", cancellable = true)
-    private void entitiesForRendering(CallbackInfoReturnable<Iterable<Entity>> cir) {
+    @Inject(method = "entitiesForRendering", at = @At("HEAD"), cancellable = true)
+    private void getEntities(CallbackInfoReturnable<Iterable<Entity>> cir) {
         List<Entity> list = new ArrayList<>();
         for (Entity entity : getEntities().getAll()) list.add(entity);
 
@@ -34,7 +34,5 @@ public class MixinClientLevel {
     }
 
     @Shadow
-    protected LevelEntityGetter<Entity> getEntities() {
-        throw new IllegalStateException("Mixin failed to shadow getTeam()");
-    }
+    protected abstract LevelEntityGetter<Entity> getEntities();
 }

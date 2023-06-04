@@ -39,3 +39,4 @@ jobs:
           name: kzeaddon
           path: |
             fabric/build/libs/kzeaddon-fabric.jar
+            forge/build/libs/kzeaddon-forge.jar

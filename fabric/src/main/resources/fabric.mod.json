@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "kzeaddon-fabric",
+  "id": "kzeaddon",
   "version": "3.0.0",
   "name": "KZEAddon",
   "description": "KZEのプレイをサポートするmod",

@@ -1,0 +1,9 @@
+{
+  "kzeaddon.key.hidePlayer": "Key to toggle player invisibility",
+
+  "kzeaddon.options.hidePlayerToggle": "Invisible Key Type",
+  "kzeaddon.options.enum.switch": "Switch",
+  "kzeaddon.options.enum.long_press": "Long Press",
+
+  "kzeaddon.options.gamma": "Max Brightness"
+}

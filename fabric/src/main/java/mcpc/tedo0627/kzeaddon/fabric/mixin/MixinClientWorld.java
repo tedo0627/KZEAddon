@@ -4,7 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.world.entity.EntityLookup;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ClientWorld.class)
-public class MixinClientWorld {
+public abstract class MixinClientWorld {
 
-    @Inject(at = @At("HEAD"), method = "getEntities()Ljava/lang/Iterable;", cancellable = true)
+    @Inject(method = "getEntities()Ljava/lang/Iterable;", at = @At("HEAD"), cancellable = true)
     private void getEntities(CallbackInfoReturnable<Iterable<Entity>> cir) {
         List<Entity> list = new ArrayList<>();
         for (Entity entity : getEntityLookup().iterate()) list.add(entity);
@@ -35,7 +34,5 @@ public class MixinClientWorld {
     }
 
     @Shadow
-    protected EntityLookup<Entity> getEntityLookup() {
-        throw new IllegalStateException("Mixin failed to shadow getEntityLookup()");
-    }
+    protected abstract EntityLookup<Entity> getEntityLookup();
 }

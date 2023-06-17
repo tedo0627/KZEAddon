@@ -1,8 +1,13 @@
 pluginManagement {
     repositories {
         maven("https://maven.fabricmc.net/")
+        maven("https://maven.minecraftforge.net")
         mavenCentral()
         gradlePluginPortal()
+    }
+    plugins {
+        id("fabric-loom").version("1.2-SNAPSHOT")
+        kotlin("jvm").version("1.8.21")
     }
 }
 

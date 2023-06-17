@@ -14,6 +14,9 @@ version 1.19.4
  - /kzeaddonで設定を開く
 
 ## インストール
+
+[Click Here](https://github.com/tedo0627/KZEAddon/releases/latest)
+
 ### Forge
 前提mod
  - [Kotlin for Forge](https://www.curseforge.com/minecraft/mc-mods/kotlin-for-forge)

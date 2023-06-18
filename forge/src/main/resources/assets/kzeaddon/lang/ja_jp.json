@@ -5,5 +5,7 @@
   "kzeaddon.options.enum.switch": "切り替え",
   "kzeaddon.options.enum.long_press": "長押し",
 
-  "kzeaddon.options.gamma": "明るさを最大にする"
+  "kzeaddon.options.gamma": "明るさを最大にする",
+
+  "kzeaddon.options.displayBullet": "弾数を表示する"
 }

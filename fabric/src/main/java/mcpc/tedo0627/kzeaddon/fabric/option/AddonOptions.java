@@ -49,8 +49,16 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final SimpleOption<Boolean> displayBullet = SimpleOption.ofBoolean(
+        "kzeaddon.options.displayBullet",
+        SimpleOption.emptyTooltip(),
+        false,
+        (bool) -> {}
+    );
+
     static {
         map.put("hidePlayerToggle", hidePlayerToggle);
         map.put("gamma", gamma);
+        map.put("displayBullet", displayBullet);
     }
 }

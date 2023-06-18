@@ -5,5 +5,7 @@
   "kzeaddon.options.enum.switch": "Switch",
   "kzeaddon.options.enum.long_press": "Long Press",
 
-  "kzeaddon.options.gamma": "Max Brightness"
+  "kzeaddon.options.gamma": "Max Brightness",
+
+  "kzeaddon.options.displayBullet": "Display bullet"
 }

@@ -1,6 +1,7 @@
 package mcpc.tedo0627.kzeaddon.forge
 
 import mcpc.tedo0627.kzeaddon.forge.option.OptionConfig
+import mcpc.tedo0627.kzeaddon.forge.service.DisplayBulletService
 import mcpc.tedo0627.kzeaddon.forge.service.HidePlayerService
 import mcpc.tedo0627.kzeaddon.forge.service.RegisterCommandService
 import net.minecraft.client.KeyMapping
@@ -24,7 +25,10 @@ object KZEAddon {
         val key = KeyMapping("kzeaddon.key.hidePlayer", -1, "KZEAddon")
         event.register(key)
 
-        MinecraftForge.EVENT_BUS.register(HidePlayerService(key))
-        MinecraftForge.EVENT_BUS.register(RegisterCommandService())
+        mutableListOf(
+            DisplayBulletService(),
+            HidePlayerService(key),
+            RegisterCommandService()
+        ).forEach { MinecraftForge.EVENT_BUS.register(it) }
     }
 }

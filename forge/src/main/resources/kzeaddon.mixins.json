@@ -2,6 +2,7 @@
   "required": true,
   "package": "mcpc.tedo0627.kzeaddon.forge.mixin",
   "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.kzeaddon.refmap.json",
   "mixins": [
     "MixinEntity"
   ],

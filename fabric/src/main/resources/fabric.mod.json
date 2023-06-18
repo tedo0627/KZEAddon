@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "kzeaddon",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "name": "KZEAddon",
   "description": "KZEのプレイをサポートするmod",
   "authors": [ "tedo0627" ],

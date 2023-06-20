@@ -1,14 +1,20 @@
 {
-  "kzeaddon.key.hidePlayer": "Key to toggle player invisibility",
+  "kzeaddon.key.hidePlayer": "プレイヤーの透明化を切り替えるキー",
 
-  "kzeaddon.options.hidePlayerToggle": "Invisible Key Type",
-  "kzeaddon.options.hideToggleType.switch": "Switch",
-  "kzeaddon.options.hideToggleType.long_press": "Long Press",
+  "kzeaddon.options.hidePlayerToggle": "透明にするキー",
+  "kzeaddon.options.hideToggleType.switch": "切り替え",
+  "kzeaddon.options.hideToggleType.long_press": "長押し",
 
-  "kzeaddon.options.hidePlayerOverlay": "Improved visibility of glasses",
-  "kzeaddon.options.hidePlayerOverlay.tooltip": "When on, you can see water, glass, etc. behind the transparent player.",
+  "kzeaddon.options.hidePlayerOverlay": "水やガラスの視認性向上",
+  "kzeaddon.options.hidePlayerOverlay.tooltip": "オンにすると透明なプレイヤーの奥にある水やガラスなどが見えるようになる",
 
-  "kzeaddon.options.gamma": "Max Brightness",
+  "kzeaddon.options.invisibleType": "透明化の方式",
+  "kzeaddon.options.invisibleType.translucent": "半透明",
+  "kzeaddon.options.invisibleType.invisible": "透明",
+  "kzeaddon.options.invisibleType.toggle": "切り替え",
+  "kzeaddon.options.invisibleType.tooltip": "透明化の方式を変更します\n\n・半透明\nプレイヤーが半透明に見える(デフォルト)\n・透明\nプレイヤーが見えなくなる\n・切り替え\n透明化のキーを押すごとに 半透明->透明->透明じゃない に切り替える(透明にするキーが切り替えの時のみ有効)",
 
-  "kzeaddon.options.displayBullet": "Display bullet"
+  "kzeaddon.options.gamma": "明るさを最大にする",
+
+  "kzeaddon.options.displayBullet": "弾数を表示する"
 }

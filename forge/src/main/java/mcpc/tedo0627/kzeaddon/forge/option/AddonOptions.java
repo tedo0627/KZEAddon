@@ -50,6 +50,32 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final OptionInstance<InvisibleType> invisibleType = new OptionInstance<>(
+        "kzeaddon.options.hidePlayerToggle",
+        OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.invisibleType.tooltip")),
+        OptionInstance.forOptionEnum(),
+        new OptionInstance.Enum<>(
+            List.of(InvisibleType.values()),
+            Codec.either(Codec.BOOL, Codec.STRING).xmap(
+                (either) -> either.map(
+                    (bool) -> bool ? InvisibleType.TRANSLUCENT : InvisibleType.INVISIBLE,
+                    (str) -> switch (str) {
+                        case "false" -> InvisibleType.INVISIBLE;
+                        case "toggle" -> InvisibleType.TOGGLE;
+                        default -> InvisibleType.TRANSLUCENT;
+                    }
+                ),
+                (type) -> Either.right(switch (type) {
+                    case TRANSLUCENT -> "true";
+                    case INVISIBLE -> "false";
+                    case TOGGLE -> "toggle";
+                })
+            )
+        ),
+        InvisibleType.TRANSLUCENT,
+        (type) -> {}
+    );
+
     public static final OptionInstance<Boolean> gamma = OptionInstance.createBoolean(
         "kzeaddon.options.gamma",
         OptionInstance.noTooltip(),
@@ -67,6 +93,7 @@ public class AddonOptions {
     static {
         map.put("hidePlayerToggle", hidePlayerToggle);
         map.put("hidePlayerOverlay", hidePlayerOverlay);
+        map.put("invisibleType", invisibleType);
         map.put("gamma", gamma);
         map.put("displayBullet", displayBullet);
     }

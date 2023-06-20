@@ -2,6 +2,7 @@ package mcpc.tedo0627.kzeaddon.fabric.service
 
 import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions
 import mcpc.tedo0627.kzeaddon.fabric.option.HideToggleType
+import mcpc.tedo0627.kzeaddon.fabric.option.InvisibleType
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.MinecraftClient
@@ -15,6 +16,12 @@ class HidePlayerService {
 
         private var executing = false
 
+        /**
+         * クリックして 半透明 -> 透明 -> 見える を切り替える時のフラグ
+         * 半透明の時 false, 透明の時 true
+         * */
+        private var toggleInvisible = false
+
         @JvmStatic
         fun isInvisible(uuid: UUID, team: AbstractTeam?, invisibleFlag: Boolean): Boolean {
             if (team == null) return invisibleFlag
@@ -25,6 +32,19 @@ class HidePlayerService {
             if (player.scoreboardTeam != team) return invisibleFlag
 
             return executing || invisibleFlag
+        }
+
+        @JvmStatic
+        fun isOverrideIsInvisibleToFunc(): Boolean {
+            if (!executing) return false
+
+            if (AddonOptions.invisibleType.value == InvisibleType.TOGGLE) {
+                if (AddonOptions.hidePlayerToggle.value != HideToggleType.SWITCH) return false
+
+                return toggleInvisible
+            }
+
+            return AddonOptions.invisibleType.value == InvisibleType.INVISIBLE
         }
     }
 
@@ -37,7 +57,18 @@ class HidePlayerService {
             when (AddonOptions.hidePlayerToggle.value) {
                 HideToggleType.SWITCH -> {
                     while (key.wasPressed()) {
-                        executing = !executing
+                        if (AddonOptions.invisibleType.value == InvisibleType.TOGGLE) {
+                            if (executing && !toggleInvisible) { // 半透明の時
+                                toggleInvisible = true
+                            } else if (executing && toggleInvisible) { // 透明の時
+                                executing = false
+                                toggleInvisible = false
+                            } else { // 見える時
+                                executing = true
+                            }
+                        } else {
+                            executing = !executing
+                        }
                     }
                 }
                 HideToggleType.LONG_PRESS -> executing = key.isPressed

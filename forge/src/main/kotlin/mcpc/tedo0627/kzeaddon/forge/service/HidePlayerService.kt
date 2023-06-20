@@ -3,6 +3,7 @@ package mcpc.tedo0627.kzeaddon.forge.service
 import com.mojang.blaze3d.platform.InputConstants
 import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions
 import mcpc.tedo0627.kzeaddon.forge.option.HideToggleType
+import mcpc.tedo0627.kzeaddon.forge.option.InvisibleType
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
 import net.minecraft.world.scores.Team
@@ -16,6 +17,12 @@ class HidePlayerService(private val key: KeyMapping) {
 
         private var executing = false
 
+        /**
+         * クリックして 半透明 -> 透明 -> 見える を切り替える時のフラグ
+         * 半透明の時 false, 透明の時 true
+         * */
+        private var toggleInvisible = false
+
         @JvmStatic
         fun isInvisible(uuid: UUID, team: Team?, invisibleFlag: Boolean): Boolean {
             if (team == null) return invisibleFlag
@@ -26,6 +33,19 @@ class HidePlayerService(private val key: KeyMapping) {
             if (player.team != team) return invisibleFlag
 
             return executing || invisibleFlag
+        }
+
+        @JvmStatic
+        fun isOverrideIsInvisibleToFunc(): Boolean {
+            if (!executing) return false
+
+            if (AddonOptions.invisibleType.get() == InvisibleType.TOGGLE) {
+                if (AddonOptions.hidePlayerToggle.get() != HideToggleType.SWITCH) return false
+
+                return toggleInvisible
+            }
+
+            return AddonOptions.invisibleType.get() == InvisibleType.INVISIBLE
         }
     }
 
@@ -39,7 +59,22 @@ class HidePlayerService(private val key: KeyMapping) {
         if (key != this.key.key.value) return
 
         when (AddonOptions.hidePlayerToggle.get()) {
-            HideToggleType.SWITCH -> if (action == InputConstants.PRESS && this.key.isDown) executing = !executing
+            HideToggleType.SWITCH -> {
+                if (action == InputConstants.PRESS && this.key.isDown) {
+                    if (AddonOptions.invisibleType.get() == InvisibleType.TOGGLE) {
+                        if (executing && !toggleInvisible) { // 半透明の時
+                            toggleInvisible = true
+                        } else if (executing && toggleInvisible) { // 透明の時
+                            executing = false
+                            toggleInvisible = false
+                        } else { // 見える時
+                            executing = true
+                        }
+                    } else {
+                        executing = !executing
+                    }
+                }
+            }
             HideToggleType.LONG_PRESS -> executing = action == InputConstants.REPEAT || this.key.isDown
             else -> {}
         }

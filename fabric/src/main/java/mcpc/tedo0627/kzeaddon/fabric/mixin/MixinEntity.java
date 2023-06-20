@@ -2,6 +2,7 @@ package mcpc.tedo0627.kzeaddon.fabric.mixin;
 
 import mcpc.tedo0627.kzeaddon.fabric.service.HidePlayerService;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.AbstractTeam;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,8 +17,10 @@ import java.util.UUID;
 @Mixin(Entity.class)
 public abstract class MixinEntity {
 
+    @Shadow public abstract boolean isInvisibleTo(PlayerEntity playerEntity);
+
     @Inject(method = "isInvisible()Z", at = @At("HEAD"), cancellable = true)
-    private void isInvisible(@NotNull CallbackInfoReturnable<Boolean> cir) {
+    private void isInvisibleInject(@NotNull CallbackInfoReturnable<Boolean> cir) {
         boolean invisibleFlag = this.getFlag(5);
         cir.setReturnValue(HidePlayerService.isInvisible(getUuid(), getScoreboardTeam(), invisibleFlag));
     }
@@ -31,4 +34,15 @@ public abstract class MixinEntity {
 
     @Shadow
     public abstract UUID getUuid();
+
+    @Inject(method = "isInvisibleTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getScoreboardTeam()Lnet/minecraft/scoreboard/AbstractTeam;"), cancellable = true)
+    private void isInvisibleTo(PlayerEntity playerEntity, CallbackInfoReturnable<Boolean> cir) {
+        if (HidePlayerService.isOverrideIsInvisibleToFunc()) {
+            cir.setReturnValue(isInvisible());
+            cir.cancel();
+        }
+    }
+
+    @Shadow
+    public abstract boolean isInvisible();
 }

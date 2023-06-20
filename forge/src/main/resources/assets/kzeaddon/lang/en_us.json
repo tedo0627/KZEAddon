@@ -5,6 +5,9 @@
   "kzeaddon.options.enum.switch": "Switch",
   "kzeaddon.options.enum.long_press": "Long Press",
 
+  "kzeaddon.options.hidePlayerOverlay": "Improved visibility of glasses",
+  "kzeaddon.options.hidePlayerOverlay.tooltip": "When on, you can see water, glass, etc. behind the transparent player.",
+
   "kzeaddon.options.gamma": "Max Brightness",
 
   "kzeaddon.options.displayBullet": "Display bullet"

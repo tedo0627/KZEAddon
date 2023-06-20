@@ -3,6 +3,7 @@ package mcpc.tedo0627.kzeaddon.forge.option;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import net.minecraft.client.OptionInstance;
+import net.minecraft.network.chat.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +43,13 @@ public class AddonOptions {
         (type) -> {}
     );
 
+    public static final OptionInstance<Boolean> hidePlayerOverlay = OptionInstance.createBoolean(
+        "kzeaddon.options.hidePlayerOverlay",
+        OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.hidePlayerOverlay.tooltip")),
+        false,
+        (bool) -> {}
+    );
+
     public static final OptionInstance<Boolean> gamma = OptionInstance.createBoolean(
         "kzeaddon.options.gamma",
         OptionInstance.noTooltip(),
@@ -58,6 +66,7 @@ public class AddonOptions {
 
     static {
         map.put("hidePlayerToggle", hidePlayerToggle);
+        map.put("hidePlayerOverlay", hidePlayerOverlay);
         map.put("gamma", gamma);
         map.put("displayBullet", displayBullet);
     }

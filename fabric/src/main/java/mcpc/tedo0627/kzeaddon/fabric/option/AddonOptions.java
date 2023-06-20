@@ -3,6 +3,7 @@ package mcpc.tedo0627.kzeaddon.fabric.option;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import net.minecraft.client.option.SimpleOption;
+import net.minecraft.text.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +43,13 @@ public class AddonOptions {
         (type) -> {}
     );
 
+    public static final SimpleOption<Boolean> hidePlayerOverlay = SimpleOption.ofBoolean(
+        "kzeaddon.options.hidePlayerOverlay",
+        SimpleOption.constantTooltip(Text.translatable("kzeaddon.options.hidePlayerOverlay.tooltip")),
+        false,
+        (bool) -> {}
+    );
+
     public static final SimpleOption<Boolean> gamma = SimpleOption.ofBoolean(
         "kzeaddon.options.gamma",
         SimpleOption.emptyTooltip(),
@@ -58,6 +66,7 @@ public class AddonOptions {
 
     static {
         map.put("hidePlayerToggle", hidePlayerToggle);
+        map.put("hidePlayerOverlay", hidePlayerOverlay);
         map.put("gamma", gamma);
         map.put("displayBullet", displayBullet);
     }

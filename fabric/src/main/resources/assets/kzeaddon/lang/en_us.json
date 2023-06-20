@@ -2,8 +2,8 @@
   "kzeaddon.key.hidePlayer": "Key to toggle player invisibility",
 
   "kzeaddon.options.hidePlayerToggle": "Invisible Key Type",
-  "kzeaddon.options.enum.switch": "Switch",
-  "kzeaddon.options.enum.long_press": "Long Press",
+  "kzeaddon.options.hideToggleType.switch": "Switch",
+  "kzeaddon.options.hideToggleType.long_press": "Long Press",
 
   "kzeaddon.options.hidePlayerOverlay": "Improved visibility of glasses",
   "kzeaddon.options.hidePlayerOverlay.tooltip": "When on, you can see water, glass, etc. behind the transparent player.",

@@ -17,8 +17,6 @@ import java.util.UUID;
 @Mixin(Entity.class)
 public abstract class MixinEntity {
 
-    @Shadow public abstract boolean isInvisibleTo(PlayerEntity playerEntity);
-
     @Inject(method = "isInvisible()Z", at = @At("HEAD"), cancellable = true)
     private void isInvisibleInject(@NotNull CallbackInfoReturnable<Boolean> cir) {
         boolean invisibleFlag = this.getFlag(5);

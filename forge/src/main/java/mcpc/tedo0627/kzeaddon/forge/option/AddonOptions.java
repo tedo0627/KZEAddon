@@ -1,25 +1,25 @@
 package mcpc.tedo0627.kzeaddon.forge.option;
 
 import com.mojang.datafixers.util.Either;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.network.chat.Component;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 // OptionInstanceの作成がなぜかKotlinで動かない
 public class AddonOptions {
 
-    private static final HashMap<String, OptionInstance<?>> map = new HashMap<>();
+    private static final ArrayList<Pair<String, OptionInstance<?>>> list = new ArrayList<>();
 
     public static OptionInstance<?>[] getOptions() {
-        return map.values().toArray(new OptionInstance[0]);
+        return list.stream().map(Pair::getSecond).toList().toArray(new OptionInstance[0]);
     }
 
-    public static Map<String, OptionInstance<?>> getOptionsMap() {
-        return map;
+    public static List<Pair<String, OptionInstance<?>>> getOptionsList() {
+        return list;
     }
 
     public static final OptionInstance<HideToggleType> hidePlayerToggle = new OptionInstance<>(
@@ -91,10 +91,10 @@ public class AddonOptions {
     );
 
     static {
-        map.put("hidePlayerToggle", hidePlayerToggle);
-        map.put("hidePlayerOverlay", hidePlayerOverlay);
-        map.put("invisibleType", invisibleType);
-        map.put("gamma", gamma);
-        map.put("displayBullet", displayBullet);
+        list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
+        list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
+        list.add(new Pair<>("invisibleType", invisibleType));
+        list.add(new Pair<>("gamma", gamma));
+        list.add(new Pair<>("displayBullet", displayBullet));
     }
 }

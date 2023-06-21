@@ -25,7 +25,7 @@ object OptionConfig {
             val json = Gson().fromJson(reader, JsonObject::class.java)
             reader.close()
 
-            AddonOptions.getOptionsMap().forEach { load(json, it.key, it.value) }
+            AddonOptions.getOptionsList().forEach { load(json, it.first, it.second) }
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
@@ -40,7 +40,7 @@ object OptionConfig {
     fun save() {
         try {
             val json = JsonObject()
-            AddonOptions.getOptionsMap().forEach { save(json, it.key, it.value) }
+            AddonOptions.getOptionsList().forEach { save(json, it.first, it.second) }
 
             val file = File("config", "KZEAddon.json")
             val writer = JsonWriter(FileWriter(file))

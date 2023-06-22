@@ -1,5 +1,6 @@
 package mcpc.tedo0627.kzeaddon.forge.mixin;
 
+import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions;
 import mcpc.tedo0627.kzeaddon.forge.service.KillLogService;
 import net.minecraft.client.multiplayer.chat.ChatListener;
 import net.minecraft.network.chat.Component;
@@ -13,6 +14,6 @@ public abstract class MixinChatListener {
 
     @Inject(method = "handleSystemMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/ChatComponent;addMessage(Lnet/minecraft/network/chat/Component;)V"), cancellable = true)
     private void handleSystemMessage(Component p_240522_, boolean p_240642_, CallbackInfo ci) {
-        if (!KillLogService.receiveChat(p_240522_)) ci.cancel();
+        if (!KillLogService.receiveChat(p_240522_) && AddonOptions.removeChatKillLog.get()) ci.cancel();
     }
 }

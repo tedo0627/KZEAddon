@@ -97,6 +97,13 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final SimpleOption<Boolean> removeChatKillLog = SimpleOption.ofBoolean(
+        "kzeaddon.options.removeChatKillLog",
+        SimpleOption.constantTooltip(Text.translatable("kzeaddon.options.removeChatKillLog.tooltip")),
+        false,
+        (bool) -> {}
+    );
+
     static {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
         list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
@@ -104,5 +111,6 @@ public class AddonOptions {
         list.add(new Pair<>("gamma", gamma));
         list.add(new Pair<>("displayBullet", displayBullet));
         list.add(new Pair<>("displayKillLog", displayKillLog));
+        list.add(new Pair<>("removeChatKillLog", removeChatKillLog));
     }
 }

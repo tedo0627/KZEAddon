@@ -1,5 +1,6 @@
 package mcpc.tedo0627.kzeaddon.fabric.mixin;
 
+import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions;
 import mcpc.tedo0627.kzeaddon.fabric.service.KillLogService;
 import net.minecraft.client.network.message.MessageHandler;
 import net.minecraft.text.Text;
@@ -13,6 +14,6 @@ public abstract class MixinMessageHandler {
 
     @Inject(method = "onGameMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/ChatHud;addMessage(Lnet/minecraft/text/Text;)V"), cancellable = true)
     private void onGameMessage(Text text, boolean bl, CallbackInfo ci) {
-        if (!KillLogService.receiveChat(text)) ci.cancel();
+        if (!KillLogService.receiveChat(text) && AddonOptions.removeChatKillLog.getValue()) ci.cancel();
     }
 }

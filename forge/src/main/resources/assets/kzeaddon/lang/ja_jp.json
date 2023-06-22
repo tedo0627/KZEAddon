@@ -18,5 +18,8 @@
 
   "kzeaddon.options.displayBullet": "弾数を表示する",
 
-  "kzeaddon.options.displayKillLog": "キルログを右上に表示する"
+  "kzeaddon.options.displayKillLog": "キルログを右上に表示する",
+
+  "kzeaddon.options.removeChatKillLog": "チャットのキルログを削除",
+  "kzeaddon.options.removeChatKillLog.tooltip": "キルログを右上に表示させた際にチャットに表示されるキルログを削除する"
 }

@@ -4,12 +4,15 @@ import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions
 import net.minecraft.client.Minecraft
 import net.minecraft.world.item.Items
 import net.minecraftforge.client.event.RenderGuiOverlayEvent
+import net.minecraftforge.client.gui.overlay.GuiOverlayManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
 
 class DisplayBulletService {
 
     @SubscribeEvent
     fun onRenderGuiOverlayEvent(event: RenderGuiOverlayEvent.Pre) {
+        if (GuiOverlayManager.getOverlays()[0] != event.overlay) return
+
         val mc = Minecraft.getInstance()
         val player = mc.player ?: return
 

@@ -3,6 +3,7 @@ package mcpc.tedo0627.kzeaddon.forge
 import mcpc.tedo0627.kzeaddon.forge.option.OptionConfig
 import mcpc.tedo0627.kzeaddon.forge.service.DisplayBulletService
 import mcpc.tedo0627.kzeaddon.forge.service.HidePlayerService
+import mcpc.tedo0627.kzeaddon.forge.service.KillLogService
 import mcpc.tedo0627.kzeaddon.forge.service.RegisterCommandService
 import net.minecraft.client.KeyMapping
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent
@@ -28,6 +29,7 @@ object KZEAddon {
         mutableListOf(
             DisplayBulletService(),
             HidePlayerService(key),
+            KillLogService(),
             RegisterCommandService()
         ).forEach { MinecraftForge.EVENT_BUS.register(it) }
     }

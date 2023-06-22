@@ -8,7 +8,8 @@
   "client": [
     "MixinClientWorld",
     "MixinLightmapTextureManager",
-    "MixinLivingEntityRenderer"
+    "MixinLivingEntityRenderer",
+    "MixinMessageHandler"
   ],
   "injectors": {
     "defaultRequire": 1

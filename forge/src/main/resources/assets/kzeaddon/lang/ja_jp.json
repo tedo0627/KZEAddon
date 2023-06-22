@@ -16,5 +16,7 @@
 
   "kzeaddon.options.gamma": "明るさを最大にする",
 
-  "kzeaddon.options.displayBullet": "弾数を表示する"
+  "kzeaddon.options.displayBullet": "弾数を表示する",
+
+  "kzeaddon.options.displayKillLog": "キルログを右上に表示する"
 }

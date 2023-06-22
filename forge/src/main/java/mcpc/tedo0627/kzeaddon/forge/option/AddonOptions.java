@@ -90,11 +90,19 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final OptionInstance<Boolean> displayKillLog = OptionInstance.createBoolean(
+        "kzeaddon.options.displayKillLog",
+        OptionInstance.noTooltip(),
+        false,
+        (bool) -> {}
+    );
+
     static {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
         list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
         list.add(new Pair<>("invisibleType", invisibleType));
         list.add(new Pair<>("gamma", gamma));
         list.add(new Pair<>("displayBullet", displayBullet));
+        list.add(new Pair<>("displayKillLog", displayKillLog));
     }
 }

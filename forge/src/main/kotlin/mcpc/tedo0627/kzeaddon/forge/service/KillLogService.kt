@@ -117,7 +117,7 @@ class KillLogService {
         }
 
         val nameLength = renderer.width("a".repeat(16))
-        val weaponLength = renderer.width("a".repeat(5))
+        val weaponLength = renderer.width("a".repeat(6))
         val height = 5 + step * (renderer.lineHeight + 2)
 
         val backColor = if (killLog.firstBlood) 1688862720 else client.options.getBackgroundColor(Integer.MIN_VALUE)

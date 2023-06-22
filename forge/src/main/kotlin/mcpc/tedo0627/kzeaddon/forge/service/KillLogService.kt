@@ -5,7 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiComponent
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

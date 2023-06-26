@@ -1,6 +1,7 @@
 package mcpc.tedo0627.kzeaddon.fabric.service
 
 import com.mojang.blaze3d.systems.RenderSystem
+import mcpc.tedo0627.kzeaddon.fabric.event.ChatReceiveCallback
 import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
@@ -9,71 +10,41 @@ import net.minecraft.client.gui.hud.InGameHud
 import net.minecraft.client.texture.NativeImage
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.resource.Resource
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import org.apache.logging.log4j.LogManager
 
 class KillLogService {
 
-    companion object {
+    private val regex = Regex("""》(FirstBlood! |)(.*) killed by (.*) \(([A-Za-z0-9_-]+) ?\)""")
 
-        private val list = mutableListOf<KillLog>()
-
-        @JvmStatic
-        fun receiveChat(text: Text): Boolean {
-            if (!AddonOptions.displayKillLog.value) return true
-
-            val split = text.string.split(" ")
-            when (split.size) {
-                5 -> { // 》target killed by killer (infected)
-                    if (split[1] != "killed" || split[2] != "by") return true
-
-                    val target = split[0]
-                    if (target[0] != '》') return true
-
-                    val weapon = split[4].removePrefix("(").removeSuffix(")").replace("-", "").lowercase()
-                    list.add(KillLog(target.removePrefix("》"), split[3], weapon))
-                }
-                6 -> {
-                    if (split[0] == "》FirstBlood!") { // 》FirstBlood! target killed by killer (infected)
-                        if (split[2] != "killed" || split[3] != "by") return true
-
-                        val target = split[1]
-
-                        val weapon = split[5].removePrefix("(").removeSuffix(")").replace("-", "").lowercase()
-                        list.add(KillLog(target, split[4], weapon, true))
-                    } else if (split[1] == "killed") { // 》target killed by killer (PSG-1 )
-                        if (split[2] != "by" || split[5] != ")") return true
-
-                        val target = split[0]
-                        if (target[0] != '》') return true
-
-                        val weapon = split[4].removePrefix("(").replace("-", "").lowercase()
-                        list.add(KillLog(target.removePrefix("》"), split[3], weapon))
-                    } else {
-                        return true
-                    }
-                }
-                7 -> { // 》FirstBlood! target killed by killer (PSG-1 )
-                    if (split[0] != "》FirstBlood!" || split[2] != "killed" || split[3] != "by" || split[6] != ")") return true
-
-                    val target = split[1]
-
-                    val weapon = split[5].removePrefix("(").replace("-", "").lowercase()
-                    list.add(KillLog(target.removePrefix("》"), split[4], weapon, true))
-                }
-                else -> return true
-            }
-
-            if (10 < list.size) list.removeAt(0)
-
-            return false
-        }
-    }
+    private val list = mutableListOf<KillLog>()
 
     private val textureSize = mutableMapOf<Identifier, Pair<Int, Int>>()
 
+    /**
+     * Samples
+     * 》target killed by killer (infected)
+     * 》FirstBlood! target killed by killer (infected)
+     * 》target killed by killer (PSG-1 )
+     * 》FirstBlood! target killed by killer (PSG-1 )
+     */
     init {
+        ChatReceiveCallback.EVENT.register(ChatReceiveCallback.FIRST) { text ->
+            if (!AddonOptions.displayKillLog.value) return@register true
+
+            val result = regex.matchEntire(text.string) ?: return@register true
+
+            val group = result.groupValues.toMutableList()
+            group.removeAt(0)
+
+            val weapon = group[3].replace("-", "").lowercase()
+            list.add(KillLog(group[1], group[2], weapon, group[0].isNotEmpty()))
+
+            if (10 < list.size) list.removeAt(0)
+
+            return@register true
+        }
+
         ClientTickEvents.END_CLIENT_TICK.register {
             list.toList().forEach {
                 if (--it.displayTIme < 0) list.remove(it)

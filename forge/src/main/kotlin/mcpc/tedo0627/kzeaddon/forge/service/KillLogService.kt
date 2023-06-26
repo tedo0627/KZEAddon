@@ -3,78 +3,49 @@ package mcpc.tedo0627.kzeaddon.forge.service
 import com.mojang.blaze3d.platform.NativeImage
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
+import mcpc.tedo0627.kzeaddon.forge.event.ChatReceiveEvent
 import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiComponent
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.Resource
 import net.minecraftforge.client.event.RenderGuiOverlayEvent
 import net.minecraftforge.client.gui.overlay.GuiOverlayManager
 import net.minecraftforge.event.TickEvent
 import net.minecraftforge.event.TickEvent.ClientTickEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import org.apache.logging.log4j.LogManager
 
 class KillLogService {
 
-    companion object {
+    private val regex = Regex("""》(FirstBlood! |)(.*) killed by (.*) \(([A-Za-z0-9_-]+) ?\)""")
 
-        private val list = mutableListOf<KillLog>()
-
-        @JvmStatic
-        fun receiveChat(text: Component): Boolean {
-            if (!AddonOptions.displayKillLog.get()) return true
-
-            val split = text.string.split(" ")
-            when (split.size) {
-                5 -> { // 》target killed by killer (infected)
-                    if (split[1] != "killed" || split[2] != "by") return true
-
-                    val target = split[0]
-                    if (target[0] != '》') return true
-
-                    val weapon = split[4].removePrefix("(").removeSuffix(")").replace("-", "").lowercase()
-                    list.add(KillLog(target.removePrefix("》"), split[3], weapon))
-                }
-                6 -> {
-                    if (split[0] == "》FirstBlood!") { // 》FirstBlood! target killed by killer (infected)
-                        if (split[2] != "killed" || split[3] != "by") return true
-
-                        val target = split[1]
-
-                        val weapon = split[5].removePrefix("(").removeSuffix(")").replace("-", "").lowercase()
-                        list.add(KillLog(target, split[4], weapon, true))
-                    } else if (split[1] == "killed") { // 》target killed by killer (PSG-1 )
-                        if (split[2] != "by" || split[5] != ")") return true
-
-                        val target = split[0]
-                        if (target[0] != '》') return true
-
-                        val weapon = split[4].removePrefix("(").replace("-", "").lowercase()
-                        list.add(KillLog(target.removePrefix("》"), split[3], weapon))
-                    } else {
-                        return true
-                    }
-                }
-                7 -> { // 》FirstBlood! target killed by killer (PSG-1 )
-                    if (split[0] != "》FirstBlood!" || split[2] != "killed" || split[3] != "by" || split[6] != ")") return true
-
-                    val target = split[1]
-
-                    val weapon = split[5].removePrefix("(").replace("-", "").lowercase()
-                    list.add(KillLog(target.removePrefix("》"), split[4], weapon, true))
-                }
-                else -> return true
-            }
-
-            if (10 < list.size) list.removeAt(0)
-
-            return false
-        }
-    }
+    private val list = mutableListOf<KillLog>()
 
     private val textureSize = mutableMapOf<ResourceLocation, Pair<Int, Int>>()
+
+    /**
+     * Samples
+     * 》target killed by killer (infected)
+     * 》FirstBlood! target killed by killer (infected)
+     * 》target killed by killer (PSG-1 )
+     * 》FirstBlood! target killed by killer (PSG-1 )
+     */
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    fun onChatReceive(event: ChatReceiveEvent) {
+        if (!AddonOptions.displayKillLog.get()) return
+
+        val result = regex.matchEntire(event.component.string) ?: return
+
+        val group = result.groupValues.toMutableList()
+        group.removeAt(0)
+
+        val weapon = group[3].replace("-", "").lowercase()
+        list.add(KillLog(group[1], group[2], weapon, group[0].isNotEmpty()))
+
+        if (10 < list.size) list.removeAt(0)
+    }
 
     @SubscribeEvent
     fun onClientTick(event: ClientTickEvent) {

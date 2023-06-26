@@ -1,10 +1,7 @@
 package mcpc.tedo0627.kzeaddon.forge
 
 import mcpc.tedo0627.kzeaddon.forge.option.OptionConfig
-import mcpc.tedo0627.kzeaddon.forge.service.DisplayBulletService
-import mcpc.tedo0627.kzeaddon.forge.service.HidePlayerService
-import mcpc.tedo0627.kzeaddon.forge.service.KillLogService
-import mcpc.tedo0627.kzeaddon.forge.service.RegisterCommandService
+import mcpc.tedo0627.kzeaddon.forge.service.*
 import net.minecraft.client.KeyMapping
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent
 import net.minecraftforge.common.MinecraftForge
@@ -27,6 +24,7 @@ object KZEAddon {
         event.register(key)
 
         mutableListOf(
+            ChatFilterService(),
             DisplayBulletService(),
             HidePlayerService(key),
             KillLogService(),

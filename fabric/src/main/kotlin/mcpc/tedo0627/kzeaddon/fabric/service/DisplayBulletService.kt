@@ -28,7 +28,7 @@ class DisplayBulletService {
                 val remainingBullet = split[2]
 
                 val x = (client.window.scaledWidth / 2).toFloat()
-                val y = (client.window.scaledHeight - 41).toFloat()
+                val y = (client.window.scaledHeight - 49).toFloat()
                 val renderer = client.textRenderer
                 renderer.drawWithShadow(MatrixStack(), currentBullet, x - 20 * (4 - slot) - renderer.getWidth(currentBullet) / 2, y, 16777215)
                 renderer.drawWithShadow(MatrixStack(), remainingBullet, x - 20 * (4 - slot) - renderer.getWidth(remainingBullet) / 2, y + 10, 16777215)

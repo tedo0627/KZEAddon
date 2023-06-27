@@ -34,8 +34,20 @@ class DisplayBulletService {
             val x = (mc.window.guiScaledWidth / 2).toFloat()
             val y = (mc.window.guiScaledHeight - 49).toFloat()
             val renderer = mc.font
-            renderer.draw(event.poseStack, currentBullet, x - 20 * (4 - slot) - renderer.width(currentBullet) / 2, y, 16777215)
-            renderer.draw(event.poseStack, remainingBullet, x - 20 * (4 - slot) - renderer.width(remainingBullet) / 2, y + 10, 16777215)
+            renderer.draw(
+                event.poseStack,
+                currentBullet,
+                x - 20 * (4 - slot) - renderer.width(currentBullet) / 2 + AddonOptions.currentBulletOverlayLocationX.get(),
+                y + AddonOptions.currentBulletOverlayLocationY.get(),
+                16777215
+            )
+            renderer.draw(
+                event.poseStack,
+                remainingBullet,
+                x - 20 * (4 - slot) - renderer.width(remainingBullet) / 2 + AddonOptions.remainingBulletOverlayLocationX.get(),
+                y + 10 + AddonOptions.remainingBulletOverlayLocationY.get(),
+                16777215
+            )
         }
     }
 }

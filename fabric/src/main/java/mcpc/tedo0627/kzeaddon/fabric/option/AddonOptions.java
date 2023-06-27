@@ -14,10 +14,6 @@ public class AddonOptions {
 
     private static final ArrayList<Pair<String, SimpleOption<?>>> list = new ArrayList<>();
 
-    public static SimpleOption<?>[] getOptions() {
-        return list.stream().map(Pair::getSecond).toList().toArray(new SimpleOption[0]);
-    }
-
     public static List<Pair<String, SimpleOption<?>>> getOptionsList() {
         return list;
     }
@@ -104,6 +100,15 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final SimpleOption<Integer> currentBulletOverlayLocationX = createLocationOption();
+    public static final SimpleOption<Integer> currentBulletOverlayLocationY = createLocationOption();
+
+    public static final SimpleOption<Integer> remainingBulletOverlayLocationX = createLocationOption();
+    public static final SimpleOption<Integer> remainingBulletOverlayLocationY = createLocationOption();
+
+    public static final SimpleOption<Integer> killLogOverlayLocationX = createLocationOption();
+    public static final SimpleOption<Integer> killLogOverlayLocationY = createLocationOption();
+
     static {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
         list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
@@ -112,5 +117,23 @@ public class AddonOptions {
         list.add(new Pair<>("displayBullet", displayBullet));
         list.add(new Pair<>("displayKillLog", displayKillLog));
         list.add(new Pair<>("removeChatKillLog", removeChatKillLog));
+
+        list.add(new Pair<>("currentBulletOverlayLocationX", currentBulletOverlayLocationX));
+        list.add(new Pair<>("currentBulletOverlayLocationY", currentBulletOverlayLocationY));
+        list.add(new Pair<>("remainingBulletOverlayLocationX", remainingBulletOverlayLocationX));
+        list.add(new Pair<>("remainingBulletOverlayLocationY", remainingBulletOverlayLocationY));
+        list.add(new Pair<>("killLogOverlayLocationX", killLogOverlayLocationX));
+        list.add(new Pair<>("killLogOverlayLocationY", killLogOverlayLocationY));
+    }
+
+    private static SimpleOption<Integer> createLocationOption() {
+        return new SimpleOption<>(
+            "",
+            SimpleOption.emptyTooltip(),
+            (text, value) -> Text.literal(""),
+            new SimpleOption.ValidatingIntSliderCallbacks(-10000, 10000),
+            0,
+            (value) -> {}
+        );
     }
 }

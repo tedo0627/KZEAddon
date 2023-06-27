@@ -21,5 +21,16 @@
   "kzeaddon.options.displayKillLog": "キルログを右上に表示する",
 
   "kzeaddon.options.removeChatKillLog": "チャットのキルログを削除",
-  "kzeaddon.options.removeChatKillLog.tooltip": "チャットに表示されるキルログを削除する"
+  "kzeaddon.options.removeChatKillLog.tooltip": "チャットに表示されるキルログを削除する",
+
+  "kzeaddon.screen.setting.displayLocationButton": "表示するものの座標",
+
+  "kzeaddon.screen.overlayLocation.currentBulletX": "現在の弾数の表示のx座標",
+  "kzeaddon.screen.overlayLocation.currentBulletY": "現在の弾数の表示のy座標",
+  "kzeaddon.screen.overlayLocation.remainingBulletX": "残っている弾数の表示のx座標",
+  "kzeaddon.screen.overlayLocation.remainingBulletY": "残っている弾数の表示のy座標",
+  "kzeaddon.screen.overlayLocation.killLogX": "キルログの表示のx座標",
+  "kzeaddon.screen.overlayLocation.killLogY": "キルログの表示のy座標",
+
+  "kzeaddon.screen.overlayLocation.tooltip": "値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する"
 }

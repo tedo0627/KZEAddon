@@ -92,8 +92,24 @@ class KillLogService {
         val height = 5 + step * (renderer.lineHeight + 2)
 
         val backColor = if (killLog.firstBlood) 1688862720 else client.options.getBackgroundColor(Integer.MIN_VALUE)
-        GuiComponent.fill(matrixStack, window.guiScaledWidth - nameLength * 2 - weaponLength - 1, height, window.guiScaledWidth - nameLength - weaponLength + 1, height + renderer.lineHeight + 2, -90, backColor)
-        GuiComponent.fill(matrixStack, window.guiScaledWidth - nameLength - 1, height, window.guiScaledWidth, height + renderer.lineHeight + 2, -90, backColor)
+        GuiComponent.fill(
+            matrixStack,
+            window.guiScaledWidth - nameLength * 2 - weaponLength - 1 + AddonOptions.killLogOverlayLocationX.get(),
+            height + AddonOptions.killLogOverlayLocationY.get(),
+            window.guiScaledWidth - nameLength - weaponLength + 1 + AddonOptions.killLogOverlayLocationX.get(),
+            height + renderer.lineHeight + 2 + AddonOptions.killLogOverlayLocationY.get(),
+            -90,
+            backColor
+        )
+        GuiComponent.fill(
+            matrixStack,
+            window.guiScaledWidth - nameLength - 1 + AddonOptions.killLogOverlayLocationX.get(),
+            height + AddonOptions.killLogOverlayLocationY.get(),
+            window.guiScaledWidth + AddonOptions.killLogOverlayLocationX.get(),
+            height + renderer.lineHeight + 2 + AddonOptions.killLogOverlayLocationY.get(),
+            -90,
+            backColor
+        )
 
         val aqua = 43690
         val green = 5635925
@@ -102,12 +118,14 @@ class KillLogService {
         val myName = client.player?.name?.string ?: return
         renderer.draw(
             matrixStack, killLog.killer,
-            (window.guiScaledWidth - nameLength * 2 - weaponLength).toFloat(), height + 1f,
+            (window.guiScaledWidth - nameLength * 2 - weaponLength).toFloat() + AddonOptions.killLogOverlayLocationX.get(),
+            height + 1f + AddonOptions.killLogOverlayLocationY.get(),
             if (myName == killLog.killer) yellow else if (isZombieKiller) green else aqua
         )
         renderer.draw(
             matrixStack, killLog.target,
-            (window.guiScaledWidth - nameLength).toFloat(), height + 1f,
+            (window.guiScaledWidth - nameLength).toFloat() + AddonOptions.killLogOverlayLocationX.get(),
+            height + 1f + AddonOptions.killLogOverlayLocationY.get(),
             if (myName == killLog.target) yellow else if (!isZombieKiller) green else aqua
         )
 
@@ -117,9 +135,19 @@ class KillLogService {
         RenderSystem.setShaderTexture(0, identifier)
         if (isZombieKiller) {
             // ゾンビの攻撃のテクスチャの位置を変える
-            GuiComponent.blit(matrixStack, window.guiScaledWidth - nameLength - weaponLength + 2, height + 1, -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second)
+            GuiComponent.blit(
+                matrixStack,
+                window.guiScaledWidth - nameLength - weaponLength + 2 + AddonOptions.killLogOverlayLocationX.get(),
+                height + 1 + AddonOptions.killLogOverlayLocationY.get(),
+                -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
+            )
         } else {
-            GuiComponent.blit(matrixStack, window.guiScaledWidth - nameLength - weaponLength, height + 1, -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second)
+            GuiComponent.blit(
+                matrixStack,
+                window.guiScaledWidth - nameLength - weaponLength + AddonOptions.killLogOverlayLocationX.get(),
+                height + 1 + AddonOptions.killLogOverlayLocationY.get(),
+                -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
+            )
         }
         RenderSystem.depthMask(true)
         RenderSystem.enableDepthTest()

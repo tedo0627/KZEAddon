@@ -30,8 +30,20 @@ class DisplayBulletService {
                 val x = (client.window.scaledWidth / 2).toFloat()
                 val y = (client.window.scaledHeight - 49).toFloat()
                 val renderer = client.textRenderer
-                renderer.drawWithShadow(MatrixStack(), currentBullet, x - 20 * (4 - slot) - renderer.getWidth(currentBullet) / 2, y, 16777215)
-                renderer.drawWithShadow(MatrixStack(), remainingBullet, x - 20 * (4 - slot) - renderer.getWidth(remainingBullet) / 2, y + 10, 16777215)
+                renderer.drawWithShadow(
+                    MatrixStack(),
+                    currentBullet,
+                    x - 20 * (4 - slot) - renderer.getWidth(currentBullet) / 2 + AddonOptions.currentBulletOverlayLocationX.value,
+                    y + AddonOptions.currentBulletOverlayLocationY.value,
+                    16777215
+                )
+                renderer.drawWithShadow(
+                    MatrixStack(),
+                    remainingBullet,
+                    x - 20 * (4 - slot) - renderer.getWidth(remainingBullet) / 2 + AddonOptions.remainingBulletOverlayLocationX.value,
+                    y + 10 + AddonOptions.remainingBulletOverlayLocationY.value,
+                    16777215
+                )
             }
         }
     }

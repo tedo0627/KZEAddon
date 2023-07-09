@@ -100,6 +100,13 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final SimpleOption<Boolean> displayGlassTimer = SimpleOption.ofBoolean(
+        "kzeaddon.options.displayGlassTimer",
+        SimpleOption.emptyTooltip(),
+        false,
+        (bool) -> {}
+    );
+
     public static final SimpleOption<Integer> currentBulletOverlayLocationX = createLocationOption();
     public static final SimpleOption<Integer> currentBulletOverlayLocationY = createLocationOption();
 
@@ -109,6 +116,9 @@ public class AddonOptions {
     public static final SimpleOption<Integer> killLogOverlayLocationX = createLocationOption();
     public static final SimpleOption<Integer> killLogOverlayLocationY = createLocationOption();
 
+    public static final SimpleOption<Integer> glassTimerOverlayLocationX = createLocationOption();
+    public static final SimpleOption<Integer> glassTimerOverlayLocationY = createLocationOption();
+
     static {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
         list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
@@ -117,6 +127,7 @@ public class AddonOptions {
         list.add(new Pair<>("displayBullet", displayBullet));
         list.add(new Pair<>("displayKillLog", displayKillLog));
         list.add(new Pair<>("removeChatKillLog", removeChatKillLog));
+        list.add(new Pair<>("displayGlassTimer", displayGlassTimer));
 
         list.add(new Pair<>("currentBulletOverlayLocationX", currentBulletOverlayLocationX));
         list.add(new Pair<>("currentBulletOverlayLocationY", currentBulletOverlayLocationY));
@@ -124,6 +135,8 @@ public class AddonOptions {
         list.add(new Pair<>("remainingBulletOverlayLocationY", remainingBulletOverlayLocationY));
         list.add(new Pair<>("killLogOverlayLocationX", killLogOverlayLocationX));
         list.add(new Pair<>("killLogOverlayLocationY", killLogOverlayLocationY));
+        list.add(new Pair<>("glassTimerOverlayLocationX", glassTimerOverlayLocationX));
+        list.add(new Pair<>("glassTimerOverlayLocationY", glassTimerOverlayLocationY));
     }
 
     private static SimpleOption<Integer> createLocationOption() {

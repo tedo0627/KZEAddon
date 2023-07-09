@@ -26,6 +26,7 @@ object KZEAddon {
         mutableListOf(
             ChatFilterService(),
             DisplayBulletService(),
+            GlassTimerService(),
             HidePlayerService(key),
             KillLogService(),
             RegisterCommandService()

@@ -14,14 +14,17 @@ import net.minecraft.network.chat.Component
 class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Component.literal("座標の変更")) {
 
     override fun init() {
-        add("kzeaddon.screen.overlayLocation.currentBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.currentBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.currentBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.currentBulletOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.currentBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.currentBulletOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.currentBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.currentBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.remainingBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.remainingBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.remainingBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.remainingBulletOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.remainingBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.remainingBulletOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.remainingBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.remainingBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.killLogX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.killLogOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.killLogY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.killLogOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.killLogX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.killLogOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.killLogY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.killLogOverlayLocationY)
+
+        add("kzeaddon.screen.overlayLocation.glassTimerX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.glassTimerOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.glassTimerY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.glassTimerOverlayLocationY)
 
         addRenderableWidget(Button
             .builder(CommonComponents.GUI_DONE) { minecraft?.setScreen(previous) }

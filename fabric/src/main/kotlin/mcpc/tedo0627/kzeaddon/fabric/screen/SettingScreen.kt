@@ -18,7 +18,8 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Text.literal(
             AddonOptions.gamma,
             AddonOptions.displayBullet,
             AddonOptions.displayKillLog,
-            AddonOptions.removeChatKillLog
+            AddonOptions.removeChatKillLog,
+            AddonOptions.displayGlassTimer
         ).forEach {
             addDrawableChild(it.createWidget(client?.options, getNextX(), getNextY(), 150))
         }

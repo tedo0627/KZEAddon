@@ -14,14 +14,17 @@ import net.minecraft.text.Text
 class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Text.literal("座標の変更")) {
 
     override fun init() {
-        add("kzeaddon.screen.overlayLocation.currentBulletX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.currentBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.currentBulletY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.currentBulletOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.currentBulletX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.currentBulletOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.currentBulletY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.currentBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.remainingBulletX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.remainingBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.remainingBulletY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.remainingBulletOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.remainingBulletX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.remainingBulletOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.remainingBulletY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.remainingBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.killLogX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.killLogOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.killLogY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltip")), AddonOptions.killLogOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.killLogX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.killLogOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.killLogY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.killLogOverlayLocationY)
+
+        add("kzeaddon.screen.overlayLocation.glassTimerX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.glassTimerOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.glassTimerY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.glassTimerOverlayLocationY)
 
         addDrawableChild(ButtonWidget
             .Builder(ScreenTexts.DONE) { client?.setScreen(previous) }

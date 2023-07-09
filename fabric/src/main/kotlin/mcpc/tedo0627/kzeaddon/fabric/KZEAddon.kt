@@ -11,6 +11,7 @@ class KZEAddon : ClientModInitializer {
 
         ChatFilterService()
         DisplayBulletService()
+        GlassTimerService()
         HidePlayerService()
         KillLogService()
         RegisterCommandService()

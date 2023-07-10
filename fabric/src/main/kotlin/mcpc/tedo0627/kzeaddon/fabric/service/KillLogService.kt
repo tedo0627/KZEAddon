@@ -25,6 +25,7 @@ class KillLogService {
     private val overlayList = mutableListOf<KillLog>()
     private val guiList = mutableListOf<KillLog>()
 
+    private val addonIdentifiers = mutableMapOf<String, Identifier>()
     private val textureSize = mutableMapOf<Identifier, Pair<Int, Int>>()
 
     /**
@@ -84,23 +85,26 @@ class KillLogService {
 
     fun renderWeapon(killLog: KillLog, step: Int) {
         val matrixStack = MatrixStack()
-        val identifier = Identifier("textures/font/${killLog.weapon}.png")
+        val identifier = addonIdentifiers.getOrPut(killLog.weapon) {
+            Identifier("textures/font/${killLog.weapon}.png")
+        }
         val client = MinecraftClient.getInstance()
         val window = client.window
         val renderer = client.textRenderer
 
         val size = textureSize.getOrPut(identifier) {
-            try {
-                val resource: Resource = client.resourceManager.getResourceOrThrow(identifier)
-                resource.inputStream.use { inputStream ->
-                    val nativeImage = NativeImage.read(inputStream)
-                    val divide = nativeImage.height / renderer.fontHeight
-                    Pair(nativeImage.width / divide, nativeImage.height / divide)
+            val pair = getSize(identifier)
+            if (pair == null) {
+                val addonIdentifier = Identifier("kzeaddon", "textures/font/${killLog.weapon}.png")
+                val addonPair = getSize(addonIdentifier)
+                if (addonPair == null) {
+                    LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weapon}")
+                } else {
+                    addonIdentifiers[killLog.weapon] = addonIdentifier
+                    return@getOrPut addonPair
                 }
-            } catch (e: Exception) {
-                LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weapon}")
-                Pair(0, 0)
             }
+            pair ?: Pair(0, 0)
         }
 
         val nameLength = renderer.getWidth("a".repeat(16))
@@ -166,6 +170,21 @@ class KillLogService {
         }
         RenderSystem.depthMask(true)
         RenderSystem.enableDepthTest()
+    }
+
+    private fun getSize(identifier: Identifier): Pair<Int, Int>? {
+        val client = MinecraftClient.getInstance()
+        val renderer = client.textRenderer
+        return try {
+            val resource: Resource = client.resourceManager.getResourceOrThrow(identifier)
+            resource.inputStream.use { inputStream ->
+                val nativeImage = NativeImage.read(inputStream)
+                val divide = nativeImage.height / renderer.fontHeight
+                Pair(nativeImage.width / divide, nativeImage.height / divide)
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 
     class KillLog(

@@ -28,8 +28,8 @@ class KillLogService(private val key: KeyMapping) {
     private val overlayList = mutableListOf<KillLog>()
     private val guiList = mutableListOf<KillLog>()
 
+    private val addonIdentifiers = mutableMapOf<String, ResourceLocation>()
     private val textureSize = mutableMapOf<ResourceLocation, Pair<Int, Int>>()
-
 
     @SubscribeEvent
     fun onKey(event: InputEvent.Key) = input(event.key, event.action)
@@ -96,23 +96,26 @@ class KillLogService(private val key: KeyMapping) {
     }
 
     fun renderWeapon(killLog: KillLog, step: Int, matrixStack: PoseStack) {
-        val identifier = ResourceLocation("textures/font/${killLog.weapon}.png")
+        val identifier = addonIdentifiers.getOrPut(killLog.weapon) {
+            ResourceLocation("textures/font/${killLog.weapon}.png")
+        }
         val client = Minecraft.getInstance()
         val window = client.window
         val renderer = client.font
 
         val size = textureSize.getOrPut(identifier) {
-            try {
-                val resource: Resource = client.resourceManager.getResourceOrThrow(identifier)
-                resource.open().use { inputStream ->
-                    val nativeImage = NativeImage.read(inputStream)
-                    val divide = nativeImage.height / renderer.lineHeight
-                    Pair(nativeImage.width / divide, nativeImage.height / divide)
+            val pair = getSize(identifier)
+            if (pair == null) {
+                val addonIdentifier = ResourceLocation("kzeaddon", "textures/font/${killLog.weapon}.png")
+                val addonPair = getSize(addonIdentifier)
+                if (addonPair == null) {
+                    LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weapon}")
+                } else {
+                    addonIdentifiers[killLog.weapon] = addonIdentifier
+                    return@getOrPut addonPair
                 }
-            } catch (e: Exception) {
-                LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weapon}")
-                Pair(0, 0)
             }
+            pair ?: Pair(0, 0)
         }
 
         val nameLength = renderer.width("a".repeat(16))
@@ -179,6 +182,21 @@ class KillLogService(private val key: KeyMapping) {
         }
         RenderSystem.depthMask(true)
         RenderSystem.enableDepthTest()
+    }
+
+    private fun getSize(identifier: ResourceLocation): Pair<Int, Int>? {
+        val client = Minecraft.getInstance()
+        val renderer = client.font
+        return try {
+            val resource: Resource = client.resourceManager.getResourceOrThrow(identifier)
+            resource.open().use { inputStream ->
+                val nativeImage = NativeImage.read(inputStream)
+                val divide = nativeImage.height / renderer.lineHeight
+                Pair(nativeImage.width / divide, nativeImage.height / divide)
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 
     class KillLog(

@@ -25,6 +25,23 @@ class KillLogService {
     private val overlayList = mutableListOf<KillLog>()
     private val guiList = mutableListOf<KillLog>()
 
+    private val weaponConverter = mutableMapOf(
+        "barrettm82" to "m82",
+        "saiga12" to "saiga",
+        "taurusjudge" to "judge",
+        "scoutelite" to "scout",
+        "remingtonm870" to "m870",
+        "benellim4" to "beneli",
+        "conderfieldshotgun" to "conderfield",
+        "s_wm37" to "m37",
+        "l96a1" to "l96",
+        "bizonpp19" to "bizon",
+        "mauserc96" to "c96",
+        "mosinnagant" to "mosin",
+        "bizonpp19" to "bizon",
+        "ruger_mki" to "ruger"
+    )
+
     private val addonIdentifiers = mutableMapOf<String, Identifier>()
     private val textureSize = mutableMapOf<Identifier, Pair<Int, Int>>()
 
@@ -85,7 +102,7 @@ class KillLogService {
 
     fun renderWeapon(killLog: KillLog, step: Int) {
         val matrixStack = MatrixStack()
-        val identifier = addonIdentifiers.getOrPut(killLog.weapon) {
+        var identifier = addonIdentifiers.getOrPut(killLog.weapon) {
             Identifier("textures/font/${killLog.weapon}.png")
         }
         val client = MinecraftClient.getInstance()
@@ -95,12 +112,24 @@ class KillLogService {
         val size = textureSize.getOrPut(identifier) {
             val pair = getSize(identifier)
             if (pair == null) {
+                val convert = weaponConverter[killLog.weapon]
+                if (convert != null) {
+                    val convertIdentifier = Identifier("textures/font/${convert}.png")
+                    val convertPair = getSize(convertIdentifier)
+                    if (convertPair != null) {
+                        addonIdentifiers[killLog.weapon] = convertIdentifier
+                        identifier = convertIdentifier
+                        return@getOrPut convertPair
+                    }
+                }
+
                 val addonIdentifier = Identifier("kzeaddon", "textures/font/${killLog.weapon}.png")
                 val addonPair = getSize(addonIdentifier)
                 if (addonPair == null) {
                     LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weapon}")
                 } else {
                     addonIdentifiers[killLog.weapon] = addonIdentifier
+                    identifier = addonIdentifier
                     return@getOrPut addonPair
                 }
             }

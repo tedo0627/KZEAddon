@@ -1,5 +1,6 @@
 {
   "kzeaddon.key.hidePlayer": "プレイヤーの透明化を切り替えるキー",
+  "kzeaddon.key.killLog": "キルログの画面を表示するキー",
 
   "kzeaddon.options.hidePlayerToggle": "透明にするキー",
   "kzeaddon.options.hideToggleType.switch": "切り替え",
@@ -36,5 +37,6 @@
   "kzeaddon.screen.overlayLocation.glassTimerX": "ガラスタイマーのX座標",
   "kzeaddon.screen.overlayLocation.glassTimerY": "ガラスタイマーのy座標",
 
-  "kzeaddon.screen.overlayLocation.tooltip": "値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する"
+  "kzeaddon.screen.overlayLocation.tooltipX": "値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する",
+  "kzeaddon.screen.overlayLocation.tooltipY": "値を増やすと画面の上に移動し、\n値を減らすと画面の下に移動する"
 }

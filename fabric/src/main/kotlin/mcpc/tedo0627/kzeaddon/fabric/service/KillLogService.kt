@@ -3,10 +3,13 @@ package mcpc.tedo0627.kzeaddon.fabric.service
 import com.mojang.blaze3d.systems.RenderSystem
 import mcpc.tedo0627.kzeaddon.fabric.event.ChatReceiveCallback
 import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions
+import mcpc.tedo0627.kzeaddon.fabric.screen.KillLogScreen
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.hud.InGameHud
+import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.texture.NativeImage
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.resource.Resource
@@ -15,9 +18,12 @@ import org.apache.logging.log4j.LogManager
 
 class KillLogService {
 
+    private val key = KeyBinding("kzeaddon.key.killLog", -1, "KZEAddon")
+
     private val regex = Regex("""》(FirstBlood! |)(.*) killed by (.*) \(([A-Za-z0-9_-]+) ?\)""")
 
-    private val list = mutableListOf<KillLog>()
+    private val overlayList = mutableListOf<KillLog>()
+    private val guiList = mutableListOf<KillLog>()
 
     private val textureSize = mutableMapOf<Identifier, Pair<Int, Int>>()
 
@@ -29,6 +35,17 @@ class KillLogService {
      * 》FirstBlood! target killed by killer (PSG-1 )
      */
     init {
+        KeyBindingHelper.registerKeyBinding(key)
+
+        ClientTickEvents.END_CLIENT_TICK.register {
+            val client = MinecraftClient.getInstance()
+            if (client.player == null) return@register
+
+            if (key.isPressed) {
+                client.setScreen(KillLogScreen(key, guiList, this))
+            }
+        }
+
         ChatReceiveCallback.EVENT.register(ChatReceiveCallback.FIRST) { text ->
             if (!AddonOptions.displayKillLog.value) return@register true
 
@@ -38,28 +55,34 @@ class KillLogService {
             group.removeAt(0)
 
             val weapon = group[3].replace("-", "").lowercase()
-            list.add(KillLog(group[1], group[2], weapon, group[0].isNotEmpty()))
+            val killLog = KillLog(group[1], group[2], weapon, group[0].isNotEmpty())
+            overlayList.add(killLog)
+            guiList.add(killLog)
 
-            if (10 < list.size) list.removeAt(0)
+            if (10 < overlayList.size) overlayList.removeAt(0)
+            if (500 < guiList.size) guiList.removeAt(0)
 
             return@register true
         }
 
         ClientTickEvents.END_CLIENT_TICK.register {
-            list.toList().forEach {
-                if (--it.displayTIme < 0) list.remove(it)
+            overlayList.toList().forEach {
+                if (--it.displayTIme < 0) overlayList.remove(it)
             }
         }
 
         HudRenderCallback.EVENT.register { _, _ ->
-            val size = list.size
-            list.forEachIndexed { index, killLog ->
+            val client = MinecraftClient.getInstance()
+            if (client.currentScreen is KillLogScreen) return@register
+
+            val size = overlayList.size
+            overlayList.forEachIndexed { index, killLog ->
                 renderWeapon(killLog, size - index - 1)
             }
         }
     }
 
-    private fun renderWeapon(killLog: KillLog, step: Int) {
+    fun renderWeapon(killLog: KillLog, step: Int) {
         val matrixStack = MatrixStack()
         val identifier = Identifier("textures/font/${killLog.weapon}.png")
         val client = MinecraftClient.getInstance()

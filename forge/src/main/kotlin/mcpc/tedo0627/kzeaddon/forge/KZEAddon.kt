@@ -20,15 +20,17 @@ object KZEAddon {
     }
 
     private fun onRegisterKeyMappings(event: RegisterKeyMappingsEvent) {
-        val key = KeyMapping("kzeaddon.key.hidePlayer", -1, "KZEAddon")
-        event.register(key)
+        val hideKey = KeyMapping("kzeaddon.key.hidePlayer", -1, "KZEAddon")
+        val killLogKey = KeyMapping("kzeaddon.key.killLog", -1, "KZEAddon")
+        event.register(hideKey)
+        event.register(killLogKey)
 
         mutableListOf(
             ChatFilterService(),
             DisplayBulletService(),
             GlassTimerService(),
-            HidePlayerService(key),
-            KillLogService(),
+            HidePlayerService(hideKey),
+            KillLogService(killLogKey),
             RegisterCommandService()
         ).forEach { MinecraftForge.EVENT_BUS.register(it) }
     }

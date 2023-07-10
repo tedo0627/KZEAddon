@@ -23,6 +23,9 @@ dependencies {
 }
 
 tasks {
+    runClient {
+        args("--username", "Dev")
+    }
     val javaVersion = JavaVersion.VERSION_17
     withType<JavaCompile> {
         options.encoding = "UTF-8"

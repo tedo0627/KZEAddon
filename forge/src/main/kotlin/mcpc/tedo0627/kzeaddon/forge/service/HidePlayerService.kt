@@ -5,6 +5,7 @@ import mcpc.tedo0627.kzeaddon.forge.option.HideToggleType
 import mcpc.tedo0627.kzeaddon.forge.option.InvisibleType
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.scores.Team
 import net.minecraftforge.client.event.InputEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -45,6 +46,18 @@ class HidePlayerService(private val key: KeyMapping) {
             }
 
             return AddonOptions.invisibleType.get() == InvisibleType.INVISIBLE
+        }
+
+        @JvmStatic
+        fun isInvisibleItem(entity: LivingEntity): Boolean {
+            val team = entity.team ?: return false
+
+            val mc = Minecraft.getInstance()
+            val player = mc.player ?: return false
+            if (player.uuid == entity.uuid) return false
+            if (player.team != team) return false
+
+            return executing
         }
     }
 

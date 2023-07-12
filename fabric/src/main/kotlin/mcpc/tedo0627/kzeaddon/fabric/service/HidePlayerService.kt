@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.scores.Team
 import java.util.*
 
@@ -45,6 +46,18 @@ class HidePlayerService {
             }
 
             return AddonOptions.invisibleType.get() == InvisibleType.INVISIBLE
+        }
+
+        @JvmStatic
+        fun isInvisibleItem(entity: LivingEntity): Boolean {
+            val team = entity.team ?: return false
+
+            val mc = Minecraft.getInstance()
+            val player = mc.player ?: return false
+            if (player.uuid == entity.uuid) return false
+            if (player.team != team) return false
+
+            return executing
         }
     }
 

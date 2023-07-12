@@ -72,6 +72,13 @@ public class AddonOptions {
         (type) -> {}
     );
 
+    public static final OptionInstance<Boolean> hidePlayerItem = OptionInstance.createBoolean(
+        "kzeaddon.options.hidePlayerItem",
+        OptionInstance.noTooltip(),
+        false,
+        (bool) -> {}
+    );
+
     public static final OptionInstance<Boolean> gamma = OptionInstance.createBoolean(
         "kzeaddon.options.gamma",
         OptionInstance.noTooltip(),
@@ -137,6 +144,7 @@ public class AddonOptions {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
         list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
         list.add(new Pair<>("invisibleType", invisibleType));
+        list.add(new Pair<>("hidePlayerItem", hidePlayerItem));
         list.add(new Pair<>("gamma", gamma));
         list.add(new Pair<>("displayBullet", displayBullet));
         list.add(new Pair<>("displayKillLog", displayKillLog));

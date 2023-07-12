@@ -15,6 +15,7 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
             AddonOptions.hidePlayerToggle,
             AddonOptions.hidePlayerOverlay,
             AddonOptions.invisibleType,
+            AddonOptions.hidePlayerItem,
             AddonOptions.gamma,
             AddonOptions.displayBullet,
             AddonOptions.displayKillLog,

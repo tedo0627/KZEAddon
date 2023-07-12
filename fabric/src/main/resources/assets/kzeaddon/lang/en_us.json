@@ -21,6 +21,8 @@
 
   "kzeaddon.options.displayKillLog": "キルログを右上に表示する",
 
+  "kzeaddon.options.addKillLogWeaponName": "キルログに武器の名前を表示する",
+
   "kzeaddon.options.disableKillLogWhenPressTab": "tabを押してるときにキルログを非表示",
 
   "kzeaddon.options.removeChatKillLog": "チャットのキルログを削除",

@@ -93,6 +93,13 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final OptionInstance<Boolean> addKillLogWeaponName = OptionInstance.createBoolean(
+        "kzeaddon.options.addKillLogWeaponName",
+        OptionInstance.noTooltip(),
+        false,
+        (bool) -> {}
+    );
+
     public static final OptionInstance<Boolean> disableKillLogWhenPressTab = OptionInstance.createBoolean(
         "kzeaddon.options.disableKillLogWhenPressTab",
         OptionInstance.noTooltip(),
@@ -133,6 +140,7 @@ public class AddonOptions {
         list.add(new Pair<>("gamma", gamma));
         list.add(new Pair<>("displayBullet", displayBullet));
         list.add(new Pair<>("displayKillLog", displayKillLog));
+        list.add(new Pair<>("addKillLogWeaponName", addKillLogWeaponName));
         list.add(new Pair<>("disableKillLogWhenPressTab", disableKillLogWhenPressTab));
         list.add(new Pair<>("removeChatKillLog", removeChatKillLog));
         list.add(new Pair<>("displayGlassTimer", displayGlassTimer));

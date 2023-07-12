@@ -18,6 +18,7 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
             AddonOptions.gamma,
             AddonOptions.displayBullet,
             AddonOptions.displayKillLog,
+            AddonOptions.addKillLogWeaponName,
             AddonOptions.disableKillLogWhenPressTab,
             AddonOptions.removeChatKillLog,
             AddonOptions.displayGlassTimer

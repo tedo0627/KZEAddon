@@ -75,7 +75,7 @@ class KillLogService {
             group.removeAt(0)
 
             val weapon = group[3].replace("-", "").lowercase()
-            val killLog = KillLog(group[1], group[2], weapon, group[0].isNotEmpty())
+            val killLog = KillLog(group[1], group[2], group[3], weapon, group[0].isNotEmpty())
             overlayList.add(killLog)
             guiList.add(killLog)
 
@@ -103,9 +103,9 @@ class KillLogService {
         }
     }
 
-    fun renderWeapon(killLog: KillLog, step: Int, matrixStack: PoseStack) {
-        var resourceLocation = addonResources.getOrPut(killLog.weapon) {
-            ResourceLocation("textures/font/${killLog.weapon}.png")
+    fun renderWeapon(killLog: KillLog, step: Int, poseStack: PoseStack) {
+        var resourceLocation = addonResources.getOrPut(killLog.weaponId) {
+            ResourceLocation("textures/font/${killLog.weaponId}.png")
         }
         val mc = Minecraft.getInstance()
         val window = mc.window
@@ -114,23 +114,23 @@ class KillLogService {
         val size = textureSize.getOrPut(resourceLocation) {
             val pair = getSize(resourceLocation)
             if (pair == null) {
-                val convert = weaponConverter[killLog.weapon]
+                val convert = weaponConverter[killLog.weaponId]
                 if (convert != null) {
                     val convertResourceLocation = ResourceLocation("textures/font/${convert}.png")
                     val convertPair = getSize(convertResourceLocation)
                     if (convertPair != null) {
-                        addonResources[killLog.weapon] = convertResourceLocation
+                        addonResources[killLog.weaponId] = convertResourceLocation
                         resourceLocation = convertResourceLocation
                         return@getOrPut convertPair
                     }
                 }
 
-                val addonResourceLocation = ResourceLocation("kzeaddon", "textures/font/${killLog.weapon}.png")
+                val addonResourceLocation = ResourceLocation("kzeaddon", "textures/font/${killLog.weaponId}.png")
                 val addonPair = getSize(addonResourceLocation)
                 if (addonPair == null) {
-                    LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weapon}")
+                    LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weaponId}")
                 } else {
-                    addonResources[killLog.weapon] = addonResourceLocation
+                    addonResources[killLog.weaponId] = addonResourceLocation
                     resourceLocation = addonResourceLocation
                     return@getOrPut addonPair
                 }
@@ -142,21 +142,27 @@ class KillLogService {
         val weaponLength = font.width("a".repeat(6))
         val height = 5 + step * (font.lineHeight + 2)
 
+        val addWeaponName = AddonOptions.addKillLogWeaponName.get()
+        val weaponNameLength = if (addWeaponName) font.width("a".repeat(18)) else 0
+
+        val overlayX = AddonOptions.killLogOverlayLocationX.get()
+        val overlayY = AddonOptions.killLogOverlayLocationY.get()
+
         val backColor = if (killLog.firstBlood) 1688862720 else mc.options.getBackgroundColor(Integer.MIN_VALUE)
         GuiComponent.fill(
-            matrixStack,
-            window.guiScaledWidth - nameLength * 2 - weaponLength - 1 + AddonOptions.killLogOverlayLocationX.get(),
-            height + AddonOptions.killLogOverlayLocationY.get(),
-            window.guiScaledWidth - nameLength - weaponLength + 1 + AddonOptions.killLogOverlayLocationX.get(),
-            height + font.lineHeight + 2 + AddonOptions.killLogOverlayLocationY.get(),
+            poseStack,
+            window.guiScaledWidth - nameLength * 2 - weaponLength - weaponNameLength - 1 + overlayX,
+            height + overlayY,
+            window.guiScaledWidth - nameLength - weaponLength - weaponNameLength + 1 + overlayX,
+            height + font.lineHeight + 2 + overlayY,
             -90,
             backColor)
         GuiComponent.fill(
-            matrixStack,
-            window.guiScaledWidth - nameLength - 1 + AddonOptions.killLogOverlayLocationX.get(),
-            height + AddonOptions.killLogOverlayLocationY.get(),
-            window.guiScaledWidth + AddonOptions.killLogOverlayLocationX.get(),
-            height + font.lineHeight + 2 + AddonOptions.killLogOverlayLocationY.get(),
+            poseStack,
+            window.guiScaledWidth - nameLength - weaponNameLength - 1 + overlayX,
+            height + overlayY,
+            window.guiScaledWidth + overlayX,
+            height + font.lineHeight + 2 + overlayY,
             -90,
             backColor
         )
@@ -164,20 +170,29 @@ class KillLogService {
         val aqua = 43690
         val green = 5635925
         val yellow = 16777045
-        val isZombieKiller = killLog.weapon == "infected"
+        val white = 16777215
+        val isZombieKiller = killLog.weaponId == "infected"
         val myName = mc.player?.name?.string ?: return
         font.draw(
-            matrixStack, killLog.killer,
-            (window.guiScaledWidth - nameLength * 2 - weaponLength).toFloat() + AddonOptions.killLogOverlayLocationX.get(),
-            height + 1f + AddonOptions.killLogOverlayLocationY.get(),
+            poseStack, killLog.killer,
+            (window.guiScaledWidth - nameLength * 2 - weaponLength - weaponNameLength).toFloat() + overlayX,
+            height + 1f + overlayY,
             if (myName == killLog.killer) yellow else if (isZombieKiller) green else aqua
         )
         font.draw(
-            matrixStack, killLog.target,
-            (window.guiScaledWidth - nameLength).toFloat() + AddonOptions.killLogOverlayLocationX.get(),
-            height + 1f + AddonOptions.killLogOverlayLocationY.get(),
+            poseStack, killLog.target,
+            (window.guiScaledWidth - nameLength).toFloat() + overlayX,
+            height + 1f + overlayY,
             if (myName == killLog.target) yellow else if (!isZombieKiller) green else aqua
         )
+        if (addWeaponName) {
+            font.draw(
+                poseStack, killLog.weaponName,
+                (window.guiScaledWidth - nameLength - weaponNameLength).toFloat() + overlayX,
+                height + 1f + overlayY,
+                white
+            )
+        }
 
         if (size == Pair(0, 0)) return
         RenderSystem.disableDepthTest()
@@ -186,16 +201,16 @@ class KillLogService {
         if (isZombieKiller) {
             // ゾンビの攻撃のテクスチャの位置を変える
             GuiComponent.blit(
-                matrixStack,
-                window.guiScaledWidth - nameLength - weaponLength + 2 + AddonOptions.killLogOverlayLocationX.get(),
-                height + 1 + AddonOptions.killLogOverlayLocationY.get(),
+                poseStack,
+                window.guiScaledWidth - nameLength - weaponLength - weaponNameLength + 2 + overlayX,
+                height + 1 + overlayY,
                 -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
             )
         } else {
             GuiComponent.blit(
-                matrixStack,
-                window.guiScaledWidth - nameLength - weaponLength + AddonOptions.killLogOverlayLocationX.get(),
-                height + 1 + AddonOptions.killLogOverlayLocationY.get(),
+                poseStack,
+                window.guiScaledWidth - nameLength - weaponLength - weaponNameLength + overlayX,
+                height + 1 + overlayY,
                 -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
             )
         }
@@ -221,7 +236,8 @@ class KillLogService {
     class KillLog(
         val target: String,
         val killer: String,
-        val weapon: String,
+        val weaponName: String,
+        val weaponId: String,
         val firstBlood: Boolean = false
     ) {
         var displayTIme = 200

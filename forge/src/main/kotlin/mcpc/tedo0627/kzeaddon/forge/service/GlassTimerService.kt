@@ -58,7 +58,7 @@ class GlassTimerService {
 
         font.draw(
             event.poseStack,
-            (currentTime / 20 + 1).toString(),
+            text,
             x + AddonOptions.glassTimerOverlayLocationX.get(),
             y + AddonOptions.glassTimerOverlayLocationY.get(),
             16777215

@@ -49,12 +49,12 @@ class HidePlayerService(private val key: KeyMapping) {
     }
 
     @SubscribeEvent
-    fun onKey(event: InputEvent.Key) = input(event.key, event.action)
+    fun onKey(event: InputEvent.Key) = input(event.key)
 
     @SubscribeEvent
-    fun onMouseButton(event: InputEvent.MouseButton) = input(event.button, event.action)
+    fun onMouseButton(event: InputEvent.MouseButton) = input(event.button)
 
-    private fun input(key: Int, action: Int) {
+    private fun input(key: Int) {
         if (key != this.key.key.value) return
 
         when (AddonOptions.hidePlayerToggle.get()) {

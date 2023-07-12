@@ -39,7 +39,9 @@ class KillLogService {
         "mauserc96" to "c96",
         "mosinnagant" to "mosin",
         "bizonpp19" to "bizon",
-        "ruger_mki" to "ruger"
+        "ruger_mki" to "ruger",
+        "survival_knife" to "knife",
+        "krissvector" to "kriss"
     )
 
     private val addonResources = mutableMapOf<String, ResourceLocation>()

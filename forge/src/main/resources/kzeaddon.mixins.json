@@ -10,6 +10,7 @@
     "MixinChatListener",
     "MixinClientLevel",
     "MixinLightTexture",
-    "MixinLivingEntityRenderer"
+    "MixinLivingEntityRenderer",
+    "MixinPlayerItemInHandLayer"
   ]
 }

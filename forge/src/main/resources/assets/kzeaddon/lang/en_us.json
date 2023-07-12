@@ -9,6 +9,8 @@
   "kzeaddon.options.hidePlayerOverlay": "水やガラスの視認性向上",
   "kzeaddon.options.hidePlayerOverlay.tooltip": "オンにすると透明なプレイヤーの奥にある水やガラスなどが見えるようになる",
 
+  "kzeaddon.options.hidePlayerItem": "透明化なプレイヤーのアイテムを非表示",
+
   "kzeaddon.options.invisibleType": "透明化の方式",
   "kzeaddon.options.invisibleType.translucent": "半透明",
   "kzeaddon.options.invisibleType.invisible": "透明",

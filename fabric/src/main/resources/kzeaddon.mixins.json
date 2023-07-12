@@ -6,10 +6,11 @@
     "MixinEntity"
   ],
   "client": [
+    "MixinChatListener",
     "MixinClientLevel",
     "MixinLightTexture",
     "MixinLivingEntityRenderer",
-    "MixinChatListener"
+    "MixinPlayerItemInHandLayer"
   ],
   "injectors": {
     "defaultRequire": 1

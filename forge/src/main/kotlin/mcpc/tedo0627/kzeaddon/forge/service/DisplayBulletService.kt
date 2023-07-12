@@ -24,28 +24,28 @@ class DisplayBulletService {
             val itemStack = inventory.items[slot]
             if (itemStack.item != Items.DIAMOND_HOE) return
 
-            val name = itemStack.displayName.string
-            val split = name.substring(1, name.length - 1).split(" ").filter { it.isNotEmpty() }
+            val name = itemStack.hoverName.string
+            val split = name.split(" ").filter { it.isNotEmpty() }
             if (split.size != 3) continue
 
             val currentBullet = split[1]
             val remainingBullet = split[2]
             if (currentBullet.toIntOrNull() == null || remainingBullet.toIntOrNull() == null) return
 
-            val x = (mc.window.guiScaledWidth / 2).toFloat()
+            val x = (mc.window.guiScaledWidth / 2).toFloat() - 20 * (4 - slot)
             val y = (mc.window.guiScaledHeight - 49).toFloat()
-            val renderer = mc.font
-            renderer.draw(
+            val font = mc.font
+            font.draw(
                 poseStack,
                 currentBullet,
-                x - 20 * (4 - slot) - renderer.width(currentBullet) / 2 + AddonOptions.currentBulletOverlayLocationX.get(),
+                x - font.width(currentBullet) / 2 + AddonOptions.currentBulletOverlayLocationX.get(),
                 y + AddonOptions.currentBulletOverlayLocationY.get(),
                 16777215
             )
-            renderer.draw(
+            font.draw(
                 poseStack,
                 remainingBullet,
-                x - 20 * (4 - slot) - renderer.width(remainingBullet) / 2 + AddonOptions.remainingBulletOverlayLocationX.get(),
+                x - font.width(remainingBullet) / 2 + AddonOptions.remainingBulletOverlayLocationX.get(),
                 y + 10 + AddonOptions.remainingBulletOverlayLocationY.get(),
                 16777215
             )

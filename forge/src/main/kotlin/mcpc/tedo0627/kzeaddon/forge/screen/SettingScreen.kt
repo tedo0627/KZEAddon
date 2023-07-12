@@ -48,10 +48,10 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
         return height / 6 - 12 + (size / 2 * 24)
     }
 
-    override fun render(matrixStack: PoseStack, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(matrixStack: PoseStack, i: Int, j: Int, f: Float) {
         renderBackground(matrixStack)
         drawCenteredString(matrixStack, font, title, width / 2, 5, 0xffffff)
-        super.render(matrixStack, mouseX, mouseY, delta)
+        super.render(matrixStack, i, j, f)
     }
 
     override fun onClose() {
@@ -61,4 +61,6 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
     override fun removed() {
         OptionConfig.save()
     }
+
+    override fun isPauseScreen() = false
 }

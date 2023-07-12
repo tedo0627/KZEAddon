@@ -10,10 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public abstract class MixinLightTexture {
 
     @ModifyArg(method = "updateLightTexture", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", ordinal = 2), index = 1)
-    private float update(float f) {
-        if (AddonOptions.gamma.get()) {
-            return 10000f;
-        }
-        return f;
+    private float updateLightTexture(float value) {
+        return AddonOptions.gamma.get() ? 10000f : value;
     }
 }

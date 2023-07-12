@@ -1,6 +1,5 @@
 package mcpc.tedo0627.kzeaddon.forge.service
 
-import com.mojang.blaze3d.platform.InputConstants
 import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions
 import mcpc.tedo0627.kzeaddon.forge.option.HideToggleType
 import mcpc.tedo0627.kzeaddon.forge.option.InvisibleType
@@ -60,7 +59,7 @@ class HidePlayerService(private val key: KeyMapping) {
 
         when (AddonOptions.hidePlayerToggle.get()) {
             HideToggleType.SWITCH -> {
-                if (action == InputConstants.PRESS && this.key.isDown) {
+                while (this.key.consumeClick()) {
                     if (AddonOptions.invisibleType.get() == InvisibleType.TOGGLE) {
                         if (executing && !toggleInvisible) { // 半透明の時
                             toggleInvisible = true
@@ -75,7 +74,7 @@ class HidePlayerService(private val key: KeyMapping) {
                     }
                 }
             }
-            HideToggleType.LONG_PRESS -> executing = action == InputConstants.REPEAT || this.key.isDown
+            HideToggleType.LONG_PRESS -> executing = this.key.isDown
             else -> {}
         }
     }

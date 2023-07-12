@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class MixinLivingEntityRenderer {
 
     @Inject(method = "getRenderType", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;itemEntityTranslucentCull(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void getRenderType(LivingEntity p_115322_, boolean p_115323_, boolean p_115324_, boolean p_115325_, CallbackInfoReturnable<RenderType> cir, ResourceLocation resourceLocation) {
+    private void getRenderType(LivingEntity livingEntity, boolean b1, boolean b2, boolean b3, CallbackInfoReturnable<RenderType> cir, ResourceLocation resourceLocation) {
         if (AddonOptions.hidePlayerOverlay.get()) {
             cir.setReturnValue(RenderType.entityTranslucentEmissive(resourceLocation));
             cir.cancel();

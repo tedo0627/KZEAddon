@@ -18,13 +18,13 @@ import java.util.UUID;
 public abstract class MixinEntity {
 
     @Inject(method = "isInvisible", at = @At("HEAD"), cancellable = true)
-    private void isInvisibleFlag(@NotNull CallbackInfoReturnable<Boolean> cir) {
+    private void isInvisibleInject(@NotNull CallbackInfoReturnable<Boolean> cir) {
         boolean invisibleFlag = this.getSharedFlag(5);
         cir.setReturnValue(HidePlayerService.isInvisible(getUUID(), getTeam(), invisibleFlag));
     }
 
     @Shadow
-    protected abstract boolean getSharedFlag(int p_20292_);
+    protected abstract boolean getSharedFlag(int i);
 
     @Shadow
     public abstract UUID getUUID();
@@ -34,7 +34,7 @@ public abstract class MixinEntity {
     public abstract Team getTeam();
 
     @Inject(method = "isInvisibleTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getTeam()Lnet/minecraft/world/scores/Team;"), cancellable = true)
-    private void isInvisibleTo(Player p_20178_, CallbackInfoReturnable<Boolean> cir) {
+    private void isInvisibleTo(Player player, CallbackInfoReturnable<Boolean> cir) {
         if (HidePlayerService.isOverrideIsInvisibleToFunc()) {
             cir.setReturnValue(isInvisible());
             cir.cancel();

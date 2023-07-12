@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinChatListener {
 
     @Inject(method = "handleSystemMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/ChatComponent;addMessage(Lnet/minecraft/network/chat/Component;)V"), cancellable = true)
-    private void onGameMessage(Component component, boolean bl, CallbackInfo ci) {
+    private void onGameMessage(Component component, boolean bool, CallbackInfo ci) {
         if (!ChatReceiveCallback.EVENT.invoker().callback(component)) ci.cancel();
     }
 }

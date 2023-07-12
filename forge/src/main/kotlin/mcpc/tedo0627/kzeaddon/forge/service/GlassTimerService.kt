@@ -50,13 +50,13 @@ class GlassTimerService {
         if (!AddonOptions.displayGlassTimer.get()) return
 
         val mc = Minecraft.getInstance()
-        val renderer = mc.font
+        val font = mc.font
 
         val text = (currentTime / 20 + 1).toString()
-        val x = (mc.window.guiScaledWidth / 2 - 20 - renderer.width(text) / 2).toFloat()
+        val x = (mc.window.guiScaledWidth / 2 - 20 - font.width(text) / 2).toFloat()
         val y = (mc.window.guiScaledHeight - 49).toFloat()
 
-        renderer.draw(
+        font.draw(
             event.poseStack,
             (currentTime / 20 + 1).toString(),
             x + AddonOptions.glassTimerOverlayLocationX.get(),

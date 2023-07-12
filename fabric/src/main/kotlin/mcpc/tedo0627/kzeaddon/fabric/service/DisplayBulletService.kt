@@ -9,8 +9,8 @@ class DisplayBulletService {
 
     init {
         HudRenderCallback.EVENT.register { poseStack, _ ->
-            val client = Minecraft.getInstance()
-            val player = client.player ?: return@register
+            val mc = Minecraft.getInstance()
+            val player = mc.player ?: return@register
 
             if (!AddonOptions.displayBullet.get()) return@register
 
@@ -25,21 +25,22 @@ class DisplayBulletService {
 
                 val currentBullet = split[1]
                 val remainingBullet = split[2]
+                if (currentBullet.toIntOrNull() == null || remainingBullet.toIntOrNull() == null) return@register
 
-                val x = (client.window.guiScaledWidth / 2).toFloat()
-                val y = (client.window.guiScaledHeight - 49).toFloat()
-                val renderer = client.font
-                renderer.draw(
+                val x = (mc.window.guiScaledWidth / 2).toFloat() - 20 * (4 - slot)
+                val y = (mc.window.guiScaledHeight - 49).toFloat()
+                val font = mc.font
+                font.draw(
                     poseStack,
                     currentBullet,
-                    x - 20 * (4 - slot) - renderer.width(currentBullet) / 2 + AddonOptions.currentBulletOverlayLocationX.get(),
+                    x - font.width(currentBullet) / 2 + AddonOptions.currentBulletOverlayLocationX.get(),
                     y + AddonOptions.currentBulletOverlayLocationY.get(),
                     16777215
                 )
-                renderer.draw(
+                font.draw(
                     poseStack,
                     remainingBullet,
-                    x - 20 * (4 - slot) - renderer.width(remainingBullet) / 2 + AddonOptions.remainingBulletOverlayLocationX.get(),
+                    x - font.width(remainingBullet) / 2 + AddonOptions.remainingBulletOverlayLocationX.get(),
                     y + 10 + AddonOptions.remainingBulletOverlayLocationY.get(),
                     16777215
                 )

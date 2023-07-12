@@ -30,14 +30,14 @@ class GlassTimerService {
             if (currentTime == -1) return@register
             if (!AddonOptions.displayGlassTimer.get()) return@register
 
-            val client = Minecraft.getInstance()
-            val renderer = client.font
+            val mc = Minecraft.getInstance()
+            val font = mc.font
 
             val text = (currentTime / 20 + 1).toString()
-            val x = (client.window.guiScaledWidth / 2 - 20 - renderer.width(text) / 2).toFloat()
-            val y = (client.window.guiScaledHeight - 49).toFloat()
+            val x = (mc.window.guiScaledWidth / 2 - 20 - font.width(text) / 2).toFloat()
+            val y = (mc.window.guiScaledHeight - 49).toFloat()
 
-            renderer.draw(
+            font.draw(
                 poseStack,
                 (currentTime / 20 + 1).toString(),
                 x + AddonOptions.glassTimerOverlayLocationX.get(),
@@ -48,8 +48,8 @@ class GlassTimerService {
     }
 
     private fun getTime(): Int? {
-        val client = Minecraft.getInstance()
-        val player = client.player ?: return null
+        val mc = Minecraft.getInstance()
+        val player = mc.player ?: return null
 
         val itemStack = player.inventory.getItem(8) ?: return null
         if (itemStack.item != Items.RED_STAINED_GLASS_PANE) return null

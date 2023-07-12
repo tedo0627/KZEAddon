@@ -24,17 +24,17 @@ public abstract class MixinEntity {
     }
 
     @Shadow
-    protected abstract boolean getSharedFlag(int p_20292_);
+    protected abstract boolean getSharedFlag(int i);
+
+    @Shadow
+    public abstract UUID getUUID();
 
     @Shadow
     @Nullable
     public abstract Team getTeam();
 
-    @Shadow
-    public abstract UUID getUUID();
-
     @Inject(method = "isInvisibleTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getTeam()Lnet/minecraft/world/scores/Team;"), cancellable = true)
-    private void isInvisibleTo(Player playerEntity, CallbackInfoReturnable<Boolean> cir) {
+    private void isInvisibleTo(Player player, CallbackInfoReturnable<Boolean> cir) {
         if (HidePlayerService.isOverrideIsInvisibleToFunc()) {
             cir.setReturnValue(isInvisible());
             cir.cancel();

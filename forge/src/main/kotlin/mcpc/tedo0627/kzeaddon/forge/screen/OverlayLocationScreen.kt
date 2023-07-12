@@ -14,17 +14,17 @@ import net.minecraft.network.chat.Component
 class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Component.literal("座標の変更")) {
 
     override fun init() {
-        add("kzeaddon.screen.overlayLocation.currentBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.currentBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.currentBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.currentBulletOverlayLocationY)
+        add("currentBulletX", "tooltipX", AddonOptions.currentBulletOverlayLocationX)
+        add("currentBulletY", "tooltipY", AddonOptions.currentBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.remainingBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.remainingBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.remainingBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.remainingBulletOverlayLocationY)
+        add("remainingBulletX", "tooltipX", AddonOptions.remainingBulletOverlayLocationX)
+        add("remainingBulletY", "tooltipY", AddonOptions.remainingBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.killLogX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.killLogOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.killLogY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.killLogOverlayLocationY)
+        add("killLogX", "tooltipX", AddonOptions.killLogOverlayLocationX)
+        add("killLogY", "tooltipY", AddonOptions.killLogOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.glassTimerX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.glassTimerOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.glassTimerY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.glassTimerOverlayLocationY)
+        add("glassTimerX", "tooltipX", AddonOptions.glassTimerOverlayLocationX)
+        add("glassTimerY", "tooltipY", AddonOptions.glassTimerOverlayLocationY)
 
         addRenderableWidget(Button
             .builder(CommonComponents.GUI_DONE) { minecraft?.setScreen(previous) }
@@ -34,12 +34,13 @@ class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Compo
         )
     }
 
-    private fun add(translatable: String, toolTip: Tooltip, option: OptionInstance<Int>) {
+    private fun add(translatable: String, toolTipStr: String, option: OptionInstance<Int>) {
         val size = children().size / 2
         val y = height / 6 - 12 + size * 30
 
         val textRenderer = minecraft?.font ?: return
-        val text = Component.translatable(translatable)
+        val toolTip = Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.$toolTipStr"))
+        val text = Component.translatable("kzeaddon.screen.overlayLocation.$translatable")
 
         val textWidget = StringWidget(width / 2 - 250 + textRenderer.width(text.visualOrderText) / 2, y, 140, 20, text, textRenderer)
         textWidget.setTooltip(toolTip)
@@ -56,13 +57,15 @@ class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Compo
         addRenderableWidget(textFieldWidget)
     }
 
-    override fun render(matrixStack: PoseStack, mouseX: Int, mouseY: Int, delta: Float) {
-        renderBackground(matrixStack)
-        drawCenteredString(matrixStack, font, title, width / 2, 5, 0xffffff)
-        super.render(matrixStack, mouseX, mouseY, delta)
+    override fun render(poseStack: PoseStack, i: Int, j: Int, f: Float) {
+        renderBackground(poseStack)
+        drawCenteredString(poseStack, font, title, width / 2, 5, 0xffffff)
+        super.render(poseStack, i, j, f)
     }
 
     override fun onClose() {
         minecraft?.setScreen(previous)
     }
+
+    override fun isPauseScreen() = false
 }

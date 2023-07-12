@@ -16,20 +16,20 @@ class KillLogScreen(
 
     private var scroll = 0
 
-    override fun render(p_96562_: PoseStack, p_96563_: Int, p_96564_: Int, p_96565_: Float) {
+    override fun render(poseStack: PoseStack, i: Int, j: Int, f: Float) {
         val size = list.size
         val start = if (size <= 20) 0 else size - 20 - scroll
         val end = size - scroll
         for (index in start until end) {
             val killLog = list[index]
-            service.renderWeapon(killLog, end - 1 - index, PoseStack())
+            service.renderWeapon(killLog, end - 1 - index, poseStack)
         }
 
-        super.render(p_96562_, p_96563_, p_96564_, p_96565_)
+        super.render(poseStack, i, j, f)
     }
 
-    override fun mouseScrolled(p_94686_: Double, p_94687_: Double, p_94688_: Double): Boolean {
-        scroll -= p_94688_.toInt()
+    override fun mouseScrolled(d: Double, e: Double, f: Double): Boolean {
+        scroll -= f.toInt()
 
         val size = list.size
         if (size < 21) {
@@ -39,7 +39,7 @@ class KillLogScreen(
 
         scroll = max(0, scroll)
         scroll = min(size - 20, scroll)
-        return super.mouseScrolled(p_94686_, p_94687_, p_94688_)
+        return super.mouseScrolled(d, e, f)
     }
 
     override fun keyPressed(i: Int, j: Int, k: Int): Boolean {

@@ -42,5 +42,5 @@
   "kzeaddon.screen.overlayLocation.glassTimerY": "ガラスタイマーのy座標",
 
   "kzeaddon.screen.overlayLocation.tooltipX": "値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する",
-  "kzeaddon.screen.overlayLocation.tooltipY": "値を増やすと画面の上に移動し、\n値を減らすと画面の下に移動する"
+  "kzeaddon.screen.overlayLocation.tooltipY": "値を増やすと画面の下に移動し、\n値を減らすと画面の上に移動する"
 }

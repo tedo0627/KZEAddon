@@ -50,10 +50,10 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
         return height / 6 - 12 + (size / 2 * 24)
     }
 
-    override fun render(matrixStack: PoseStack, i: Int, j: Int, f: Float) {
-        renderBackground(matrixStack)
-        drawCenteredString(matrixStack, font, title, width / 2, 5, 0xffffff)
-        super.render(matrixStack, i, j, f)
+    override fun render(poseStack: PoseStack, i: Int, j: Int, f: Float) {
+        renderBackground(poseStack)
+        drawCenteredString(poseStack, font, title, width / 2, 5, 0xffffff)
+        super.render(poseStack, i, j, f)
     }
 
     override fun onClose() {

@@ -16,6 +16,7 @@ class OverlayLocationList(
         add("remainingBullet", AddonOptions.remainingBulletOverlayLocationX, AddonOptions.remainingBulletOverlayLocationY)
         add("killLog", AddonOptions.killLogOverlayLocationX, AddonOptions.killLogOverlayLocationY)
         add("glassTimer", AddonOptions.glassTimerOverlayLocationX, AddonOptions.glassTimerOverlayLocationY)
+        add("scoreboardTimer", AddonOptions.scoreboardTimerOverlayLocationX, AddonOptions.scoreboardTimerOverlayLocationY)
 
         setRenderBackground(false)
         setRenderTopAndBottom(false)

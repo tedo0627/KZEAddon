@@ -121,6 +121,13 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final OptionInstance<Boolean> displayScoreboardTimer = OptionInstance.createBoolean(
+        "kzeaddon.options.displayScoreboardTimer",
+        OptionInstance.noTooltip(),
+        false,
+        (bool) -> {}
+    );
+
     public static final OptionInstance<Integer> currentBulletOverlayLocationX = createLocationOption();
     public static final OptionInstance<Integer> currentBulletOverlayLocationY = createLocationOption();
 
@@ -133,6 +140,9 @@ public class AddonOptions {
     public static final OptionInstance<Integer> glassTimerOverlayLocationX = createLocationOption();
     public static final OptionInstance<Integer> glassTimerOverlayLocationY = createLocationOption();
 
+    public static final OptionInstance<Integer> scoreboardTimerOverlayLocationX = createLocationOption();
+    public static final OptionInstance<Integer> scoreboardTimerOverlayLocationY = createLocationOption();
+
     static {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
         list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
@@ -144,6 +154,7 @@ public class AddonOptions {
         list.add(new Pair<>("disableKillLogWhenPressTab", disableKillLogWhenPressTab));
         list.add(new Pair<>("removeChatKillLog", removeChatKillLog));
         list.add(new Pair<>("displayGlassTimer", displayGlassTimer));
+        list.add(new Pair<>("displayScoreboardTimer", displayScoreboardTimer));
 
         list.add(new Pair<>("currentBulletOverlayLocationX", currentBulletOverlayLocationX));
         list.add(new Pair<>("currentBulletOverlayLocationY", currentBulletOverlayLocationY));
@@ -153,6 +164,8 @@ public class AddonOptions {
         list.add(new Pair<>("killLogOverlayLocationY", killLogOverlayLocationY));
         list.add(new Pair<>("glassTimerOverlayLocationX", glassTimerOverlayLocationX));
         list.add(new Pair<>("glassTimerOverlayLocationY", glassTimerOverlayLocationY));
+        list.add(new Pair<>("scoreboardTimerOverlayLocationX", scoreboardTimerOverlayLocationX));
+        list.add(new Pair<>("scoreboardTimerOverlayLocationY", scoreboardTimerOverlayLocationY));
     }
 
     private static OptionInstance<Integer> createLocationOption() {

@@ -31,7 +31,8 @@ object KZEAddon {
             GlassTimerService(),
             HidePlayerService(hideKey),
             KillLogService(killLogKey),
-            RegisterCommandService()
+            RegisterCommandService(),
+            ScoreboardTimerService()
         ).forEach { MinecraftForge.EVENT_BUS.register(it) }
     }
 }

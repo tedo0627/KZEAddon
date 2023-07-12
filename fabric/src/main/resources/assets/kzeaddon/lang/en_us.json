@@ -34,15 +34,12 @@
 
   "kzeaddon.screen.setting.displayLocationButton": "表示するものの座標",
 
-  "kzeaddon.screen.overlayLocation.currentBulletX": "現在の弾数の表示のx座標",
-  "kzeaddon.screen.overlayLocation.currentBulletY": "現在の弾数の表示のy座標",
-  "kzeaddon.screen.overlayLocation.remainingBulletX": "残っている弾数の表示のx座標",
-  "kzeaddon.screen.overlayLocation.remainingBulletY": "残っている弾数の表示のy座標",
-  "kzeaddon.screen.overlayLocation.killLogX": "キルログの表示のx座標",
-  "kzeaddon.screen.overlayLocation.killLogY": "キルログの表示のy座標",
-  "kzeaddon.screen.overlayLocation.glassTimerX": "ガラスタイマーのX座標",
-  "kzeaddon.screen.overlayLocation.glassTimerY": "ガラスタイマーのy座標",
+  "kzeaddon.screen.overlayLocation.currentBullet": "現在の弾数の表示の座標",
+  "kzeaddon.screen.overlayLocation.remainingBullet": "残っている弾数の表示の座標",
+  "kzeaddon.screen.overlayLocation.killLog": "キルログの表示の座標",
+  "kzeaddon.screen.overlayLocation.glassTimer": "ガラスタイマーの座標",
+  "kzeaddon.screen.overlayLocation.scoreboardTimer": "スコアボードタイマーの座標",
 
-  "kzeaddon.screen.overlayLocation.tooltipX": "値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する",
-  "kzeaddon.screen.overlayLocation.tooltipY": "値を増やすと画面の下に移動し、\n値を減らすと画面の上に移動する"
+  "kzeaddon.screen.overlayLocation.tooltipX": "X座標を決める\n値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する",
+  "kzeaddon.screen.overlayLocation.tooltipY": "Y座標を決める\n値を増やすと画面の下に移動し、\n値を減らすと画面の上に移動する"
 }

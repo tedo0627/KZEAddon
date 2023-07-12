@@ -21,7 +21,8 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
             AddonOptions.addKillLogWeaponName,
             AddonOptions.disableKillLogWhenPressTab,
             AddonOptions.removeChatKillLog,
-            AddonOptions.displayGlassTimer
+            AddonOptions.displayGlassTimer,
+            AddonOptions.displayScoreboardTimer
         ).forEach {
             addRenderableWidget(it.createButton(minecraft?.options ?: return, getNextX(), getNextY(), 200))
         }

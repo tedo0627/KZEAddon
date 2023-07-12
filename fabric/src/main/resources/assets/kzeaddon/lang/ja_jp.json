@@ -30,6 +30,8 @@
 
   "kzeaddon.options.displayGlassTimer": "ガラスタイマーの時間の表示",
 
+  "kzeaddon.options.displayScoreboardTimer": "スコアボードタイマーの時間の表示",
+
   "kzeaddon.screen.setting.displayLocationButton": "表示するものの座標",
 
   "kzeaddon.screen.overlayLocation.currentBullet": "現在の弾数の表示の座標",

@@ -15,5 +15,6 @@ class KZEAddon : ClientModInitializer {
         HidePlayerService()
         KillLogService()
         RegisterCommandService()
+        ScoreboardTimerService()
     }
 }

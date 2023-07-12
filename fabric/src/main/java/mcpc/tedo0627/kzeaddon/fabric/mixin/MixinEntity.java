@@ -1,9 +1,9 @@
 package mcpc.tedo0627.kzeaddon.fabric.mixin;
 
 import mcpc.tedo0627.kzeaddon.fabric.service.HidePlayerService;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.scoreboard.AbstractTeam;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.scores.Team;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,22 +19,22 @@ public abstract class MixinEntity {
 
     @Inject(method = "isInvisible()Z", at = @At("HEAD"), cancellable = true)
     private void isInvisibleInject(@NotNull CallbackInfoReturnable<Boolean> cir) {
-        boolean invisibleFlag = this.getFlag(5);
-        cir.setReturnValue(HidePlayerService.isInvisible(getUuid(), getScoreboardTeam(), invisibleFlag));
+        boolean invisibleFlag = this.getSharedFlag(5);
+        cir.setReturnValue(HidePlayerService.isInvisible(getUUID(), getTeam(), invisibleFlag));
     }
 
     @Shadow
-    protected abstract boolean getFlag(int index);
+    protected abstract boolean getSharedFlag(int p_20292_);
 
     @Shadow
     @Nullable
-    public abstract AbstractTeam getScoreboardTeam();
+    public abstract Team getTeam();
 
     @Shadow
-    public abstract UUID getUuid();
+    public abstract UUID getUUID();
 
-    @Inject(method = "isInvisibleTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getScoreboardTeam()Lnet/minecraft/scoreboard/AbstractTeam;"), cancellable = true)
-    private void isInvisibleTo(PlayerEntity playerEntity, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "isInvisibleTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getTeam()Lnet/minecraft/world/scores/Team;"), cancellable = true)
+    private void isInvisibleTo(Player playerEntity, CallbackInfoReturnable<Boolean> cir) {
         if (HidePlayerService.isOverrideIsInvisibleToFunc()) {
             cir.setReturnValue(isInvisible());
             cir.cancel();

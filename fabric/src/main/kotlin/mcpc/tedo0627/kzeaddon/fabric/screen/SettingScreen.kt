@@ -1,14 +1,14 @@
 package mcpc.tedo0627.kzeaddon.fabric.screen
 
+import com.mojang.blaze3d.vertex.PoseStack
 import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions
 import mcpc.tedo0627.kzeaddon.fabric.option.OptionConfig
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.widget.ButtonWidget
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.screen.ScreenTexts
-import net.minecraft.text.Text
+import net.minecraft.client.gui.components.Button
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.CommonComponents
+import net.minecraft.network.chat.Component
 
-class SettingScreen(private val previous: Screen? = null) : Screen(Text.literal("KZEAddonのオプション")) {
+class SettingScreen(private val previous: Screen? = null) : Screen(Component.literal("KZEAddonのオプション")) {
 
     override fun init() {
         mutableListOf(
@@ -21,18 +21,18 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Text.literal(
             AddonOptions.removeChatKillLog,
             AddonOptions.displayGlassTimer
         ).forEach {
-            addDrawableChild(it.createWidget(client?.options, getNextX(), getNextY(), 150))
+            addRenderableWidget(it.createButton(minecraft?.options ?: return, getNextX(), getNextY(), 150))
         }
 
-        addDrawableChild(ButtonWidget
-            .builder(Text.translatable("kzeaddon.screen.setting.displayLocationButton")) { client?.setScreen(OverlayLocationScreen(this)) }
-            .dimensions(getNextX(), getNextY(), 150, 20)
+        addRenderableWidget(Button
+            .builder(Component.translatable("kzeaddon.screen.setting.displayLocationButton")) { minecraft?.setScreen(OverlayLocationScreen(this)) }
+            .bounds(getNextX(), getNextY(), 150, 20)
             .build()
         )
 
-        addDrawableChild(ButtonWidget
-            .Builder(ScreenTexts.DONE) { client?.setScreen(previous) }
-            .position(width / 2 - 100, height - 27)
+        addRenderableWidget(Button
+            .Builder(CommonComponents.GUI_DONE) { minecraft?.setScreen(previous) }
+            .pos(width / 2 - 100, height - 27)
             .size(200, 20)
             .build()
         )
@@ -48,14 +48,14 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Text.literal(
         return height / 6 - 12 + (size / 2 * 24)
     }
 
-    override fun render(matrixStack: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(matrixStack: PoseStack, mouseX: Int, mouseY: Int, delta: Float) {
         renderBackground(matrixStack)
-        drawCenteredTextWithShadow(matrixStack, textRenderer, title, width / 2, 5, 0xffffff)
+        drawCenteredString(matrixStack, font, title, width / 2, 5, 0xffffff)
         super.render(matrixStack, mouseX, mouseY, delta)
     }
 
-    override fun close() {
-        client?.setScreen(previous)
+    override fun onClose() {
+        minecraft?.setScreen(previous)
     }
 
     override fun removed() {

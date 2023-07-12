@@ -12,6 +12,7 @@ class DisplayBulletService {
     @SubscribeEvent
     fun onRenderGuiOverlayEvent(event: RenderGuiOverlayEvent.Pre) {
         if (GuiOverlayManager.getOverlays()[0] != event.overlay) return
+        val poseStack = event.poseStack
 
         val mc = Minecraft.getInstance()
         val player = mc.player ?: return
@@ -35,14 +36,14 @@ class DisplayBulletService {
             val y = (mc.window.guiScaledHeight - 49).toFloat()
             val renderer = mc.font
             renderer.draw(
-                event.poseStack,
+                poseStack,
                 currentBullet,
                 x - 20 * (4 - slot) - renderer.width(currentBullet) / 2 + AddonOptions.currentBulletOverlayLocationX.get(),
                 y + AddonOptions.currentBulletOverlayLocationY.get(),
                 16777215
             )
             renderer.draw(
-                event.poseStack,
+                poseStack,
                 remainingBullet,
                 x - 20 * (4 - slot) - renderer.width(remainingBullet) / 2 + AddonOptions.remainingBulletOverlayLocationX.get(),
                 y + 10 + AddonOptions.remainingBulletOverlayLocationY.get(),

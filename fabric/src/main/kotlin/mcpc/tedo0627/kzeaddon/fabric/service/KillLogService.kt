@@ -1,24 +1,24 @@
 package mcpc.tedo0627.kzeaddon.fabric.service
 
+import com.mojang.blaze3d.platform.NativeImage
 import com.mojang.blaze3d.systems.RenderSystem
+import com.mojang.blaze3d.vertex.PoseStack
 import mcpc.tedo0627.kzeaddon.fabric.event.ChatReceiveCallback
 import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions
 import mcpc.tedo0627.kzeaddon.fabric.screen.KillLogScreen
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gui.hud.InGameHud
-import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.texture.NativeImage
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.resource.Resource
-import net.minecraft.util.Identifier
+import net.minecraft.client.KeyMapping
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiComponent
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.packs.resources.Resource
 import org.apache.logging.log4j.LogManager
 
 class KillLogService {
 
-    private val key = KeyBinding("kzeaddon.key.killLog", -1, "KZEAddon")
+    private val key = KeyMapping("kzeaddon.key.killLog", -1, "KZEAddon")
 
     private val regex = Regex("""》(FirstBlood! |)(.*) killed by (.*) \(([A-Za-z0-9_-]+) ?\)""")
 
@@ -42,8 +42,8 @@ class KillLogService {
         "ruger_mki" to "ruger"
     )
 
-    private val addonIdentifiers = mutableMapOf<String, Identifier>()
-    private val textureSize = mutableMapOf<Identifier, Pair<Int, Int>>()
+    private val addonIdentifiers = mutableMapOf<String, ResourceLocation>()
+    private val textureSize = mutableMapOf<ResourceLocation, Pair<Int, Int>>()
 
     /**
      * Samples
@@ -56,16 +56,16 @@ class KillLogService {
         KeyBindingHelper.registerKeyBinding(key)
 
         ClientTickEvents.END_CLIENT_TICK.register {
-            val client = MinecraftClient.getInstance()
+            val client = Minecraft.getInstance()
             if (client.player == null) return@register
 
-            if (key.isPressed) {
+            if (key.isDown) {
                 client.setScreen(KillLogScreen(key, guiList, this))
             }
         }
 
         ChatReceiveCallback.EVENT.register(ChatReceiveCallback.FIRST) { text ->
-            if (!AddonOptions.displayKillLog.value) return@register true
+            if (!AddonOptions.displayKillLog.get()) return@register true
 
             val result = regex.matchEntire(text.string) ?: return@register true
 
@@ -89,32 +89,31 @@ class KillLogService {
             }
         }
 
-        HudRenderCallback.EVENT.register { _, _ ->
-            val client = MinecraftClient.getInstance()
-            if (client.currentScreen is KillLogScreen) return@register
+        HudRenderCallback.EVENT.register { poseStack, _ ->
+            val client = Minecraft.getInstance()
+            if (client.screen is KillLogScreen) return@register
 
             val size = overlayList.size
             overlayList.forEachIndexed { index, killLog ->
-                renderWeapon(killLog, size - index - 1)
+                renderWeapon(killLog, size - index - 1, poseStack)
             }
         }
     }
 
-    fun renderWeapon(killLog: KillLog, step: Int) {
-        val matrixStack = MatrixStack()
+    fun renderWeapon(killLog: KillLog, step: Int, matrixStack: PoseStack) {
         var identifier = addonIdentifiers.getOrPut(killLog.weapon) {
-            Identifier("textures/font/${killLog.weapon}.png")
+            ResourceLocation("textures/font/${killLog.weapon}.png")
         }
-        val client = MinecraftClient.getInstance()
+        val client = Minecraft.getInstance()
         val window = client.window
-        val renderer = client.textRenderer
+        val renderer = client.font
 
         val size = textureSize.getOrPut(identifier) {
             val pair = getSize(identifier)
             if (pair == null) {
                 val convert = weaponConverter[killLog.weapon]
                 if (convert != null) {
-                    val convertIdentifier = Identifier("textures/font/${convert}.png")
+                    val convertIdentifier = ResourceLocation("textures/font/${convert}.png")
                     val convertPair = getSize(convertIdentifier)
                     if (convertPair != null) {
                         addonIdentifiers[killLog.weapon] = convertIdentifier
@@ -123,7 +122,7 @@ class KillLogService {
                     }
                 }
 
-                val addonIdentifier = Identifier("kzeaddon", "textures/font/${killLog.weapon}.png")
+                val addonIdentifier = ResourceLocation("kzeaddon", "textures/font/${killLog.weapon}.png")
                 val addonPair = getSize(addonIdentifier)
                 if (addonPair == null) {
                     LogManager.getLogger().info("not found weapon, log target: ${killLog.target}, killer: ${killLog.killer}, weapon: ${killLog.weapon}")
@@ -136,25 +135,25 @@ class KillLogService {
             pair ?: Pair(0, 0)
         }
 
-        val nameLength = renderer.getWidth("a".repeat(16))
-        val weaponLength = renderer.getWidth("a".repeat(6))
-        val height = 5 + step * (renderer.fontHeight + 2)
+        val nameLength = renderer.width("a".repeat(16))
+        val weaponLength = renderer.width("a".repeat(6))
+        val height = 5 + step * (renderer.lineHeight + 2)
 
-        val backColor = if (killLog.firstBlood) 1688862720 else client.options.getTextBackgroundColor(Integer.MIN_VALUE)
-        InGameHud.fill(
+        val backColor = if (killLog.firstBlood) 1688862720 else client.options.getBackgroundColor(Integer.MIN_VALUE)
+        GuiComponent.fill(
             matrixStack,
-            window.scaledWidth - nameLength * 2 - weaponLength - 1 + AddonOptions.killLogOverlayLocationX.value,
-            height + AddonOptions.killLogOverlayLocationY.value,
-            window.scaledWidth - nameLength - weaponLength + 1 + AddonOptions.killLogOverlayLocationX.value,
-            height + renderer.fontHeight + 2 + AddonOptions.killLogOverlayLocationY.value,
+            window.guiScaledWidth - nameLength * 2 - weaponLength - 1 + AddonOptions.killLogOverlayLocationX.get(),
+            height + AddonOptions.killLogOverlayLocationY.get(),
+            window.guiScaledWidth - nameLength - weaponLength + 1 + AddonOptions.killLogOverlayLocationX.get(),
+            height + renderer.lineHeight + 2 + AddonOptions.killLogOverlayLocationY.get(),
             -90,
             backColor)
-        InGameHud.fill(
+        GuiComponent.fill(
             matrixStack,
-            window.scaledWidth - nameLength - 1 + AddonOptions.killLogOverlayLocationX.value,
-            height + AddonOptions.killLogOverlayLocationY.value,
-            window.scaledWidth + AddonOptions.killLogOverlayLocationX.value,
-            height + renderer.fontHeight + 2 + AddonOptions.killLogOverlayLocationY.value,
+            window.guiScaledWidth - nameLength - 1 + AddonOptions.killLogOverlayLocationX.get(),
+            height + AddonOptions.killLogOverlayLocationY.get(),
+            window.guiScaledWidth + AddonOptions.killLogOverlayLocationX.get(),
+            height + renderer.lineHeight + 2 + AddonOptions.killLogOverlayLocationY.get(),
             -90,
             backColor
         )
@@ -164,16 +163,16 @@ class KillLogService {
         val yellow = 16777045
         val isZombieKiller = killLog.weapon == "infected"
         val myName = client.player?.name?.string ?: return
-        renderer.drawWithShadow(
+        renderer.draw(
             matrixStack, killLog.killer,
-            (window.scaledWidth - nameLength * 2 - weaponLength).toFloat() + AddonOptions.killLogOverlayLocationX.value,
-            height + 1f + AddonOptions.killLogOverlayLocationY.value,
+            (window.guiScaledWidth - nameLength * 2 - weaponLength).toFloat() + AddonOptions.killLogOverlayLocationX.get(),
+            height + 1f + AddonOptions.killLogOverlayLocationY.get(),
             if (myName == killLog.killer) yellow else if (isZombieKiller) green else aqua
         )
-        renderer.drawWithShadow(
+        renderer.draw(
             matrixStack, killLog.target,
-            (window.scaledWidth - nameLength).toFloat() + AddonOptions.killLogOverlayLocationX.value,
-            height + 1f + AddonOptions.killLogOverlayLocationY.value,
+            (window.guiScaledWidth - nameLength).toFloat() + AddonOptions.killLogOverlayLocationX.get(),
+            height + 1f + AddonOptions.killLogOverlayLocationY.get(),
             if (myName == killLog.target) yellow else if (!isZombieKiller) green else aqua
         )
 
@@ -183,17 +182,17 @@ class KillLogService {
         RenderSystem.setShaderTexture(0, identifier)
         if (isZombieKiller) {
             // ゾンビの攻撃のテクスチャの位置を変える
-            InGameHud.drawTexture(
+            GuiComponent.blit(
                 matrixStack,
-                window.scaledWidth - nameLength - weaponLength + 2 + AddonOptions.killLogOverlayLocationX.value,
-                height + 1 + AddonOptions.killLogOverlayLocationY.value,
+                window.guiScaledWidth - nameLength - weaponLength + 2 + AddonOptions.killLogOverlayLocationX.get(),
+                height + 1 + AddonOptions.killLogOverlayLocationY.get(),
                 -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
             )
         } else {
-            InGameHud.drawTexture(
+            GuiComponent.blit(
                 matrixStack,
-                window.scaledWidth - nameLength - weaponLength + AddonOptions.killLogOverlayLocationX.value,
-                height + 1 + AddonOptions.killLogOverlayLocationY.value,
+                window.guiScaledWidth - nameLength - weaponLength + AddonOptions.killLogOverlayLocationX.get(),
+                height + 1 + AddonOptions.killLogOverlayLocationY.get(),
                 -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
             )
         }
@@ -201,14 +200,14 @@ class KillLogService {
         RenderSystem.enableDepthTest()
     }
 
-    private fun getSize(identifier: Identifier): Pair<Int, Int>? {
-        val client = MinecraftClient.getInstance()
-        val renderer = client.textRenderer
+    private fun getSize(identifier: ResourceLocation): Pair<Int, Int>? {
+        val client = Minecraft.getInstance()
+        val renderer = client.font
         return try {
             val resource: Resource = client.resourceManager.getResourceOrThrow(identifier)
-            resource.inputStream.use { inputStream ->
+            resource.open().use { inputStream ->
                 val nativeImage = NativeImage.read(inputStream)
-                val divide = nativeImage.height / renderer.fontHeight
+                val divide = nativeImage.height / renderer.lineHeight
                 Pair(nativeImage.width / divide, nativeImage.height / divide)
             }
         } catch (e: Exception) {

@@ -9,7 +9,7 @@ class ChatFilterService {
 
     init {
         ChatReceiveCallback.EVENT.register(ChatReceiveCallback.SECOND) { text ->
-            if (!AddonOptions.removeChatKillLog.value) return@register true
+            if (!AddonOptions.removeChatKillLog.get()) return@register true
 
             return@register !text.string.matches(regex)
         }

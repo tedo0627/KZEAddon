@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.stream.JsonWriter
 import com.mojang.serialization.JsonOps
-import net.minecraft.client.option.SimpleOption
+import net.minecraft.client.OptionInstance
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -32,9 +32,9 @@ object OptionConfig {
         }
     }
 
-    private fun <T> load(json: JsonObject, key: String, option: SimpleOption<T>) {
-        val dataResult = option.codec.parse(JsonOps.INSTANCE, json.get(key))
-        dataResult.result().ifPresent { option.value = it }
+    private fun <T> load(json: JsonObject, key: String, option: OptionInstance<T>) {
+        val dataResult = option.codec().parse(JsonOps.INSTANCE, json.get(key))
+        dataResult.result().ifPresent { option.set(it) }
     }
 
     fun save() {
@@ -52,8 +52,8 @@ object OptionConfig {
         }
     }
 
-    private fun <T> save(json: JsonObject, key: String, option: SimpleOption<T>) {
-        val dataResult = option.codec.encodeStart(JsonOps.INSTANCE, option.value)
+    private fun <T> save(json: JsonObject, key: String, option: OptionInstance<T>) {
+        val dataResult = option.codec().encodeStart(JsonOps.INSTANCE, option.get())
         json.add(key, dataResult.result().get())
     }
 }

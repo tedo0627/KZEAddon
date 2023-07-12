@@ -6,10 +6,10 @@
     "MixinEntity"
   ],
   "client": [
-    "MixinClientWorld",
-    "MixinLightmapTextureManager",
+    "MixinClientLevel",
+    "MixinLightTexture",
     "MixinLivingEntityRenderer",
-    "MixinMessageHandler"
+    "MixinChatListener"
   ],
   "injectors": {
     "defaultRequire": 1

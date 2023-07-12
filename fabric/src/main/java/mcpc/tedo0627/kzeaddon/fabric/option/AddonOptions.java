@@ -3,8 +3,8 @@ package mcpc.tedo0627.kzeaddon.fabric.option;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import net.minecraft.client.option.SimpleOption;
-import net.minecraft.text.Text;
+import net.minecraft.client.OptionInstance;
+import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +12,17 @@ import java.util.List;
 // OptionInstanceの作成がなぜかKotlinで動かない
 public class AddonOptions {
 
-    private static final ArrayList<Pair<String, SimpleOption<?>>> list = new ArrayList<>();
+    private static final ArrayList<Pair<String, OptionInstance<?>>> list = new ArrayList<>();
 
-    public static List<Pair<String, SimpleOption<?>>> getOptionsList() {
+    public static List<Pair<String, OptionInstance<?>>> getOptionsList() {
         return list;
     }
 
-    public static final SimpleOption<HideToggleType> hidePlayerToggle = new SimpleOption<>(
+    public static final OptionInstance<HideToggleType> hidePlayerToggle = new OptionInstance<>(
         "kzeaddon.options.hidePlayerToggle",
-        SimpleOption.emptyTooltip(),
-        SimpleOption.enumValueText(),
-        new SimpleOption.PotentialValuesBasedCallbacks<>(
+        OptionInstance.noTooltip(),
+        OptionInstance.forOptionEnum(),
+        new OptionInstance.Enum<>(
             List.of(HideToggleType.values()),
             Codec.either(Codec.BOOL, Codec.STRING).xmap(
                 (either) -> either.map(
@@ -39,18 +39,18 @@ public class AddonOptions {
         (type) -> {}
     );
 
-    public static final SimpleOption<Boolean> hidePlayerOverlay = SimpleOption.ofBoolean(
+    public static final OptionInstance<Boolean> hidePlayerOverlay = OptionInstance.createBoolean(
         "kzeaddon.options.hidePlayerOverlay",
-        SimpleOption.constantTooltip(Text.translatable("kzeaddon.options.hidePlayerOverlay.tooltip")),
+        OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.hidePlayerOverlay.tooltip")),
         false,
         (bool) -> {}
     );
 
-    public static final SimpleOption<InvisibleType> invisibleType = new SimpleOption<>(
-        "kzeaddon.options.invisibleType",
-        SimpleOption.constantTooltip(Text.translatable("kzeaddon.options.invisibleType.tooltip")),
-        SimpleOption.enumValueText(),
-        new SimpleOption.PotentialValuesBasedCallbacks<>(
+    public static final OptionInstance<InvisibleType> invisibleType = new OptionInstance<>(
+        "kzeaddon.options.hidePlayerToggle",
+        OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.invisibleType.tooltip")),
+        OptionInstance.forOptionEnum(),
+        new OptionInstance.Enum<>(
             List.of(InvisibleType.values()),
             Codec.either(Codec.BOOL, Codec.STRING).xmap(
                 (either) -> either.map(
@@ -72,52 +72,52 @@ public class AddonOptions {
         (type) -> {}
     );
 
-    public static final SimpleOption<Boolean> gamma = SimpleOption.ofBoolean(
+    public static final OptionInstance<Boolean> gamma = OptionInstance.createBoolean(
         "kzeaddon.options.gamma",
-        SimpleOption.emptyTooltip(),
+        OptionInstance.noTooltip(),
         false,
         (bool) -> {}
     );
 
-    public static final SimpleOption<Boolean> displayBullet = SimpleOption.ofBoolean(
+    public static final OptionInstance<Boolean> displayBullet = OptionInstance.createBoolean(
         "kzeaddon.options.displayBullet",
-        SimpleOption.emptyTooltip(),
+        OptionInstance.noTooltip(),
         false,
         (bool) -> {}
     );
 
-    public static final SimpleOption<Boolean> displayKillLog = SimpleOption.ofBoolean(
+    public static final OptionInstance<Boolean> displayKillLog = OptionInstance.createBoolean(
         "kzeaddon.options.displayKillLog",
-        SimpleOption.emptyTooltip(),
+        OptionInstance.noTooltip(),
         false,
         (bool) -> {}
     );
 
-    public static final SimpleOption<Boolean> removeChatKillLog = SimpleOption.ofBoolean(
+    public static final OptionInstance<Boolean> removeChatKillLog = OptionInstance.createBoolean(
         "kzeaddon.options.removeChatKillLog",
-        SimpleOption.constantTooltip(Text.translatable("kzeaddon.options.removeChatKillLog.tooltip")),
+        OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.removeChatKillLog.tooltip")),
         false,
         (bool) -> {}
     );
 
-    public static final SimpleOption<Boolean> displayGlassTimer = SimpleOption.ofBoolean(
+    public static final OptionInstance<Boolean> displayGlassTimer = OptionInstance.createBoolean(
         "kzeaddon.options.displayGlassTimer",
-        SimpleOption.emptyTooltip(),
+        OptionInstance.noTooltip(),
         false,
         (bool) -> {}
     );
 
-    public static final SimpleOption<Integer> currentBulletOverlayLocationX = createLocationOption();
-    public static final SimpleOption<Integer> currentBulletOverlayLocationY = createLocationOption();
+    public static final OptionInstance<Integer> currentBulletOverlayLocationX = createLocationOption();
+    public static final OptionInstance<Integer> currentBulletOverlayLocationY = createLocationOption();
 
-    public static final SimpleOption<Integer> remainingBulletOverlayLocationX = createLocationOption();
-    public static final SimpleOption<Integer> remainingBulletOverlayLocationY = createLocationOption();
+    public static final OptionInstance<Integer> remainingBulletOverlayLocationX = createLocationOption();
+    public static final OptionInstance<Integer> remainingBulletOverlayLocationY = createLocationOption();
 
-    public static final SimpleOption<Integer> killLogOverlayLocationX = createLocationOption();
-    public static final SimpleOption<Integer> killLogOverlayLocationY = createLocationOption();
+    public static final OptionInstance<Integer> killLogOverlayLocationX = createLocationOption();
+    public static final OptionInstance<Integer> killLogOverlayLocationY = createLocationOption();
 
-    public static final SimpleOption<Integer> glassTimerOverlayLocationX = createLocationOption();
-    public static final SimpleOption<Integer> glassTimerOverlayLocationY = createLocationOption();
+    public static final OptionInstance<Integer> glassTimerOverlayLocationX = createLocationOption();
+    public static final OptionInstance<Integer> glassTimerOverlayLocationY = createLocationOption();
 
     static {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
@@ -139,12 +139,12 @@ public class AddonOptions {
         list.add(new Pair<>("glassTimerOverlayLocationY", glassTimerOverlayLocationY));
     }
 
-    private static SimpleOption<Integer> createLocationOption() {
-        return new SimpleOption<>(
+    private static OptionInstance<Integer> createLocationOption() {
+        return new OptionInstance<>(
             "",
-            SimpleOption.emptyTooltip(),
-            (text, value) -> Text.literal(""),
-            new SimpleOption.ValidatingIntSliderCallbacks(-10000, 10000),
+            OptionInstance.noTooltip(),
+            (text, value) -> Component.literal(""),
+            new OptionInstance.IntRange(-10000, 10000),
             0,
             (value) -> {}
         );

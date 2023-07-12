@@ -1,28 +1,28 @@
 package mcpc.tedo0627.kzeaddon.fabric.screen
 
+import com.mojang.blaze3d.vertex.PoseStack
 import mcpc.tedo0627.kzeaddon.fabric.service.KillLogService
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.text.Text
+import net.minecraft.client.KeyMapping
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.Component
 import kotlin.math.max
 import kotlin.math.min
 
 class KillLogScreen(
-    private val key: KeyBinding,
+    private val key: KeyMapping,
     private val list: List<KillLogService.KillLog>,
     private val service: KillLogService
-) : Screen(Text.literal("キルログ")) {
+) : Screen(Component.literal("キルログ")) {
 
     private var scroll = 0
 
-    override fun render(matrixStack: MatrixStack, i: Int, j: Int, f: Float) {
+    override fun render(matrixStack: PoseStack, i: Int, j: Int, f: Float) {
         val size = list.size
         val start = if (size <= 20) 0 else size - 20 - scroll
         val end = size - scroll
         for (index in start until end) {
             val killLog = list[index]
-            service.renderWeapon(killLog, end - 1 - index)
+            service.renderWeapon(killLog, end - 1 - index, matrixStack)
         }
 
         super.render(matrixStack, i, j, f)
@@ -43,8 +43,8 @@ class KillLogScreen(
     }
 
     override fun keyPressed(i: Int, j: Int, k: Int): Boolean {
-        if (key.matchesKey(i, j)) {
-            close()
+        if (key.matches(i, j)) {
+            onClose()
             return true
         }
 
@@ -53,12 +53,12 @@ class KillLogScreen(
 
     override fun mouseClicked(d: Double, e: Double, i: Int): Boolean {
         if (key.matchesMouse(i)) {
-            close()
+            onClose()
             return true
         }
 
         return super.mouseClicked(d, e, i)
     }
 
-    override fun shouldPause() = false
+    override fun isPauseScreen() = false
 }

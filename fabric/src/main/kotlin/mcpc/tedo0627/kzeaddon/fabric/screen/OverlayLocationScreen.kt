@@ -1,68 +1,69 @@
 package mcpc.tedo0627.kzeaddon.fabric.screen
 
+import com.mojang.blaze3d.vertex.PoseStack
 import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.tooltip.Tooltip
-import net.minecraft.client.gui.widget.ButtonWidget
-import net.minecraft.client.gui.widget.TextFieldWidget
-import net.minecraft.client.gui.widget.TextWidget
-import net.minecraft.client.option.SimpleOption
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.screen.ScreenTexts
-import net.minecraft.text.Text
+import net.minecraft.client.OptionInstance
+import net.minecraft.client.gui.components.Button
+import net.minecraft.client.gui.components.EditBox
+import net.minecraft.client.gui.components.StringWidget
+import net.minecraft.client.gui.components.Tooltip
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.CommonComponents
+import net.minecraft.network.chat.Component
 
-class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Text.literal("座標の変更")) {
+class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Component.literal("座標の変更")) {
 
     override fun init() {
-        add("kzeaddon.screen.overlayLocation.currentBulletX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.currentBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.currentBulletY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.currentBulletOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.currentBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.currentBulletOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.currentBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.currentBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.remainingBulletX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.remainingBulletOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.remainingBulletY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.remainingBulletOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.remainingBulletX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.remainingBulletOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.remainingBulletY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.remainingBulletOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.killLogX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.killLogOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.killLogY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.killLogOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.killLogX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.killLogOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.killLogY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.killLogOverlayLocationY)
 
-        add("kzeaddon.screen.overlayLocation.glassTimerX", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.glassTimerOverlayLocationX)
-        add("kzeaddon.screen.overlayLocation.glassTimerY", Tooltip.of(Text.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.glassTimerOverlayLocationY)
+        add("kzeaddon.screen.overlayLocation.glassTimerX", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipX")), AddonOptions.glassTimerOverlayLocationX)
+        add("kzeaddon.screen.overlayLocation.glassTimerY", Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltipY")), AddonOptions.glassTimerOverlayLocationY)
 
-        addDrawableChild(ButtonWidget
-            .Builder(ScreenTexts.DONE) { client?.setScreen(previous) }
-            .position(width / 2 - 100, height - 27)
+        addRenderableWidget(
+            Button
+            .Builder(CommonComponents.GUI_DONE) { minecraft?.setScreen(previous) }
+            .pos(width / 2 - 100, height - 27)
             .size(200, 20)
             .build()
         )
     }
 
-    private fun add(translatable: String, toolTip: Tooltip, option: SimpleOption<Int>) {
+    private fun add(translatable: String, toolTip: Tooltip, option: OptionInstance<Int>) {
         val size = children().size / 2
         val y = height / 6 - 12 + size * 30
 
-        val textRenderer = client?.textRenderer ?: return
-        val text = Text.translatable(translatable)
+        val textRenderer = minecraft?.font ?: return
+        val text = Component.translatable(translatable)
 
-        val textWidget = TextWidget(width / 2 - 250 + textRenderer.getWidth(text.asOrderedText()) / 2, y, 140, 20, text, textRenderer)
+        val textWidget = StringWidget(width / 2 - 250 + textRenderer.width(text.visualOrderText) / 2, y, 140, 20, text, textRenderer)
         textWidget.setTooltip(toolTip)
-        addDrawableChild(textWidget)
+        addRenderableWidget(textWidget)
 
-        val textFieldWidget = TextFieldWidget(textRenderer, width / 2 + 40, y, 80, 20, text)
-        textFieldWidget.text = option.value.toString()
-        textFieldWidget.setChangedListener {
+        val textFieldWidget = EditBox(textRenderer, width / 2 + 40, y, 80, 20, text)
+        textFieldWidget.value = option.get().toString()
+        textFieldWidget.setResponder {
             val value = it.toIntOrNull()
-            textFieldWidget.setEditableColor(if (value != null) 0xE0E0E0 else 0xFF0000)
-            if (value != null) option.value = value
+            textFieldWidget.setTextColor(if (value != null) 0xE0E0E0 else 0xFF0000)
+            if (value != null) option.set(value)
         }
         textFieldWidget.setTooltip(toolTip)
-        addDrawableChild(textFieldWidget)
+        addRenderableWidget(textFieldWidget)
     }
 
-    override fun render(matrixStack: MatrixStack, i: Int, j: Int, f: Float) {
+    override fun render(matrixStack: PoseStack, i: Int, j: Int, f: Float) {
         renderBackground(matrixStack)
-        drawCenteredTextWithShadow(matrixStack, textRenderer, title, width / 2, 5, 0xffffff)
+        drawCenteredString(matrixStack, font, title, width / 2, 5, 0xffffff)
         super.render(matrixStack, i, j, f)
     }
 
-    override fun close() {
-        client?.setScreen(previous)
+    override fun onClose() {
+        minecraft?.setScreen(previous)
     }
 }

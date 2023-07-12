@@ -6,7 +6,7 @@ import mcpc.tedo0627.kzeaddon.fabric.screen.SettingScreen
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.minecraft.client.MinecraftClient
+import net.minecraft.client.Minecraft
 
 class RegisterCommandService {
 
@@ -24,7 +24,7 @@ class RegisterCommandService {
 
         ClientTickEvents.END_CLIENT_TICK.register {
             if (enable) {
-                MinecraftClient.getInstance().setScreen(SettingScreen())
+                Minecraft.getInstance().setScreen(SettingScreen())
                 enable = false
             }
         }

@@ -2,18 +2,18 @@ package mcpc.tedo0627.kzeaddon.fabric.event
 
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
-import net.minecraft.text.Text
-import net.minecraft.util.Identifier
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 
 fun interface ChatReceiveCallback {
 
     companion object {
 
         @JvmField
-        val FIRST = Identifier("kzeaddon", "chatreceive-first")
+        val FIRST = ResourceLocation("kzeaddon", "chatreceive-first")
 
         @JvmField
-        val SECOND = Identifier("kzeaddon", "chatreceive-second")
+        val SECOND = ResourceLocation("kzeaddon", "chatreceive-second")
 
         /**
          * チャットを受け取った時のイベント
@@ -21,9 +21,9 @@ fun interface ChatReceiveCallback {
          */
         @JvmField
         val EVENT = EventFactory.createWithPhases(ChatReceiveCallback::class.java, { listeners ->
-            ChatReceiveCallback { text ->
+            ChatReceiveCallback { component ->
                 for (listener in listeners) {
-                    if (!listener.callback(text)) return@ChatReceiveCallback false
+                    if (!listener.callback(component)) return@ChatReceiveCallback false
                 }
 
                 return@ChatReceiveCallback true
@@ -31,5 +31,5 @@ fun interface ChatReceiveCallback {
         }, FIRST, SECOND, Event.DEFAULT_PHASE)
     }
 
-    fun callback(text: Text): Boolean
+    fun callback(component: Component): Boolean
 }

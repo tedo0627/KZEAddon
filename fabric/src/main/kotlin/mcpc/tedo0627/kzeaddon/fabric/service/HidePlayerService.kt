@@ -5,9 +5,9 @@ import mcpc.tedo0627.kzeaddon.fabric.option.HideToggleType
 import mcpc.tedo0627.kzeaddon.fabric.option.InvisibleType
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.option.KeyBinding
-import net.minecraft.scoreboard.AbstractTeam
+import net.minecraft.client.KeyMapping
+import net.minecraft.client.Minecraft
+import net.minecraft.world.scores.Team
 import java.util.*
 
 class HidePlayerService {
@@ -23,13 +23,13 @@ class HidePlayerService {
         private var toggleInvisible = false
 
         @JvmStatic
-        fun isInvisible(uuid: UUID, team: AbstractTeam?, invisibleFlag: Boolean): Boolean {
+        fun isInvisible(uuid: UUID, team: Team?, invisibleFlag: Boolean): Boolean {
             if (team == null) return invisibleFlag
 
-            val mc = MinecraftClient.getInstance()
+            val mc = Minecraft.getInstance()
             val player = mc.player ?: return invisibleFlag
             if (player.uuid == uuid) return invisibleFlag
-            if (player.scoreboardTeam != team) return invisibleFlag
+            if (player.team != team) return invisibleFlag
 
             return executing || invisibleFlag
         }
@@ -38,26 +38,26 @@ class HidePlayerService {
         fun isOverrideIsInvisibleToFunc(): Boolean {
             if (!executing) return false
 
-            if (AddonOptions.invisibleType.value == InvisibleType.TOGGLE) {
-                if (AddonOptions.hidePlayerToggle.value != HideToggleType.SWITCH) return false
+            if (AddonOptions.invisibleType.get() == InvisibleType.TOGGLE) {
+                if (AddonOptions.hidePlayerToggle.get() != HideToggleType.SWITCH) return false
 
                 return toggleInvisible
             }
 
-            return AddonOptions.invisibleType.value == InvisibleType.INVISIBLE
+            return AddonOptions.invisibleType.get() == InvisibleType.INVISIBLE
         }
     }
 
-    private val key = KeyBinding("kzeaddon.key.hidePlayer", -1, "KZEAddon")
+    private val key = KeyMapping("kzeaddon.key.hidePlayer", -1, "KZEAddon")
 
     init {
         KeyBindingHelper.registerKeyBinding(key)
 
         ClientTickEvents.END_CLIENT_TICK.register {
-            when (AddonOptions.hidePlayerToggle.value) {
+            when (AddonOptions.hidePlayerToggle.get()) {
                 HideToggleType.SWITCH -> {
-                    while (key.wasPressed()) {
-                        if (AddonOptions.invisibleType.value == InvisibleType.TOGGLE) {
+                    while (key.consumeClick()) {
+                        if (AddonOptions.invisibleType.get() == InvisibleType.TOGGLE) {
                             if (executing && !toggleInvisible) { // 半透明の時
                                 toggleInvisible = true
                             } else if (executing && toggleInvisible) { // 透明の時
@@ -71,7 +71,7 @@ class HidePlayerService {
                         }
                     }
                 }
-                HideToggleType.LONG_PRESS -> executing = key.isPressed
+                HideToggleType.LONG_PRESS -> executing = key.isDown
                 else -> throw IllegalStateException()
             }
         }

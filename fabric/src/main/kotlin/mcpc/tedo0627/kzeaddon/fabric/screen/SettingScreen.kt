@@ -18,15 +18,16 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
             AddonOptions.gamma,
             AddonOptions.displayBullet,
             AddonOptions.displayKillLog,
+            AddonOptions.disableKillLogWhenPressTab,
             AddonOptions.removeChatKillLog,
             AddonOptions.displayGlassTimer
         ).forEach {
-            addRenderableWidget(it.createButton(minecraft?.options ?: return, getNextX(), getNextY(), 150))
+            addRenderableWidget(it.createButton(minecraft?.options ?: return, getNextX(), getNextY(), 200))
         }
 
         addRenderableWidget(Button
             .builder(Component.translatable("kzeaddon.screen.setting.displayLocationButton")) { minecraft?.setScreen(OverlayLocationScreen(this)) }
-            .bounds(getNextX(), getNextY(), 150, 20)
+            .bounds(getNextX(), getNextY(), 200, 20)
             .build()
         )
 
@@ -40,7 +41,7 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
 
     private fun getNextX(): Int {
         val size = children().size
-        return if (size % 2 == 0) width / 2 - 155 else width / 2 - 155 + 160
+        return width / 2 + if (size % 2 == 0) - 200 - 5 else 5
     }
 
     private fun getNextY(): Int {

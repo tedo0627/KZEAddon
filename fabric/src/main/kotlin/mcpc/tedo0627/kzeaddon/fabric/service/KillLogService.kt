@@ -58,11 +58,11 @@ class KillLogService {
         KeyBindingHelper.registerKeyBinding(key)
 
         ClientTickEvents.END_CLIENT_TICK.register {
-            val client = Minecraft.getInstance()
-            if (client.player == null) return@register
+            val mc = Minecraft.getInstance()
+            if (mc.player == null) return@register
 
             if (key.isDown) {
-                client.setScreen(KillLogScreen(key, guiList, this))
+                mc.setScreen(KillLogScreen(key, guiList, this))
             }
         }
 
@@ -92,8 +92,9 @@ class KillLogService {
         }
 
         HudRenderCallback.EVENT.register { poseStack, _ ->
-            val client = Minecraft.getInstance()
-            if (client.screen is KillLogScreen) return@register
+            val mc = Minecraft.getInstance()
+            if (mc.screen is KillLogScreen) return@register
+            if (AddonOptions.disableKillLogWhenPressTab.get() && mc.options.keyPlayerList.isDown) return@register
 
             val size = overlayList.size
             overlayList.forEachIndexed { index, killLog ->

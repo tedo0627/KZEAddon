@@ -58,11 +58,11 @@ class KillLogService(private val key: KeyMapping) {
     private fun input(key: Int) {
         if (key != this.key.key.value) return
 
-        val client = Minecraft.getInstance()
-        if (client.player == null) return
+        val mc = Minecraft.getInstance()
+        if (mc.player == null) return
 
         if (this.key.isDown) {
-            client.setScreen(KillLogScreen(this.key, guiList, this))
+            mc.setScreen(KillLogScreen(this.key, guiList, this))
         }
     }
 
@@ -104,8 +104,9 @@ class KillLogService(private val key: KeyMapping) {
     fun onRenderGuiOverlayEvent(event: RenderGuiOverlayEvent.Pre) {
         if (GuiOverlayManager.getOverlays()[0] != event.overlay) return
 
-        val client = Minecraft.getInstance()
-        if (client.screen is KillLogScreen) return
+        val mc = Minecraft.getInstance()
+        if (mc.screen is KillLogScreen) return
+        if (AddonOptions.disableKillLogWhenPressTab.get() && mc.options.keyPlayerList.isDown) return
 
         val size = overlayList.size
         overlayList.forEachIndexed { index, killLog ->

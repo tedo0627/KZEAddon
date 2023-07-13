@@ -37,5 +37,5 @@ version 1.19.4
 オプション
  - [Mod Menu](https://modrinth.com/mod/modmenu)
 
-## Special Thank
+## Special Thanks
 足りない銃のアイコン [あるまき](https://twitter.com/Arum4ki)

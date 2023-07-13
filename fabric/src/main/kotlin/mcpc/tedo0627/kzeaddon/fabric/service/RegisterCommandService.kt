@@ -8,9 +8,10 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.client.Minecraft
 
-class RegisterCommandService {
+class RegisterCommandService(battleRecord: BattleRecordService) {
 
     private var enable = false
+    private var history = false
 
     init {
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
@@ -19,6 +20,12 @@ class RegisterCommandService {
                     enable = true
                     Command.SINGLE_SUCCESS
                 }
+                .then(LiteralArgumentBuilder.literal<FabricClientCommandSource?>("history")
+                    .executes {
+                        history = true
+                        Command.SINGLE_SUCCESS
+                    }
+                )
             )
         }
 
@@ -26,6 +33,10 @@ class RegisterCommandService {
             if (enable) {
                 Minecraft.getInstance().setScreen(SettingScreen())
                 enable = false
+            }
+            if (history) {
+                battleRecord.openBattleRecordScreen()
+                history = false
             }
         }
     }

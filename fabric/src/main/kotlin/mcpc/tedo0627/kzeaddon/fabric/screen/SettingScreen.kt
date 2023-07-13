@@ -22,10 +22,17 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
             AddonOptions.addKillLogWeaponName,
             AddonOptions.disableKillLogWhenPressTab,
             AddonOptions.removeChatKillLog,
-            AddonOptions.displayGlassTimer
+            AddonOptions.displayGlassTimer,
+            AddonOptions.displayScoreboardTimer
         ).forEach {
             addRenderableWidget(it.createButton(minecraft?.options ?: return, getNextX(), getNextY(), 200))
         }
+
+        addRenderableWidget(Button
+            .builder(Component.translatable("kzeaddon.screen.setting.crosshair")) { minecraft?.setScreen(CrosshairScreen(this)) }
+            .bounds(getNextX(), getNextY(), 200, 20)
+            .build()
+        )
 
         addRenderableWidget(Button
             .builder(Component.translatable("kzeaddon.screen.setting.displayLocationButton")) { minecraft?.setScreen(OverlayLocationScreen(this)) }

@@ -10,6 +10,7 @@ class KZEAddon : ClientModInitializer {
         OptionConfig // load config
 
         ChatFilterService()
+        CrosshairService()
         DisplayBulletService()
         GlassTimerService()
         HidePlayerService()

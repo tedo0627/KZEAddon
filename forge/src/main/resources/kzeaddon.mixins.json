@@ -9,6 +9,7 @@
   "client": [
     "MixinChatListener",
     "MixinClientLevel",
+    "MixinGui",
     "MixinLightTexture",
     "MixinLivingEntityRenderer",
     "MixinPlayerItemInHandLayer"

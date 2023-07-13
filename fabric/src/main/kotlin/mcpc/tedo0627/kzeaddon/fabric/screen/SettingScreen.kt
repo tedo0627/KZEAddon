@@ -29,6 +29,12 @@ class SettingScreen(private val previous: Screen? = null) : Screen(Component.lit
         }
 
         addRenderableWidget(Button
+            .builder(Component.translatable("kzeaddon.screen.setting.crosshair")) { minecraft?.setScreen(CrosshairScreen(this)) }
+            .bounds(getNextX(), getNextY(), 200, 20)
+            .build()
+        )
+
+        addRenderableWidget(Button
             .builder(Component.translatable("kzeaddon.screen.setting.displayLocationButton")) { minecraft?.setScreen(OverlayLocationScreen(this)) }
             .bounds(getNextX(), getNextY(), 200, 20)
             .build()

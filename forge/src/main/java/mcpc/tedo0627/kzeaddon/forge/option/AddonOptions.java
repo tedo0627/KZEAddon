@@ -135,6 +135,13 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final OptionInstance<Boolean> crosshair = OptionInstance.createBoolean(
+        "kzeaddon.options.crosshair",
+        OptionInstance.noTooltip(),
+        false,
+        (bool) -> {}
+    );
+
     public static final OptionInstance<Integer> currentBulletOverlayLocationX = createLocationOption();
     public static final OptionInstance<Integer> currentBulletOverlayLocationY = createLocationOption();
 
@@ -150,6 +157,11 @@ public class AddonOptions {
     public static final OptionInstance<Integer> scoreboardTimerOverlayLocationX = createLocationOption();
     public static final OptionInstance<Integer> scoreboardTimerOverlayLocationY = createLocationOption();
 
+    public static final OptionInstance<Integer> crosshairColorR = createColorOption();
+    public static final OptionInstance<Integer> crosshairColorG = createColorOption();
+    public static final OptionInstance<Integer> crosshairColorB = createColorOption();
+    public static final OptionInstance<Integer> crosshairColorA = createColorOption();
+
     static {
         list.add(new Pair<>("hidePlayerToggle", hidePlayerToggle));
         list.add(new Pair<>("hidePlayerOverlay", hidePlayerOverlay));
@@ -163,6 +175,7 @@ public class AddonOptions {
         list.add(new Pair<>("removeChatKillLog", removeChatKillLog));
         list.add(new Pair<>("displayGlassTimer", displayGlassTimer));
         list.add(new Pair<>("displayScoreboardTimer", displayScoreboardTimer));
+        list.add(new Pair<>("crosshair", crosshair));
 
         list.add(new Pair<>("currentBulletOverlayLocationX", currentBulletOverlayLocationX));
         list.add(new Pair<>("currentBulletOverlayLocationY", currentBulletOverlayLocationY));
@@ -174,6 +187,11 @@ public class AddonOptions {
         list.add(new Pair<>("glassTimerOverlayLocationY", glassTimerOverlayLocationY));
         list.add(new Pair<>("scoreboardTimerOverlayLocationX", scoreboardTimerOverlayLocationX));
         list.add(new Pair<>("scoreboardTimerOverlayLocationY", scoreboardTimerOverlayLocationY));
+
+        list.add(new Pair<>("crosshairColorR", crosshairColorR));
+        list.add(new Pair<>("crosshairColorG", crosshairColorG));
+        list.add(new Pair<>("crosshairColorB", crosshairColorB));
+        list.add(new Pair<>("crosshairColorA", crosshairColorA));
     }
 
     private static OptionInstance<Integer> createLocationOption() {
@@ -183,6 +201,17 @@ public class AddonOptions {
             (text, value) -> Component.literal(""),
             new OptionInstance.IntRange(-10000, 10000),
             0,
+            (value) -> {}
+        );
+    }
+
+    private static OptionInstance<Integer> createColorOption() {
+        return new OptionInstance<>(
+            "",
+            OptionInstance.noTooltip(),
+            (text, value) -> Component.literal(""),
+            new OptionInstance.IntRange(0, 255),
+            255,
             (value) -> {}
         );
     }

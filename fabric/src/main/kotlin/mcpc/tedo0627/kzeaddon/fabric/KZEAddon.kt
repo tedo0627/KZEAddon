@@ -9,13 +9,16 @@ class KZEAddon : ClientModInitializer {
     override fun onInitializeClient() {
         OptionConfig // load config
 
+        val status = KZEStatus()
+
+        val battleRecord = BattleRecordService(status)
         ChatFilterService()
         CrosshairService()
         DisplayBulletService()
         GlassTimerService()
         HidePlayerService()
         KillLogService()
-        RegisterCommandService()
+        RegisterCommandService(battleRecord)
         ScoreboardTimerService()
     }
 }

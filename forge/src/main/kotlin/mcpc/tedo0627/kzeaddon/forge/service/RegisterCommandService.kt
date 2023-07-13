@@ -9,7 +9,7 @@ import net.minecraft.commands.Commands
 import net.minecraftforge.client.event.RegisterClientCommandsEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 
-class RegisterCommandService {
+class RegisterCommandService(private val battleRecord: BattleRecordService) {
 
     @SubscribeEvent
     fun onRegisterClientCommands(event: RegisterClientCommandsEvent) {
@@ -18,6 +18,12 @@ class RegisterCommandService {
                 Minecraft.getInstance().setScreen(SettingScreen())
                 Command.SINGLE_SUCCESS
             }
+            .then(Commands.literal("history")
+                .executes {
+                    battleRecord.openBattleRecordScreen()
+                    Command.SINGLE_SUCCESS
+                }
+            )
         )
     }
 }

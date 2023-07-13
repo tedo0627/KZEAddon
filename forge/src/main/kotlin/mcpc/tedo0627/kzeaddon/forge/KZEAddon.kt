@@ -25,14 +25,21 @@ object KZEAddon {
         event.register(hideKey)
         event.register(killLogKey)
 
+        val status = KZEStatus()
+
+        val battleRecord = BattleRecordService(status)
+
         mutableListOf(
+            status,
+
             ChatFilterService(),
             CrosshairService(),
+            battleRecord,
             DisplayBulletService(),
             GlassTimerService(),
             HidePlayerService(hideKey),
             KillLogService(killLogKey),
-            RegisterCommandService(),
+            RegisterCommandService(battleRecord),
             ScoreboardTimerService()
         ).forEach { MinecraftForge.EVENT_BUS.register(it) }
     }

@@ -36,7 +36,7 @@ class CrosshairService {
                 Pos(-1, -5, 0, -4),
                 Pos(-1, -3, 0, -1),
                 Pos(-1, 2, 0, 4),
-                Pos(-1, 3, 0, 6),
+                Pos(-1, 5, 0, 6),
             ).forEach {
                 GuiComponent.fill(
                     poseStack,

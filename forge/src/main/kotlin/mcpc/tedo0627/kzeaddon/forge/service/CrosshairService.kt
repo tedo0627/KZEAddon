@@ -18,6 +18,8 @@ class CrosshairService {
         if (!AddonOptions.crosshair.get()) return
 
         val mc = Minecraft.getInstance()
+        if (!mc.options.cameraType.isFirstPerson) return
+
         val window = mc.window
         val color = FastColor.ARGB32.color(
             AddonOptions.crosshairColorA.get(),

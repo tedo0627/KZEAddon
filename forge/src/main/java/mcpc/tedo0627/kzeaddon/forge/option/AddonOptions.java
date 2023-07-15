@@ -47,7 +47,7 @@ public class AddonOptions {
     );
 
     public static final OptionInstance<InvisibleType> invisibleType = new OptionInstance<>(
-        "kzeaddon.options.hidePlayerToggle",
+        "kzeaddon.options.invisibleType",
         OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.invisibleType.tooltip")),
         OptionInstance.forOptionEnum(),
         new OptionInstance.Enum<>(

@@ -80,7 +80,7 @@ class KillLogService {
             overlayList.add(killLog)
             guiList.add(killLog)
 
-            if (10 < overlayList.size) overlayList.removeAt(0)
+            if (AddonOptions.killLogHeight.get() < overlayList.size) overlayList.removeAt(0)
             if (500 < guiList.size) guiList.removeAt(0)
 
             return@register true

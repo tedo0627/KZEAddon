@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import net.minecraft.client.OptionInstance;
+import net.minecraft.client.Options;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
@@ -112,6 +113,15 @@ public class AddonOptions {
         OptionInstance.noTooltip(),
         false,
         (bool) -> {}
+    );
+
+    public static final OptionInstance<Integer> killLogHeight = new OptionInstance<>(
+        "kzeaddon.options.killLogHeight",
+        OptionInstance.noTooltip(),
+        Options::genericValueLabel,
+        new OptionInstance.IntRange(1, 30),
+        10,
+        (value) -> {}
     );
 
     public static final OptionInstance<Boolean> removeChatKillLog = OptionInstance.createBoolean(

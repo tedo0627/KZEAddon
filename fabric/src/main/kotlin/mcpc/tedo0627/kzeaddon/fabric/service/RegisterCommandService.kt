@@ -8,10 +8,14 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.client.Minecraft
 
-class RegisterCommandService(battleRecord: BattleRecordService) {
+class RegisterCommandService(
+    battleRecord: BattleRecordService,
+    killLog: KillLogService
+) {
 
     private var enable = false
     private var history = false
+    private var log = false
 
     init {
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
@@ -26,6 +30,12 @@ class RegisterCommandService(battleRecord: BattleRecordService) {
                         Command.SINGLE_SUCCESS
                     }
                 )
+                .then(LiteralArgumentBuilder.literal<FabricClientCommandSource>("killlog")
+                    .executes {
+                        log = true
+                        Command.SINGLE_SUCCESS
+                    }
+                )
             )
         }
 
@@ -37,6 +47,10 @@ class RegisterCommandService(battleRecord: BattleRecordService) {
             if (history) {
                 battleRecord.openBattleRecordScreen()
                 history = false
+            }
+            if (log) {
+                killLog.openKillLogScreen()
+                log = false
             }
         }
     }

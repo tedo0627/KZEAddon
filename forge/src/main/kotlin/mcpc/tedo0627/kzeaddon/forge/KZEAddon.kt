@@ -33,6 +33,7 @@ object KZEAddon {
         val status = KZEStatus()
 
         val battleRecord = BattleRecordService(status)
+        val killLog = KillLogService(killLogKey)
 
         mutableListOf(
             status,
@@ -43,8 +44,8 @@ object KZEAddon {
             DisplayBulletService(),
             GlassTimerService(),
             HidePlayerService(hideKey),
-            KillLogService(killLogKey),
-            RegisterCommandService(battleRecord),
+            killLog,
+            RegisterCommandService(battleRecord, killLog),
             ScoreboardTimerService()
         ).forEach { MinecraftForge.EVENT_BUS.register(it) }
     }

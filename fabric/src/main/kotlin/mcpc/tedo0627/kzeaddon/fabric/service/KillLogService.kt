@@ -59,12 +59,9 @@ class KillLogService {
         KeyBindingHelper.registerKeyBinding(key)
 
         ClientTickEvents.END_CLIENT_TICK.register {
-            val mc = Minecraft.getInstance()
-            if (mc.player == null) return@register
+            if (Minecraft.getInstance().player == null) return@register
 
-            if (key.isDown) {
-                mc.setScreen(KillLogScreen(key, guiList, this))
-            }
+            if (key.isDown) openKillLogScreen()
         }
 
         ChatReceiveCallback.EVENT.register(ChatReceiveCallback.FIRST) { text ->
@@ -232,6 +229,10 @@ class KillLogService {
         } catch (e: Exception) {
             null
         }
+    }
+
+    fun openKillLogScreen() {
+        Minecraft.getInstance().setScreen(KillLogScreen(key, guiList, this))
     }
 
     class KillLog(

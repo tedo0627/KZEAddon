@@ -24,9 +24,9 @@ class KZEAddon : ClientModInitializer {
         DisplayBulletService()
         GlassTimerService()
         HidePlayerService()
-        KillLogService()
+        val killLog = KillLogService()
         KnifeAnimationService(checkGeckoLib)
-        RegisterCommandService(battleRecord)
+        RegisterCommandService(battleRecord, killLog)
         ScoreboardTimerService()
     }
 }

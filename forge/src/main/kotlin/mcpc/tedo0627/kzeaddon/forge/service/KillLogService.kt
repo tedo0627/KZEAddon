@@ -59,12 +59,9 @@ class KillLogService(private val key: KeyMapping) {
     private fun input(key: Int) {
         if (key != this.key.key.value) return
 
-        val mc = Minecraft.getInstance()
-        if (mc.player == null) return
+        if (Minecraft.getInstance().player == null) return
 
-        if (this.key.isDown) {
-            mc.setScreen(KillLogScreen(this.key, guiList, this))
-        }
+        if (this.key.isDown) openKillLogScreen()
     }
 
     /**
@@ -243,6 +240,10 @@ class KillLogService(private val key: KeyMapping) {
         } catch (e: Exception) {
             null
         }
+    }
+
+    fun openKillLogScreen() {
+        Minecraft.getInstance().setScreen(KillLogScreen(key, guiList, this))
     }
 
     class KillLog(

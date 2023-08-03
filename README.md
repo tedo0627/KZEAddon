@@ -1,7 +1,8 @@
 # KZEAddon
+[![](https://img.shields.io/github/downloads/tedo0627/KZEAddon/total)]()  
 kzeのプレイをサポートするmodです  
 forgeとfabric両方対応  
-version 1.19.4
+version 1.19.4  
 
 ## 機能
  - 同じチームのプレイヤーを透明にする ※1

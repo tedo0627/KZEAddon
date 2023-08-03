@@ -1,0 +1,6 @@
+{
+  "parent": "kzeaddon:displaysettings/raw_fish.item",
+  "textures": {
+    "layer0": "kzeaddon:item/raw_fish"
+  }
+}

@@ -18,6 +18,7 @@ mixin {
 
 repositories {
     maven("https://thedarkcolour.github.io/KotlinForForge/")
+    maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
 }
 
 dependencies {
@@ -26,6 +27,7 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
     implementation("thedarkcolour:kotlinforforge:4.2.0")
+    implementation(fg.deobf("software.bernie.geckolib:geckolib-forge-1.19.4:4.2"))
 }
 
 minecraft {

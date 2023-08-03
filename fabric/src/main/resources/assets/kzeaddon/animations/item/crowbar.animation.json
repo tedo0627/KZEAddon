@@ -1,0 +1,108 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"idle": {
+			"loop": true,
+			"animation_length": 2.01,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, -0.5, 0]
+						},
+						"2.01": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"pick1": {
+			"animation_length": 1,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"0.0": {
+							"vector": [-20, 360, 0]
+						},
+						"0.5": {
+							"vector": [-20, 0, 0],
+							"easing": "linear"
+						},
+						"0.6": {
+							"vector": [8, 0, 0]
+						},
+						"0.75": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [6, -14, 0]
+						},
+						"0.25": {
+							"vector": [2.5, 6, 0],
+							"easing": "easeOutSine"
+						},
+						"0.5": {
+							"vector": [0, 0, 0],
+							"easing": "easeInSine"
+						},
+						"0.6": {
+							"vector": [0, -0.5, 0]
+						},
+						"0.75": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"pick2": {
+			"animation_length": 1.21,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"0.0": {
+							"vector": [-1080, 0, 0]
+						},
+						"0.75": {
+							"vector": [14.16, 0, 0],
+							"easing": "linear"
+						},
+						"0.9": {
+							"vector": [30, 0, 0],
+							"easing": "easeOutQuart"
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, -19, -14]
+						},
+						"0.75": {
+							"vector": [0, 6, -14],
+							"easing": "easeOutSine"
+						},
+						"0.9": {
+							"vector": [0, 0, 1],
+							"easing": "easeOutQuint"
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

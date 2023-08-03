@@ -1,0 +1,6 @@
+{
+  "parent": "kzeaddon:displaysettings/pen_knife.item",
+  "textures": {
+    "layer0": "kzeaddon:item/pen_knife"
+  }
+}

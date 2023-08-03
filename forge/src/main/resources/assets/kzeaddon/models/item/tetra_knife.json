@@ -1,0 +1,6 @@
+{
+  "parent": "kzeaddon:displaysettings/tetra_knife.item",
+  "textures": {
+    "layer0": "kzeaddon:item/tetra_knife"
+  }
+}

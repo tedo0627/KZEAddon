@@ -1,0 +1,6 @@
+{
+  "parent": "kzeaddon:displaysettings/survival_knife.item",
+  "textures": {
+    "layer0": "kzeaddon:item/survival_knife"
+  }
+}

@@ -5,6 +5,7 @@ import mcpc.tedo0627.kzeaddon.forge.service.*
 import net.minecraft.client.KeyMapping
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.fml.ModList
 import net.minecraftforge.fml.common.Mod
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.runForDist
@@ -17,6 +18,10 @@ object KZEAddon {
     init {
         OptionConfig // load config
         runForDist({ MOD_BUS.addListener(::onRegisterKeyMappings) }, {})
+
+        KnifeAnimationService.REGISTRY.register(MOD_BUS)
+        val checkGeckoLib = ModList.get().getModContainerById("geckolib").isPresent
+        MinecraftForge.EVENT_BUS.register(KnifeAnimationService(checkGeckoLib))
     }
 
     private fun onRegisterKeyMappings(event: RegisterKeyMappingsEvent) {

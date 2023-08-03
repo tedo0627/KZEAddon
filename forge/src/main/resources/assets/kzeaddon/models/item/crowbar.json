@@ -1,0 +1,6 @@
+{
+  "parent": "kzeaddon:displaysettings/crowbar.item",
+  "textures": {
+    "layer0": "kzeaddon:item/crowbar"
+  }
+}

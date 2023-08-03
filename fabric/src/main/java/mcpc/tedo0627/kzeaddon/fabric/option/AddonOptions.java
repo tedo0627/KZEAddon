@@ -152,6 +152,13 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final OptionInstance<Boolean> knifeAnimation = OptionInstance.createBoolean(
+        "kzeaddon.options.knifeAnimation",
+        OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.knifeAnimation.tooltip")),
+        false,
+        (bool) -> {}
+    );
+
     public static final OptionInstance<Integer> currentBulletOverlayLocationX = createLocationOption();
     public static final OptionInstance<Integer> currentBulletOverlayLocationY = createLocationOption();
 
@@ -186,6 +193,7 @@ public class AddonOptions {
         list.add(new Pair<>("displayGlassTimer", displayGlassTimer));
         list.add(new Pair<>("displayScoreboardTimer", displayScoreboardTimer));
         list.add(new Pair<>("crosshair", crosshair));
+        list.add(new Pair<>("knifeAnimation", knifeAnimation));
 
         list.add(new Pair<>("currentBulletOverlayLocationX", currentBulletOverlayLocationX));
         list.add(new Pair<>("currentBulletOverlayLocationY", currentBulletOverlayLocationY));

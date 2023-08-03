@@ -9,7 +9,8 @@ base { archivesName.set("kzeaddon-fabric") }
 group = "mcpc.tedo0627.kzeaddon.fabric"
 
 repositories {
-    maven { url = uri("https://maven.terraformersmc.com/releases/") }
+    maven("https://maven.terraformersmc.com/releases/")
+    maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
 }
 
 dependencies {
@@ -18,6 +19,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:0.14.21")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.82.0+1.19.4")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.9.4+kotlin.1.8.21")
+
+    modImplementation("software.bernie.geckolib:geckolib-fabric-1.19.4:4.2")
 
     modApi("com.terraformersmc:modmenu:6.2.1")
 }

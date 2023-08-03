@@ -17,14 +17,10 @@ import java.util.UUID;
 @Mixin(Entity.class)
 public abstract class MixinEntity {
 
-    @Inject(method = "isInvisible", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isInvisible", at = @At("RETURN"), cancellable = true)
     private void isInvisibleInject(@NotNull CallbackInfoReturnable<Boolean> cir) {
-        boolean invisibleFlag = this.getSharedFlag(5);
-        cir.setReturnValue(HidePlayerService.isInvisible(getUUID(), getTeam(), invisibleFlag));
+        cir.setReturnValue(HidePlayerService.isInvisible(getUUID(), getTeam(), cir.getReturnValue()));
     }
-
-    @Shadow
-    protected abstract boolean getSharedFlag(int i);
 
     @Shadow
     public abstract UUID getUUID();

@@ -19,6 +19,9 @@
 
   "kzeaddon.options.gamma": "明るさを最大にする",
 
+  "kzeaddon.options.darknessRemoveGamma": "暗闇が付いた時に明るさの最大をオフ",
+  "kzeaddon.options.darknessRemoveGamma.tooltip": "明るさを最大にした時に、暗闇のエフェクトが付いた時に画面の色がおかしくなることがあるが、これをオンにすることにより回避することができる",
+
   "kzeaddon.options.displayBullet": "弾数を表示する",
 
   "kzeaddon.options.displayKillLog": "キルログを右上に表示する",

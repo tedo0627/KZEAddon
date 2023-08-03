@@ -87,6 +87,13 @@ public class AddonOptions {
         (bool) -> {}
     );
 
+    public static final OptionInstance<Boolean> darknessRemoveGamma = OptionInstance.createBoolean(
+        "kzeaddon.options.darknessRemoveGamma",
+        OptionInstance.cachedConstantTooltip(Component.translatable("kzeaddon.options.darknessRemoveGamma.tooltip")),
+        false,
+        (bool) -> {}
+    );
+
     public static final OptionInstance<Boolean> displayBullet = OptionInstance.createBoolean(
         "kzeaddon.options.displayBullet",
         OptionInstance.noTooltip(),
@@ -185,6 +192,7 @@ public class AddonOptions {
         list.add(new Pair<>("invisibleType", invisibleType));
         list.add(new Pair<>("hidePlayerItem", hidePlayerItem));
         list.add(new Pair<>("gamma", gamma));
+        list.add(new Pair<>("darknessRemoveGamma", darknessRemoveGamma));
         list.add(new Pair<>("displayBullet", displayBullet));
         list.add(new Pair<>("displayKillLog", displayKillLog));
         list.add(new Pair<>("addKillLogWeaponName", addKillLogWeaponName));

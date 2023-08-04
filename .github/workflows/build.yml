@@ -40,3 +40,4 @@ jobs:
           path: |
             fabric/build/libs/kzeaddon-fabric.jar
             forge/build/libs/kzeaddon-forge.jar
+            forge-bundle/build/libs/kzeaddon-forge-bundle.jar

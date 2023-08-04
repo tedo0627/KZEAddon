@@ -13,11 +13,13 @@ pluginManagement {
 
 rootProject.name = "kzeaddon"
 
-val map = mapOf(
-    "kzeaddon-fabric" to "fabric",
-    "kzeaddon-forge" to "forge"
+val list = listOf(
+    "fabric",
+    "forge",
+    "forge-bundle"
 )
-for (entry in map) {
-    include(entry.key)
-    findProject(":${entry.key}")?.projectDir = file(entry.value)
+for (str in list) {
+    val name = "kzeaddon-$str"
+    include(name)
+    findProject(":$name")?.projectDir = file(str)
 }

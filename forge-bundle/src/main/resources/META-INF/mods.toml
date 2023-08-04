@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[45,)"
+license="LGPL License"
+
+[[mods]]
+modId="kzeaddon_bundle"
+version="3.0.3"
+displayName="KZEAddon-Bundle"
+authors="tedo0627"
+description='''
+KZEAddonに必要なmodが含まれているセット
+'''
+
+[[dependencies.kzeaddon_bundle]]
+modId="forge"
+mandatory=true
+versionRange="[45,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.kzeaddon_bundle]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.19.4,1.20)"
+ordering="NONE"
+side="BOTH"

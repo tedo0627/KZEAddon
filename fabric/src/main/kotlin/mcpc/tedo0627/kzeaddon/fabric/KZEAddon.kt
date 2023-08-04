@@ -22,6 +22,7 @@ class KZEAddon : ClientModInitializer {
         ChatFilterService()
         CrosshairService()
         DisplayBulletService()
+        GammaService()
         GlassTimerService()
         HidePlayerService()
         val killLog = KillLogService()

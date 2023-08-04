@@ -27,8 +27,10 @@ object KZEAddon {
     private fun onRegisterKeyMappings(event: RegisterKeyMappingsEvent) {
         val hideKey = KeyMapping("kzeaddon.key.hidePlayer", -1, "KZEAddon")
         val killLogKey = KeyMapping("kzeaddon.key.killLog", -1, "KZEAddon")
+        val gammaKey = KeyMapping("kzeaddon.key.gamma", -1, "KZEAddon")
         event.register(hideKey)
         event.register(killLogKey)
+        event.register(gammaKey)
 
         val status = KZEStatus()
 
@@ -42,6 +44,7 @@ object KZEAddon {
             CrosshairService(),
             battleRecord,
             DisplayBulletService(),
+            GammaService(gammaKey),
             GlassTimerService(),
             HidePlayerService(hideKey),
             killLog,

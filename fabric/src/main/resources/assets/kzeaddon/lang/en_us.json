@@ -1,6 +1,7 @@
 {
   "kzeaddon.key.hidePlayer": "プレイヤーの透明化を切り替えるキー",
   "kzeaddon.key.killLog": "キルログの画面を表示するキー",
+  "kzeaddon.key.gamma": "明るさ最大の設定のオンオフを切り替えるキー",
 
   "kzeaddon.options.hidePlayerToggle": "透明にするキー",
   "kzeaddon.options.hideToggleType.switch": "切り替え",

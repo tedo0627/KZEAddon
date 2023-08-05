@@ -23,13 +23,17 @@ class ScoreboardTimerService {
             val x = (mc.window.guiScaledWidth / 2 - 20 - font.width(text) / 2).toFloat()
             val y = (mc.window.guiScaledHeight - 49).toFloat()
 
+            val option = AddonOptions.scoreboardTimerOverlay
+            poseStack.pushPose()
+            poseStack.scale(option.scalePercent, option.scalePercent, 1.0f)
             font.draw(
                 poseStack,
                 text,
-                x + AddonOptions.scoreboardTimerOverlayLocationX.get(),
-                y + AddonOptions.scoreboardTimerOverlayLocationY.get(),
-                16777215
+                (x + option.x) / option.scalePercent,
+                (y + option.y) / option.scalePercent,
+                option.color
             )
+            poseStack.popPose()
         }
     }
 }

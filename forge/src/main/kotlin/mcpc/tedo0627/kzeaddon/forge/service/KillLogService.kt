@@ -101,15 +101,20 @@ class KillLogService(private val key: KeyMapping) {
     @SubscribeEvent
     fun onRenderGuiOverlayEvent(event: RenderGuiOverlayEvent.Pre) {
         if (GuiOverlayManager.getOverlays()[0] != event.overlay) return
+        val poseStack = event.poseStack
 
         val mc = Minecraft.getInstance()
         if (mc.screen is KillLogScreen) return
         if (AddonOptions.disableKillLogWhenPressTab.get() && mc.options.keyPlayerList.isDown) return
 
         val size = overlayList.size
+        val option = AddonOptions.killLogOverlay
+        poseStack.pushPose()
+        poseStack.scale(option.scalePercent, option.scalePercent, 1.0f)
         overlayList.forEachIndexed { index, killLog ->
-            renderWeapon(killLog, size - index - 1, event.poseStack)
+            renderWeapon(killLog, size - index - 1, poseStack)
         }
+        poseStack.popPose()
     }
 
     fun renderWeapon(killLog: KillLog, step: Int, poseStack: PoseStack) {
@@ -147,31 +152,35 @@ class KillLogService(private val key: KeyMapping) {
             pair ?: Pair(0, 0)
         }
 
+        val option = AddonOptions.killLogOverlay
+
         val nameLength = font.width("a".repeat(16))
         val weaponLength = font.width("a".repeat(6))
-        val height = 5 + step * (font.lineHeight + 2)
+        val lineHeight = font.lineHeight + 2
+        val height = step * lineHeight
 
         val addWeaponName = AddonOptions.addKillLogWeaponName.get()
         val weaponNameLength = if (addWeaponName) font.width("a".repeat(18)) else 0
 
-        val overlayX = AddonOptions.killLogOverlayLocationX.get()
-        val overlayY = AddonOptions.killLogOverlayLocationY.get()
+        val startX = (window.guiScaledWidth - nameLength * 2 - weaponLength - weaponNameLength + option.x) / option.scalePercent
+        val startY = height + (option.y + 5) / option.scalePercent
 
         val backColor = if (killLog.firstBlood) 1688862720 else mc.options.getBackgroundColor(Integer.MIN_VALUE)
         GuiComponent.fill(
             poseStack,
-            window.guiScaledWidth - nameLength * 2 - weaponLength - weaponNameLength - 1 + overlayX,
-            height + overlayY,
-            window.guiScaledWidth - nameLength - weaponLength - weaponNameLength + 1 + overlayX,
-            height + font.lineHeight + 2 + overlayY,
+            (startX - 1).toInt(),
+            (startY).toInt(),
+            (startX + nameLength + 1).toInt(),
+            (startY + lineHeight).toInt(),
             -90,
-            backColor)
+            backColor
+        )
         GuiComponent.fill(
             poseStack,
-            window.guiScaledWidth - nameLength - weaponNameLength - 1 + overlayX,
-            height + overlayY,
-            window.guiScaledWidth + overlayX,
-            height + font.lineHeight + 2 + overlayY,
+            (startX + nameLength + weaponLength - 1).toInt(),
+            (startY).toInt(),
+            (startX + nameLength * 2 + weaponLength + weaponNameLength).toInt(),
+            (startY + lineHeight).toInt(),
             -90,
             backColor
         )
@@ -184,21 +193,21 @@ class KillLogService(private val key: KeyMapping) {
         val myName = mc.player?.name?.string ?: return
         font.draw(
             poseStack, killLog.killer,
-            (window.guiScaledWidth - nameLength * 2 - weaponLength - weaponNameLength).toFloat() + overlayX,
-            height + 1f + overlayY,
+            startX,
+            startY + 1,
             if (myName == killLog.killer) yellow else if (isZombieKiller) green else aqua
         )
         font.draw(
             poseStack, killLog.target,
-            (window.guiScaledWidth - nameLength).toFloat() + overlayX,
-            height + 1f + overlayY,
+            startX + nameLength + weaponLength + weaponNameLength,
+            startY + 1,
             if (myName == killLog.target) yellow else if (!isZombieKiller) green else aqua
         )
         if (addWeaponName) {
             font.draw(
                 poseStack, killLog.weaponName,
-                (window.guiScaledWidth - nameLength - weaponNameLength).toFloat() + overlayX,
-                height + 1f + overlayY,
+                startX + nameLength + weaponLength,
+                startY + 1,
                 white
             )
         }
@@ -211,15 +220,15 @@ class KillLogService(private val key: KeyMapping) {
             // ゾンビの攻撃のテクスチャの位置を変える
             GuiComponent.blit(
                 poseStack,
-                window.guiScaledWidth - nameLength - weaponLength - weaponNameLength + 2 + overlayX,
-                height + 1 + overlayY,
+                (startX + nameLength + 2).toInt(),
+                (startY + 1).toInt(),
                 -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
             )
         } else {
             GuiComponent.blit(
                 poseStack,
-                window.guiScaledWidth - nameLength - weaponLength - weaponNameLength + overlayX,
-                height + 1 + overlayY,
+                (startX + nameLength).toInt(),
+                (startY + 1).toInt(),
                 -90, 0.0f, 0.0f, size.first, size.second, size.first, size.second
             )
         }

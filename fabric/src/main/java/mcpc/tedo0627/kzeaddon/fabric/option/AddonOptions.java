@@ -166,20 +166,11 @@ public class AddonOptions {
         (bool) -> {}
     );
 
-    public static final OptionInstance<Integer> currentBulletOverlayLocationX = createLocationOption();
-    public static final OptionInstance<Integer> currentBulletOverlayLocationY = createLocationOption();
-
-    public static final OptionInstance<Integer> remainingBulletOverlayLocationX = createLocationOption();
-    public static final OptionInstance<Integer> remainingBulletOverlayLocationY = createLocationOption();
-
-    public static final OptionInstance<Integer> killLogOverlayLocationX = createLocationOption();
-    public static final OptionInstance<Integer> killLogOverlayLocationY = createLocationOption();
-
-    public static final OptionInstance<Integer> glassTimerOverlayLocationX = createLocationOption();
-    public static final OptionInstance<Integer> glassTimerOverlayLocationY = createLocationOption();
-
-    public static final OptionInstance<Integer> scoreboardTimerOverlayLocationX = createLocationOption();
-    public static final OptionInstance<Integer> scoreboardTimerOverlayLocationY = createLocationOption();
+    public static final OverlayTextOption currentBulletOverlay = new OverlayTextOption("currentBulletOverlay");
+    public static final OverlayTextOption remainingBulletOverlay = new OverlayTextOption("remainingBulletOverlay");
+    public static final OverlayTextOption killLogOverlay = new OverlayTextOption("killLogOverlay", false);
+    public static final OverlayTextOption glassTimerOverlay = new OverlayTextOption("glassTimerOverlay");
+    public static final OverlayTextOption scoreboardTimerOverlay = new OverlayTextOption("scoreboardTimerOverlay");
 
     public static final OptionInstance<Integer> crosshairColorR = createColorOption();
     public static final OptionInstance<Integer> crosshairColorG = createColorOption();
@@ -203,16 +194,11 @@ public class AddonOptions {
         list.add(new Pair<>("crosshair", crosshair));
         list.add(new Pair<>("knifeAnimation", knifeAnimation));
 
-        list.add(new Pair<>("currentBulletOverlayLocationX", currentBulletOverlayLocationX));
-        list.add(new Pair<>("currentBulletOverlayLocationY", currentBulletOverlayLocationY));
-        list.add(new Pair<>("remainingBulletOverlayLocationX", remainingBulletOverlayLocationX));
-        list.add(new Pair<>("remainingBulletOverlayLocationY", remainingBulletOverlayLocationY));
-        list.add(new Pair<>("killLogOverlayLocationX", killLogOverlayLocationX));
-        list.add(new Pair<>("killLogOverlayLocationY", killLogOverlayLocationY));
-        list.add(new Pair<>("glassTimerOverlayLocationX", glassTimerOverlayLocationX));
-        list.add(new Pair<>("glassTimerOverlayLocationY", glassTimerOverlayLocationY));
-        list.add(new Pair<>("scoreboardTimerOverlayLocationX", scoreboardTimerOverlayLocationX));
-        list.add(new Pair<>("scoreboardTimerOverlayLocationY", scoreboardTimerOverlayLocationY));
+        currentBulletOverlay.addSaveList(list);
+        remainingBulletOverlay.addSaveList(list);
+        killLogOverlay.addSaveList(list);
+        glassTimerOverlay.addSaveList(list);
+        scoreboardTimerOverlay.addSaveList(list);
 
         list.add(new Pair<>("crosshairColorR", crosshairColorR));
         list.add(new Pair<>("crosshairColorG", crosshairColorG));
@@ -220,7 +206,7 @@ public class AddonOptions {
         list.add(new Pair<>("crosshairColorA", crosshairColorA));
     }
 
-    private static OptionInstance<Integer> createLocationOption() {
+    public static OptionInstance<Integer> createLocationOption() {
         return new OptionInstance<>(
             "",
             OptionInstance.noTooltip(),
@@ -231,13 +217,24 @@ public class AddonOptions {
         );
     }
 
-    private static OptionInstance<Integer> createColorOption() {
+    public static OptionInstance<Integer> createColorOption() {
         return new OptionInstance<>(
             "",
             OptionInstance.noTooltip(),
             (text, value) -> Component.literal(""),
             new OptionInstance.IntRange(0, 255),
             255,
+            (value) -> {}
+        );
+    }
+
+    public static OptionInstance<Integer> createScaleOption() {
+        return new OptionInstance<>(
+            "",
+            OptionInstance.noTooltip(),
+            (text, value) -> Component.literal(""),
+            new OptionInstance.IntRange(1, 1000),
+            100,
             (value) -> {}
         );
     }

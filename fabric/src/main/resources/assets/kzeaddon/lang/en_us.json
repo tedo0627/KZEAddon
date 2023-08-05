@@ -46,19 +46,25 @@
   "kzeaddon.options.knifeAnimation.tooltip": "GeckoLibが必要です\nGeckoLibがないとオンにしても動作しません\n\nオンする前に取得したナイフは反映されません\n次の試合までお待ちください",
 
   "kzeaddon.screen.setting.crosshair": "クロスヘアーの設定...",
-  "kzeaddon.screen.setting.displayLocationButton": "表示するものの座標...",
+  "kzeaddon.screen.setting.displayLocationButton": "表示するものの設定...",
 
-  "kzeaddon.screen.overlayLocation.currentBullet": "現在の弾数の表示の座標",
-  "kzeaddon.screen.overlayLocation.remainingBullet": "残っている弾数の表示の座標",
-  "kzeaddon.screen.overlayLocation.killLog": "キルログの表示の座標",
-  "kzeaddon.screen.overlayLocation.glassTimer": "ガラスタイマーの座標",
-  "kzeaddon.screen.overlayLocation.scoreboardTimer": "スコアボードタイマーの座標",
+  "kzeaddon.screen.overlayLocation.currentBulletOverlay": "現在の弾数の表示",
+  "kzeaddon.screen.overlayLocation.remainingBulletOverlay": "残っている弾数の表示",
+  "kzeaddon.screen.overlayLocation.killLogOverlay": "キルログの表示",
+  "kzeaddon.screen.overlayLocation.glassTimerOverlay": "ガラスタイマー",
+  "kzeaddon.screen.overlayLocation.scoreboardTimerOverlay": "スコアボードタイマー",
 
-  "kzeaddon.screen.overlayLocation.tooltipX": "X座標を決める\n値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する",
-  "kzeaddon.screen.overlayLocation.tooltipY": "Y座標を決める\n値を増やすと画面の下に移動し、\n値を減らすと画面の上に移動する",
+  "kzeaddon.screen.overlayLocation.location": "座標",
+  "kzeaddon.screen.overlayLocation.scale": "大きさ",
+  "kzeaddon.screen.overlayLocation.color": "色",
 
-  "kzeaddon.screen.color.r": "RGBAのR 赤\n0から255の範囲で決める",
-  "kzeaddon.screen.color.g": "RGBAのG 緑\n0から255の範囲で決める",
-  "kzeaddon.screen.color.b": "RGBAのB 青\n0から255の範囲で決める",
-  "kzeaddon.screen.color.a": "RGBAのA 透過度\n0から255の範囲で決める"
+  "kzeaddon.screen.overlayLocation.tooltip.x": "X座標を決める\n値を増やすと画面の右に移動し、\n値を減らすと画面の左に移動する",
+  "kzeaddon.screen.overlayLocation.tooltip.y": "Y座標を決める\n値を増やすと画面の下に移動し、\n値を減らすと画面の上に移動する",
+
+  "kzeaddon.screen.overlayLocation.tooltip.scale": "大きさを決める\n1%から1000%まで指定できる\nデフォルトは100%",
+
+  "kzeaddon.screen.overlayLocation.tooltip.r": "RGBAのR 赤\n0から255の範囲で決める",
+  "kzeaddon.screen.overlayLocation.tooltip.g": "RGBAのG 緑\n0から255の範囲で決める",
+  "kzeaddon.screen.overlayLocation.tooltip.b": "RGBAのB 青\n0から255の範囲で決める",
+  "kzeaddon.screen.overlayLocation.tooltip.a": "RGBAのA 透過度\n0から255の範囲で決める"
 }

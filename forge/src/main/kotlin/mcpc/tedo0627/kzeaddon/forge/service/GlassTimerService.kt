@@ -45,6 +45,7 @@ class GlassTimerService {
     @SubscribeEvent
     fun onRenderGuiOverlayEvent(event: RenderGuiOverlayEvent.Pre) {
         if (GuiOverlayManager.getOverlays()[0] != event.overlay) return
+        val poseStack = event.poseStack
 
         if (currentTime == -1) return
         if (!AddonOptions.displayGlassTimer.get()) return
@@ -56,12 +57,16 @@ class GlassTimerService {
         val x = (mc.window.guiScaledWidth / 2 - 20 - font.width(text) / 2).toFloat()
         val y = (mc.window.guiScaledHeight - 49).toFloat()
 
+        val option = AddonOptions.glassTimerOverlay
+        poseStack.pushPose()
+        poseStack.scale(option.scalePercent, option.scalePercent, 1.0f)
         font.draw(
-            event.poseStack,
+            poseStack,
             text,
-            x + AddonOptions.glassTimerOverlayLocationX.get(),
-            y + AddonOptions.glassTimerOverlayLocationY.get(),
-            16777215
+            (x + option.x) / option.scalePercent,
+            (y + option.y) / option.scalePercent,
+            option.color
         )
+        poseStack.popPose()
     }
 }

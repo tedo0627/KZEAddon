@@ -1,6 +1,7 @@
 package mcpc.tedo0627.kzeaddon.forge.screen
 
 import com.mojang.blaze3d.vertex.PoseStack
+import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions
 import mcpc.tedo0627.kzeaddon.forge.service.KillLogService
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.gui.screens.Screen
@@ -20,10 +21,15 @@ class KillLogScreen(
         val size = list.size
         val start = if (size <= 20) 0 else size - 20 - scroll
         val end = size - scroll
+
+        val option = AddonOptions.killLogOverlay
+        poseStack.pushPose()
+        poseStack.scale(option.scalePercent, option.scalePercent, 1.0f)
         for (index in start until end) {
             val killLog = list[index]
             service.renderWeapon(killLog, end - 1 - index, poseStack)
         }
+        poseStack.popPose()
 
         super.render(poseStack, i, j, f)
     }

@@ -32,15 +32,16 @@ class CrosshairScreen(private val previous: Screen? = null) : Screen(Component.l
     }
 
     private fun add(option: OptionInstance<Int>, tooltip: String, index: Int) {
-        val textFieldWidgetA = EditBox(font, width / 2 - 40 - 10 - 40 - 5 + (index * (40 + 10)), height / 6 - 12 + 24, 40, 20, Component.empty())
-        textFieldWidgetA.value = option.get().toString()
-        textFieldWidgetA.setResponder {
+        val textFieldWidget = EditBox(font, width / 2 - 40 - 10 - 40 - 5 + (index * (40 + 10)), height / 6 - 12 + 24, 40, 20, Component.empty())
+        textFieldWidget.value = option.get().toString()
+        textFieldWidget.setFilter { it.isEmpty() || it.toIntOrNull() != null }
+        textFieldWidget.setResponder {
             val value = it.toIntOrNull()
-            textFieldWidgetA.setTextColor(if (value != null) 0xE0E0E0 else 0xFF0000)
+            textFieldWidget.setTextColor(if (value != null) 0xE0E0E0 else 0xFF0000)
             if (value != null) option.set(value)
         }
-        textFieldWidgetA.setTooltip(Tooltip.create(Component.translatable("kzeaddon.screen.color.$tooltip")))
-        addRenderableWidget(textFieldWidgetA)
+        textFieldWidget.setTooltip(Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.color.$tooltip")))
+        addRenderableWidget(textFieldWidget)
     }
 
     override fun render(poseStack: PoseStack, i: Int, j: Int, f: Float) {

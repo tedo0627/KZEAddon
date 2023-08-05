@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component
 class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Component.literal("座標の変更")) {
 
     override fun init() {
-        addRenderableWidget(OverlayLocationList(width, height, 32, height - 32, 25))
+        addRenderableWidget(OverlayLocationList(width, height))
 
         addRenderableWidget(Button
             .Builder(CommonComponents.GUI_DONE) { minecraft?.setScreen(previous) }

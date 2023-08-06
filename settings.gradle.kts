@@ -5,10 +5,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
-    plugins {
-        id("fabric-loom").version("1.2-SNAPSHOT")
-        kotlin("jvm").version("1.8.21")
-    }
 }
 
 rootProject.name = "kzeaddon"

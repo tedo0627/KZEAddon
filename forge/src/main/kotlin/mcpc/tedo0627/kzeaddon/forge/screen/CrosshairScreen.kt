@@ -40,7 +40,7 @@ class CrosshairScreen(private val previous: Screen? = null) : Screen(Component.l
             textFieldWidget.setTextColor(if (value != null) 0xE0E0E0 else 0xFF0000)
             if (value != null) option.set(value)
         }
-        textFieldWidget.setTooltip(Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.color.$tooltip")))
+        textFieldWidget.setTooltip(Tooltip.create(Component.translatable("kzeaddon.screen.overlayLocation.tooltip.$tooltip")))
         addRenderableWidget(textFieldWidget)
     }
 

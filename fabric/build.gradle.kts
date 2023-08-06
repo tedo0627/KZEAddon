@@ -29,6 +29,13 @@ tasks {
     runClient {
         args("--username", "Dev")
     }
+    processResources {
+        inputs.property("version", version)
+
+        filesMatching("fabric.mod.json") {
+            expand("version" to version)
+        }
+    }
     val javaVersion = JavaVersion.VERSION_17
     withType<JavaCompile> {
         options.encoding = "UTF-8"
@@ -42,5 +49,11 @@ tasks {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
         withSourcesJar()
+    }
+    remapJar {
+        archiveVersion.set("")
+    }
+    remapSourcesJar {
+        archiveVersion.set("")
     }
 }

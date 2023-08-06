@@ -65,6 +65,13 @@ tasks {
         withSourcesJar()
     }
     withType<Jar> {
+        archiveVersion.set("")
         finalizedBy("reobfJar")
+
+        manifest {
+            attributes(
+                "Implementation-Version" to version,
+            )
+        }
     }
 }

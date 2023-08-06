@@ -4,7 +4,7 @@ license="MIT License"
 
 [[mods]]
 modId="kzeaddon"
-version="3.0.3"
+version="${file.jarVersion}"
 displayName="KZEAddon"
 authors="tedo0627"
 description='''

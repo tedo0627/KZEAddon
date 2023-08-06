@@ -69,8 +69,15 @@ tasks {
         withSourcesJar()
     }
     withType<Jar> {
+        archiveVersion.set("")
         archiveClassifier.set("slim")
         finalizedBy("reobfJar")
+
+        manifest {
+            attributes(
+                "Implementation-Version" to version,
+            )
+        }
     }
 
     reobf {
@@ -78,6 +85,7 @@ tasks {
     }
 
     withType<JarJar> {
+        archiveVersion.set("")
         archiveClassifier.set("")
         finalizedBy("reobfJarJar")
     }

@@ -45,6 +45,8 @@
   "kzeaddon.options.knifeAnimation": "ナイフにアニメーションを付ける",
   "kzeaddon.options.knifeAnimation.tooltip": "GeckoLibが必要です\nGeckoLibがないとオンにしても動作しません\n\nオンする前に取得したナイフは反映されません\n次の試合までお待ちください",
 
+  "kzeaddon.screen.setting.invisible": "透明化の設定...",
+  "kzeaddon.screen.setting.killLog": "キルログの設定...",
   "kzeaddon.screen.setting.crosshair": "クロスヘアーの設定...",
   "kzeaddon.screen.setting.displayLocationButton": "表示するものの設定...",
 

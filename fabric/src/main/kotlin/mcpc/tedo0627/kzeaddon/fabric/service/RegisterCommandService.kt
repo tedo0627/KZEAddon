@@ -2,7 +2,7 @@ package mcpc.tedo0627.kzeaddon.fabric.service
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
-import mcpc.tedo0627.kzeaddon.fabric.screen.SettingScreen
+import mcpc.tedo0627.kzeaddon.fabric.screen.setting.SettingScreen
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents

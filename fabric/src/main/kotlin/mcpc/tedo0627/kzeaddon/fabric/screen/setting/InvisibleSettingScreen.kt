@@ -1,17 +1,24 @@
-package mcpc.tedo0627.kzeaddon.forge.screen
+package mcpc.tedo0627.kzeaddon.fabric.screen.setting
 
 import com.mojang.blaze3d.vertex.PoseStack
+import mcpc.tedo0627.kzeaddon.fabric.option.AddonOptions
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.CommonComponents
 import net.minecraft.network.chat.Component
 
-class OverlayLocationScreen(private val previous: Screen? = null) : Screen(Component.literal("座標の変更")) {
+class InvisibleSettingScreen(private val previous: Screen? = null) : Screen(Component.literal("透明の設定")) {
 
     override fun init() {
-        addRenderableWidget(OverlayLocationList(width, height))
+        val options = Minecraft.getInstance().options ?: return
+        addRenderableWidget(OptionList(mutableListOf(
+            AddonOptions.hidePlayerToggle, AddonOptions.hidePlayerOverlay,
+            AddonOptions.invisibleType, AddonOptions.hidePlayerItem
+        ).map { it.createButton(options, 0, 0, 0) }, width, height))
 
-        addRenderableWidget(Button
+        addRenderableWidget(
+            Button
             .Builder(CommonComponents.GUI_DONE) { minecraft?.setScreen(previous) }
             .pos(width / 2 - 100, height - 27)
             .size(200, 20)

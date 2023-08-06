@@ -1,4 +1,4 @@
-package mcpc.tedo0627.kzeaddon.forge.screen
+package mcpc.tedo0627.kzeaddon.forge.screen.setting
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mcpc.tedo0627.kzeaddon.forge.option.AddonOptions

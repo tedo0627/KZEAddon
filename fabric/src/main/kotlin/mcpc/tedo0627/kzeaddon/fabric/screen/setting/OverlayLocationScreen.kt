@@ -1,4 +1,4 @@
-package mcpc.tedo0627.kzeaddon.fabric.screen
+package mcpc.tedo0627.kzeaddon.fabric.screen.setting
 
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.components.Button

@@ -5,6 +5,7 @@ forgeとfabric両方対応
 version 1.19.4  
 
 ## 機能
+デフォルトではすべてオフになっています
  - 同じチームのプレイヤーを透明にする ※1
  - 明るさを最大にする
  - 武器の弾数を表示する
@@ -30,7 +31,7 @@ URL先のAssetsのファイルをダウンロードしてmodsフォルダに入�
 
 forgeを使っている人は```kzeaddon-forge.jar```か```kzeaddon-forge-bundle.jar```をダウンロードしてください  
 ```kzeaddon-froge.jar```は前提modが必要なため、各自でダウンロードしてください  
-```kzeaddon-forge-bundle.jar```は前提modをダウンロードする必要がないので、modをあまり触ったことがない人におすすめです 
+```kzeaddon-forge-bundle.jar```はKZEAddonを含めた前提mod全てが入っているので、modをあまり触ったことがない人におすすめです 
 
 fabricを使っているは ```kzeaddon-fabric.jar``` をダウンロードしてください  
 

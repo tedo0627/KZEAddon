@@ -47,7 +47,7 @@ class OverlayTextOption(val name: String, val useColor: Boolean = true) {
         get() = scale.toFloat() / 100
 
     val color: Int
-        get() = FastColor.ARGB32.color(r, g, b, a)
+        get() = FastColor.ARGB32.color(a, r, g, b)
 
     fun addSaveList(list: ArrayList<Pair<String, OptionInstance<*>>>) {
         list.add(Pair("${name}LocationX", xOption))

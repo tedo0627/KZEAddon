@@ -188,6 +188,7 @@ public class AddonOptions {
         list.add(new Pair<>("displayKillLog", displayKillLog));
         list.add(new Pair<>("addKillLogWeaponName", addKillLogWeaponName));
         list.add(new Pair<>("disableKillLogWhenPressTab", disableKillLogWhenPressTab));
+        list.add(new Pair<>("killLogHeight", killLogHeight));
         list.add(new Pair<>("removeChatKillLog", removeChatKillLog));
         list.add(new Pair<>("displayGlassTimer", displayGlassTimer));
         list.add(new Pair<>("displayScoreboardTimer", displayScoreboardTimer));

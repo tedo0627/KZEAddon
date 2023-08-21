@@ -45,7 +45,8 @@ class KillLogService(private val key: KeyMapping) {
         "survival_knife" to "knife",
         "krissvector" to "kriss",
         "m92fs" to "pt92",
-        "howam1500" to "m1500"
+        "howam1500" to "m1500",
+        "tavor7" to "tavor"
     )
 
     private val addonResources = mutableMapOf<String, ResourceLocation>()
